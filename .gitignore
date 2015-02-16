@@ -1,6 +1,6 @@
 bin/
 obj/
-
+log.txt
 
 # Compiled Object files
 *.slo
