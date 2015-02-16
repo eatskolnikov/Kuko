@@ -34,6 +34,10 @@ namespace kuko
         static int GetScreenWidth();
         static int GetScreenHeight();
 
+        static SDL_Renderer* GetRenderer();
+        static void BeginDraw();
+        static void EndDraw();
+
         private:
         static int m_screenWidth;
         static int m_screenHeight;

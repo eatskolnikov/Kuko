@@ -3,7 +3,7 @@
 
 #include "../utilities/Logger.hpp"
 
-#include <SDL.h>
+#include "SDL_image.h"
 
 namespace kuko
 {
@@ -68,13 +68,13 @@ bool Application::Start( const std::string& winTitle, int screenWidth /* = 480 *
     }
     SDL_SetRenderDrawColor( m_renderer, 0xFF, 0xFF, 0xFF, 0xFF );
 
-//    int imgFlags = IMG_INIT_PNG;
-//    if ( !( IMG_Init( imgFlags ) & imgFlags ) )
-//    {
-//        std::string error( SDL_GetError() );
-//        Logger::Error( "Error initializing SDL_Image: " + error, "Application::Start" );
-//        return false;
-//    }
+    int imgFlags = IMG_INIT_PNG;
+    if ( !( IMG_Init( imgFlags ) & imgFlags ) )
+    {
+        std::string error( SDL_GetError() );
+        Logger::Error( "Error initializing SDL_Image: " + error, "Application::Start" );
+        return false;
+    }
 
     return true;
 }
@@ -106,6 +106,21 @@ int Application::GetScreenWidth()
 int Application::GetScreenHeight()
 {
     return m_screenHeight;
+}
+
+SDL_Renderer* Application::GetRenderer()
+{
+    return m_renderer;
+}
+
+void Application::BeginDraw()
+{
+    SDL_RenderClear( m_renderer );
+}
+
+void Application::EndDraw()
+{
+    SDL_RenderPresent( m_renderer );
 }
 
 }
