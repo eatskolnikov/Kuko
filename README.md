@@ -12,7 +12,7 @@ Built by Rachel J. Morris
 
 ## Projects using Kuko
 
-I will probably make a Pickin' Sticks game with this at some point.
+* [Pickin' Sticks LXXIV](https://github.com/Moosader/Pickin-Sticks-LXXIV/tree/KukoUpdate)
 
 I have a planned Language Learning game that will use this.
 
