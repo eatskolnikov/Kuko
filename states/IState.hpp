@@ -21,11 +21,14 @@ class IState
     virtual void Draw() = 0;
 
     virtual std::string GetNextState() { return m_gotoState; }
+    virtual bool IsDone() { return m_gotoState != ""; }
 
     protected:
     bool m_isDone;
     bool m_isSetup;
     std::string m_gotoState;
+
+    friend class StateManager;
 };
 
 }

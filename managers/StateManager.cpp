@@ -17,6 +17,16 @@ void StateManager::Setup()
 
 void StateManager::Cleanup()
 {
+    for ( std::map< std::string, IState* >::iterator iter = m_lstStates.begin();
+            iter != m_lstStates.end();
+            ++iter )
+    {
+        if ( iter->second != NULL )
+        {
+            delete iter->second;
+            iter->second = NULL;
+        }
+    }
 }
 
 void StateManager::PushState( const std::string& title, IState* ptrState )
