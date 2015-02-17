@@ -1,0 +1,32 @@
+// Kuko Framework - https://github.com/Rejcx/Kuko - Rachel J. Morris - MIT License
+#ifndef _ISTATE
+#define _ISTATE
+
+#include "../base/Application.hpp"
+
+#include <string>
+
+namespace kuko
+{
+
+class IState
+{
+    public:
+    IState() { m_isDone = false; m_isSetup = false; m_gotoState = ""; }
+
+    virtual void Setup() = 0;
+    virtual void Cleanup() = 0;
+
+    virtual void Main() = 0;
+
+    virtual std::string GetNextState() { return m_gotoState; }
+
+    protected:
+    bool m_isDone;
+    bool m_isSetup;
+    std::string m_gotoState;
+};
+
+}
+
+#endif

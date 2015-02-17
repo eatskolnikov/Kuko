@@ -1,3 +1,4 @@
+// Kuko Framework - https://github.com/Rejcx/Kuko - Rachel J. Morris - MIT License
 #include "Logger.hpp"
 #include <ctime>
 #include <sstream>
