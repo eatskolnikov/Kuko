@@ -21,9 +21,8 @@ class StateManager
 
     void PushState( const std::string& title, IState* ptrState );
     void SwitchState( const std::string& key );
-    void RunCurrentState();
-
-    void Run();
+    void UpdateCurrentState();
+    void DrawCurrentState();
 
     private:
     void CleanCurrentState();

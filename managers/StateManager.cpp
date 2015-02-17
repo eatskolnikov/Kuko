@@ -19,27 +19,6 @@ void StateManager::Cleanup()
 {
 }
 
-void StateManager::Run()
-{
-    bool done = false;
-    while ( !done )
-    {
-        RunCurrentState();
-
-        std::string nextState = m_ptrCurrentState->GetNextState();
-        if ( m_lstStates[ nextState ] != NULL )
-        {
-            // Change state
-            SwitchState( nextState );
-        }
-        else
-        {
-            // Default - exit
-            done = true;
-        }
-    }
-}
-
 void StateManager::PushState( const std::string& title, IState* ptrState )
 {
     m_lstStates.insert(
@@ -60,11 +39,19 @@ void StateManager::SwitchState( const std::string& key )
     m_ptrCurrentState->Setup();
 }
 
-void StateManager::RunCurrentState()
+void StateManager::UpdateCurrentState()
 {
     if ( m_ptrCurrentState != NULL )
     {
-        m_ptrCurrentState->Main();
+        m_ptrCurrentState->Update();
+    }
+}
+
+void StateManager::DrawCurrentState()
+{
+    if ( m_ptrCurrentState != NULL )
+    {
+        m_ptrCurrentState->Draw();
     }
 }
 

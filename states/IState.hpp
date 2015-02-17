@@ -17,7 +17,8 @@ class IState
     virtual void Setup() = 0;
     virtual void Cleanup() = 0;
 
-    virtual void Main() = 0;
+    virtual void Update() = 0;
+    virtual void Draw() = 0;
 
     virtual std::string GetNextState() { return m_gotoState; }
 
