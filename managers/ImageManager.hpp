@@ -22,6 +22,7 @@ class ImageManager
     static void AddImages();
     static SDL_Texture* GetTexture( const std::string& key );
     static SDL_Texture* LoadFile( const std::string& path );
+    static void Draw( const Sprite& sprite );
 
     protected:
     static std::map<std::string, SDL_Texture*> m_textures;

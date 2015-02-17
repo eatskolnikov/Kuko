@@ -9,6 +9,7 @@ namespace kuko
 StateManager::StateManager()
 {
     m_ptrCurrentState = NULL;
+    m_isDone = false;
 }
 
 void StateManager::Setup()
@@ -27,6 +28,11 @@ void StateManager::Cleanup()
             iter->second = NULL;
         }
     }
+}
+
+bool StateManager::IsDone()
+{
+    return m_isDone;
 }
 
 void StateManager::PushState( const std::string& title, IState* ptrState )
@@ -54,6 +60,12 @@ void StateManager::UpdateCurrentState()
     if ( m_ptrCurrentState != NULL )
     {
         m_ptrCurrentState->Update();
+
+        if ( m_ptrCurrentState->IsDone() )
+        {
+            // TODO: Go to next state based on this
+            m_isDone = true;
+        }
     }
 }
 

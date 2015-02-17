@@ -23,8 +23,10 @@ class StateManager
     void SwitchState( const std::string& key );
     void UpdateCurrentState();
     void DrawCurrentState();
+    bool IsDone();
 
     private:
+    bool m_isDone;
     void CleanCurrentState();
 
     std::map< std::string, IState* > m_lstStates;

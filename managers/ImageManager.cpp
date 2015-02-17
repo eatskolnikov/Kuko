@@ -18,14 +18,7 @@ void ImageManager::AddImages()
 {
     Logger::Out( "ImageManager::AddImages" );
     // Load images that will be used
-    m_textures.insert( std::pair<std::string, SDL_Texture*>( "donaldo", LoadFile( "content/graphics/donaldo.png" ) ) );
-    m_textures.insert( std::pair<std::string, SDL_Texture*>( "rejcxelo", LoadFile( "content/graphics/rejcxelo.png" ) ) );
-    m_textures.insert( std::pair<std::string, SDL_Texture*>( "tileset", LoadFile( "content/graphics/tileset.png" ) ) );
-    m_textures.insert( std::pair<std::string, SDL_Texture*>( "background", LoadFile( "content/graphics/background.png" ) ) );
-    m_textures.insert( std::pair<std::string, SDL_Texture*>( "crate", LoadFile( "content/graphics/crate.png" ) ) );
-    m_textures.insert( std::pair<std::string, SDL_Texture*>( "buttonUp", LoadFile( "content/graphics/buttonUp.png" ) ) );
-    m_textures.insert( std::pair<std::string, SDL_Texture*>( "buttonDown", LoadFile( "content/graphics/buttonDown.png" ) ) );
-    m_textures.insert( std::pair<std::string, SDL_Texture*>( "heart", LoadFile( "content/graphics/heart.png" ) ) );
+    //m_textures.insert( std::pair<std::string, SDL_Texture*>( "donaldo", LoadFile( "content/graphics/donaldo.png" ) ) );
 }
 
 SDL_Texture* ImageManager::LoadFile( const std::string& path )
@@ -64,6 +57,21 @@ void ImageManager::Cleanup()
             it->second = NULL;
         }
     }
+}
+
+void ImageManager::Draw( const Sprite& sprite )
+{
+    SDL_RendererFlip flip = ( sprite.isFlipped ) ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+
+    SDL_RenderCopyEx(
+        kuko::Application::GetRenderer(),
+        sprite.texture,
+        &sprite.frame,
+        &sprite.position,
+        sprite.angle,
+        NULL,
+        flip
+    );
 }
 
 }

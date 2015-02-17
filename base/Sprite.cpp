@@ -15,6 +15,7 @@ Sprite::Sprite()
     position.x = position.y = 0;
     position.w = position.h = 16;
     isFlipped = false;
+    angle = 0.0f;
 }
 
 void Sprite::SetTexture( SDL_Texture* ptrTexture )

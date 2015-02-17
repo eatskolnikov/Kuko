@@ -26,6 +26,7 @@ class Sprite
     SDL_Rect        frame;
     SDL_Rect        position;
     bool            isFlipped;
+    float           angle;
 };
 
 }
