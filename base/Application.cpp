@@ -23,10 +23,26 @@ void Timer::Setup( int fps )
 
 void Timer::Start()
 {
+    startTicks = SDL_GetTicks();
 }
 
 void Timer::Update()
 {
+    int frameTicks = SDL_GetTicks();
+    if ( frameTicks < ticksPerFrame )
+    {
+        SDL_Delay( ticksPerFrame - frameTicks );
+    }
+}
+
+void Application::TimerStart()
+{
+    m_timer.Start();
+}
+
+void Application::TimerUpdate()
+{
+    m_timer.Update();
 }
 
 bool Application::Start( const std::string& winTitle, int screenWidth /* = 480 */, int screenHeight /* = 480 */ )

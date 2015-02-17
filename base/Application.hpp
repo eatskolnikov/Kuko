@@ -38,6 +38,9 @@ namespace kuko
         static void BeginDraw();
         static void EndDraw();
 
+        static void TimerStart();
+        static void TimerUpdate();
+
         private:
         static int m_screenWidth;
         static int m_screenHeight;
