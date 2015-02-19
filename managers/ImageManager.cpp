@@ -74,4 +74,23 @@ void ImageManager::Draw( const Sprite& sprite )
     );
 }
 
+void ImageManager::Draw( SDL_Texture* ptrTexture, int x, int y )
+{
+    SDL_Rect pos;
+    pos.x = x;
+    pos.y = y;
+    pos.w = 200;
+    pos.h = 50;
+
+    SDL_RenderCopyEx(
+        kuko::Application::GetRenderer(),
+        ptrTexture,
+        NULL,
+        &pos,
+        0.0f,
+        NULL,
+        SDL_FLIP_NONE
+    );
+}
+
 }

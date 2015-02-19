@@ -4,6 +4,7 @@
 #include "../utilities/Logger.hpp"
 
 #include "SDL_image.h"
+#include "SDL_ttf.h"
 
 namespace kuko
 {
@@ -87,8 +88,15 @@ bool Application::Start( const std::string& winTitle, int screenWidth /* = 480 *
     int imgFlags = IMG_INIT_PNG;
     if ( !( IMG_Init( imgFlags ) & imgFlags ) )
     {
-        std::string error( SDL_GetError() );
+        std::string error( IMG_GetError() );
         Logger::Error( "Error initializing SDL_Image: " + error, "Application::Start" );
+        return false;
+    }
+
+    if( TTF_Init() == -1 )
+    {
+        std::string error( TTF_GetError() );
+        Logger::Error( "Error initializing SDL_TTF: " + error, "Application::Start" );
         return false;
     }
 
