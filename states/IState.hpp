@@ -1,6 +1,6 @@
 // Kuko Framework - https://github.com/Rejcx/Kuko - Rachel J. Morris - MIT License
-#ifndef _ISTATE
-#define _ISTATE
+#ifndef _KUKO_ISTATE
+#define _KUKO_ISTATE
 
 #include "../base/Application.hpp"
 

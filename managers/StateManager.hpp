@@ -1,6 +1,6 @@
 // Kuko Framework - https://github.com/Rejcx/Kuko - Rachel J. Morris - MIT License
-#ifndef _STATEMANAGER
-#define _STATEMANAGER
+#ifndef _KUKO_STATEMANAGER
+#define _KUKO_STATEMANAGER
 
 #include "../states/IState.hpp"
 #include "../base/Application.hpp"

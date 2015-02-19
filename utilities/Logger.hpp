@@ -1,6 +1,6 @@
 // Kuko Framework - https://github.com/Rejcx/Kuko - Rachel J. Morris - MIT License
-#ifndef _LOGGER
-#define _LOGGER
+#ifndef _KUKO_LOGGER
+#define _KUKO_LOGGER
 
 #include <iostream>
 #include <fstream>

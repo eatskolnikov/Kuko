@@ -1,3 +1,4 @@
+// Kuko Framework - https://github.com/Rejcx/Kuko - Rachel J. Morris - MIT License
 #include "InputManager.hpp"
 
 #include "../utilities/Logger.hpp"

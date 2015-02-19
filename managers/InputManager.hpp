@@ -1,6 +1,6 @@
 // Kuko Framework - https://github.com/Rejcx/Kuko - Rachel J. Morris - MIT License
-#ifndef _INPUTMANAGER
-#define _INPUTMANAGER
+#ifndef _KUKO_INPUTMANAGER
+#define _KUKO_INPUTMANAGER
 
 #include <SDL.h>
 

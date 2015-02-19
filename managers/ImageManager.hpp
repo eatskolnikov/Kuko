@@ -1,6 +1,6 @@
 // Kuko Framework - https://github.com/Rejcx/Kuko - Rachel J. Morris - MIT License
-#ifndef _IMAGEMANAGER
-#define _IMAGEMANAGER
+#ifndef _KUKO_IMAGEMANAGER
+#define _KUKO_IMAGEMANAGER
 
 #include <SDL.h>
 #include <SDL_image.h>

@@ -1,6 +1,6 @@
 // Kuko Framework - https://github.com/Rejcx/Kuko - Rachel J. Morris - MIT License
-#ifndef _SPRITE
-#define _SPRITE
+#ifndef _KUKO_SPRITE
+#define _KUKO_SPRITE
 
 #include <SDL.h>
 #include <SDL_image.h>
