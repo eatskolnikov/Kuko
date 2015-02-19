@@ -24,4 +24,10 @@ class Logger
     static time_t m_startTime;
 };
 
+// Shortcut expressions for logger
+#define I2S( number ) Logger::IntToString( number )
+#define LOG( msg ) Logger::Out( msg );
+#define LOGLOC( msg, loc ) Logger::Out( msg, loc );
+#define ERR( msg, loc ) Logger::Error( msg, loc );
+
 #endif

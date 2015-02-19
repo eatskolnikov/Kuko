@@ -12,6 +12,7 @@ namespace kuko
 class IState
 {
     public:
+    virtual ~IState() { ; }
     IState() { m_isDone = false; m_isSetup = false; m_gotoState = ""; }
 
     virtual void Setup() = 0;
