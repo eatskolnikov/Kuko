@@ -15,7 +15,7 @@ void ImageManager::Setup()
 
 void ImageManager::AddTexture( const std::string& id, const std::string& path )
 {
-    Logger::Out( "ImageManager::AddImages" );
+    Logger::Out( "Add image " + id + " from path " + path, "ImageManager::AddTexture" );
     m_textures.insert( std::pair<std::string, SDL_Texture*>( id, LoadFile( path ) ) );
 }
 

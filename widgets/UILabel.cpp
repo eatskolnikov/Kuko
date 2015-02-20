@@ -7,7 +7,7 @@
 namespace kuko
 {
 
-void UILabel::Setup( const std::string& id, const std::string& label, TTF_Font* font, SDL_Rect position, SDL_Color textColor )
+void UILabel::Setup( const std::string& id, const std::string& label, SDL_Rect position, SDL_Color textColor, TTF_Font* font )
 {
     Logger::Out( "Creating UILabel \"" + id + "\"", "UILabel::Setup" );
     m_position = position;

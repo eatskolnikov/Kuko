@@ -12,13 +12,6 @@ void UIImage::Setup( const std::string& id, SDL_Rect position, SDL_Texture* ptrT
     Logger::Out( "Creating UIImage \"" + id + "\"", "UIImage::Setup" );
     m_position = position;
 
-    Logger::Out(
-        Logger::IntToString( m_position.x ) + "," +
-        Logger::IntToString( m_position.y ) + " " +
-        Logger::IntToString( m_position.w ) + "x" +
-        Logger::IntToString( m_position.h ),
-        "UIImage " + id );
-
     if ( ptrTexture == NULL )
     {
         m_primitiveBackground = true;
