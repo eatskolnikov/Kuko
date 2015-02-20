@@ -19,7 +19,8 @@ class ImageManager
     static void Setup();
     static void Cleanup();
 
-    static void AddImages();
+    static void AddTexture( const std::string& id, const std::string& path );
+    static void ClearTextures();
     static SDL_Texture* GetTexture( const std::string& key );
     static SDL_Texture* LoadFile( const std::string& path );
     static void Draw( const Sprite& sprite );

@@ -22,6 +22,7 @@ class Logger
     private:
     static std::ofstream m_file;
     static time_t m_startTime;
+    static time_t m_lastTimestamp;
 };
 
 // Shortcut expressions for logger

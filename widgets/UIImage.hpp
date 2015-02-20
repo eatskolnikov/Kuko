@@ -13,7 +13,7 @@ class UIImage : public IWidget
 {
     public:
     void Setup( const std::string& id, SDL_Rect position, SDL_Texture* ptrTexture );
-    void SetColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a );
+    void SetColor( SDL_Color color );
     virtual void Draw();
 
     protected:
@@ -21,7 +21,7 @@ class UIImage : public IWidget
     // SDL_Rect m_position;
     Sprite m_background;
     bool m_primitiveBackground;
-    Uint8 r, g, b, a;
+    SDL_Color m_color;
 };
 
 }

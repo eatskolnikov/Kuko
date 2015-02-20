@@ -5,11 +5,13 @@
 
 std::ofstream Logger::m_file;
 time_t Logger::m_startTime;
+time_t Logger::m_lastTimestamp;
 
 void Logger::Setup()
 {
     m_file.open( "log.txt" );
     m_startTime = time( 0 );
+    m_lastTimestamp = m_startTime;
     m_file << "Program begin at " << __DATE__ << " " << __TIME__ << std::endl << std::endl;
 }
 
@@ -21,6 +23,14 @@ void Logger::Cleanup()
 
 void Logger::Out( const std::string& message, const std::string& location /* = "" */, bool condition /* = true */ )
 {
+    time_t timestamp = GetTimestamp();
+    if ( m_lastTimestamp != timestamp )
+    {
+        std::cout << std::endl;
+        m_file << std::endl;
+        m_lastTimestamp = timestamp;
+    }
+
     if ( condition )
     {
         std::cout   << GetTimestamp() << "\t" << message;

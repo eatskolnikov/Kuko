@@ -139,6 +139,7 @@ SDL_Renderer* Application::GetRenderer()
 
 void Application::BeginDraw()
 {
+    SDL_SetRenderDrawColor( m_renderer, 0x33, 0x33, 0x33, 0xFF );
     SDL_RenderClear( m_renderer );
 }
 

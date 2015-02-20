@@ -12,38 +12,41 @@ void UIImage::Setup( const std::string& id, SDL_Rect position, SDL_Texture* ptrT
     Logger::Out( "Creating UIImage \"" + id + "\"", "UIImage::Setup" );
     m_position = position;
 
+    Logger::Out(
+        Logger::IntToString( m_position.x ) + "," +
+        Logger::IntToString( m_position.y ) + " " +
+        Logger::IntToString( m_position.w ) + "x" +
+        Logger::IntToString( m_position.h ),
+        "UIImage " + id );
+
     if ( ptrTexture == NULL )
     {
         m_primitiveBackground = true;
-        SetColor( 0x00, 0xFF, 0xFF, 0xFF );
+        SetColor( { 0x00, 0xFF, 0xFF, 0xFF } );
     }
     else
     {
         m_background.SetTexture( ptrTexture );
+        m_background.position = position;
         m_primitiveBackground = false;
     }
 }
 
-void UIImage::SetColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a )
+void UIImage::SetColor( SDL_Color color )
 {
-    this->r = r;
-    this->g = g;
-    this->b = b;
-    this->a = a;
+    m_color = color;
 }
 
 void UIImage::Draw()
 {
     if ( m_primitiveBackground )
     {
-        SDL_SetRenderDrawColor( Application::GetRenderer(), r, g, b, a );
+        SDL_SetRenderDrawColor( Application::GetRenderer(), m_color.r, m_color.g, m_color.b, m_color.a );
         SDL_RenderFillRect( Application::GetRenderer(), &m_position );
     }
     else
     {
     }
-
-    //kuko::ImageManager::Draw( background );
 }
 
 }

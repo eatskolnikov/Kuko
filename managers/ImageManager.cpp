@@ -11,14 +11,17 @@ std::map<std::string, SDL_Texture*> ImageManager::m_textures;
 void ImageManager::Setup()
 {
     Logger::Out( "ImageManager::Setup" );
-    AddImages();
 }
 
-void ImageManager::AddImages()
+void ImageManager::AddTexture( const std::string& id, const std::string& path )
 {
     Logger::Out( "ImageManager::AddImages" );
-    // Load images that will be used
-    //m_textures.insert( std::pair<std::string, SDL_Texture*>( "donaldo", LoadFile( "content/graphics/donaldo.png" ) ) );
+    m_textures.insert( std::pair<std::string, SDL_Texture*>( id, LoadFile( path ) ) );
+}
+
+void ImageManager::ClearTextures()
+{
+    m_textures.clear();
 }
 
 SDL_Texture* ImageManager::LoadFile( const std::string& path )

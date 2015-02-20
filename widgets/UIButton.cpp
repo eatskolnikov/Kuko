@@ -4,16 +4,22 @@ namespace kuko
 {
 
 void UIButton::Setup( const std::string& id, const std::string& text, SDL_Rect position,
-    SDL_Texture* ptrTexture, SDL_Color textColor, TTF_Font* font, int padding /* = 0 */ )
+    SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, int padding /* = 0 */ )
 {
-    Logger::Out( "Creating UIButton \"" + id + "\"", "UIButton::Setup" );
+    Logger::Out( "\n\nCreating UIButton \"" + id + "\"", "UIButton::Setup" );
 
     m_position = position;
-
     m_id = id;
 
+    Logger::Out(
+        Logger::IntToString( m_position.x ) + "," +
+        Logger::IntToString( m_position.y ) + " " +
+        Logger::IntToString( m_position.w ) + "x" +
+        Logger::IntToString( m_position.h ),
+        "UIButton " + id );
+
     m_background.Setup( id + "-img", position, ptrTexture );
-    m_background.SetColor( 0xFF, 0x00, 0x00, 0xFF );
+    m_background.SetColor( buttonColor );
 
     SDL_Rect textPos = position;
     textPos.x += padding;
