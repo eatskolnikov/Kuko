@@ -9,7 +9,6 @@ namespace kuko
 
 void UILabel::Setup( const std::string& id, const std::string& label, SDL_Rect position, SDL_Color textColor, TTF_Font* font )
 {
-    Logger::Out( "Creating UILabel \"" + id + "\"", "UILabel::Setup" );
     m_position = position;
     m_color = textColor;
     m_font = font;
@@ -36,6 +35,12 @@ void UILabel::GenerateTexture()
 
 void UILabel::Draw()
 {
+//    Logger::Out( "Label " + m_id + " Color: " +
+//        Logger::IntToString( m_color.r ) + "," +
+//        Logger::IntToString( m_color.g ) + "," +
+//        Logger::IntToString( m_color.b ) + "," +
+//        Logger::IntToString( m_color.a ) );
+
     kuko::ImageManager::Draw( m_sprite );
 }
 

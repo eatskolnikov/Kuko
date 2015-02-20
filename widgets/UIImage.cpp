@@ -9,7 +9,6 @@ namespace kuko
 
 void UIImage::Setup( const std::string& id, SDL_Rect position, SDL_Texture* ptrTexture )
 {
-    Logger::Out( "Creating UIImage \"" + id + "\"", "UIImage::Setup" );
     m_position = position;
 
     if ( ptrTexture == NULL )

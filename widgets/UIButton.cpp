@@ -13,8 +13,6 @@ void UIButton::Setup( const std::string& id, const std::string& text, SDL_Rect p
 void UIButton::Setup( const std::string& id, const std::string& text, SDL_Rect position,
     SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, SDL_Rect padding )
 {
-    Logger::Out( "Creating UIButton \"" + id + "\"", "UIButton::Setup" );
-
     m_position = position;
     m_id = id;
 
