@@ -1,6 +1,6 @@
 // Kuko Framework - https://github.com/Rejcx/Kuko - Rachel J. Morris - MIT License
-#ifndef _KUKO_FONTANAGER
-#define _KUKO_FONTANAGER
+#ifndef _KUKO_FONTMANAGER
+#define _KUKO_FONTMANAGER
 
 #include <SDL.h>
 #include <SDL_ttf.h>
