@@ -4,7 +4,7 @@
 
 This is a framework built on SDL2 with C++ for cross-platform games (PC, Android).
 
-See the Wiki for a To-Do list.
+See "Issue" area for list of tasks, or the wiki for an overall to-do list.
 
 MIT License
 
