@@ -15,9 +15,7 @@ namespace kuko
 class UILabel : public IWidget
 {
     public:
-    void Setup( const std::string& id, const std::string& label, TTF_Font* font,
-    int posX, int posY, int width, int height,
-        SDL_Color textColor );
+    void Setup( const std::string& id, const std::string& label, TTF_Font* font, SDL_Rect position, SDL_Color textColor );
     void SetColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a );
     virtual void Draw();
 

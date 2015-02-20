@@ -15,8 +15,8 @@ namespace kuko
 class UIButton : public IWidget
 {
     public:
-    void Setup( const std::string& id, const std::string& text, int posX, int posY, int width, int height,
-        SDL_Texture* ptrTexture, SDL_Color textColor, TTF_Font* font );
+    void Setup( const std::string& id, const std::string& text, SDL_Rect position,
+        SDL_Texture* ptrTexture, SDL_Color textColor, TTF_Font* font, int padding = 0 );
     void Draw();
     bool IsTriggered( int actionX, int actionY );
 
