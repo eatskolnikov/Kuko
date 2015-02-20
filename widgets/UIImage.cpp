@@ -39,6 +39,7 @@ void UIImage::Draw()
     }
     else
     {
+        kuko::ImageManager::Draw( m_background );
     }
 }
 

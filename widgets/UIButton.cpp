@@ -3,8 +3,15 @@
 namespace kuko
 {
 
+
 void UIButton::Setup( const std::string& id, const std::string& text, SDL_Rect position,
     SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, int padding /* = 0 */ )
+{
+    Setup( id, text, position, ptrTexture, buttonColor, textColor, font, { padding, padding, padding, padding } );
+}
+
+void UIButton::Setup( const std::string& id, const std::string& text, SDL_Rect position,
+    SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, SDL_Rect padding )
 {
     Logger::Out( "Creating UIButton \"" + id + "\"", "UIButton::Setup" );
 
@@ -15,10 +22,10 @@ void UIButton::Setup( const std::string& id, const std::string& text, SDL_Rect p
     m_background.SetColor( buttonColor );
 
     SDL_Rect textPos = position;
-    textPos.x += padding;
-    textPos.y += padding;
-    textPos.w -= (padding * 2);
-    textPos.h -= (padding * 2);
+    textPos.x += padding.x;
+    textPos.y += padding.y;
+    textPos.w -= (padding.w * 2);
+    textPos.h -= (padding.h * 2);
 
     m_text.Setup( id + "-lbl", text, textPos, textColor, font );
 }
