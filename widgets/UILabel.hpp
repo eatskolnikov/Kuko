@@ -17,7 +17,7 @@ class UILabel : public IWidget
     public:
     void Setup( const std::string& id, const std::string& label, TTF_Font* font,
     int posX, int posY, int width, int height,
-        Uint8 r, Uint8 g, Uint8 b, Uint8 a );
+        SDL_Color textColor );
     void SetColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a );
     virtual void Draw();
 
@@ -28,7 +28,6 @@ class UILabel : public IWidget
     void GenerateTexture();
 
     std::string m_label;
-    Uint8 r, g, b, a;
     TTF_Font* m_font;
     Sprite m_sprite;
     SDL_Color m_color;

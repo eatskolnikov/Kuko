@@ -9,14 +9,14 @@ namespace kuko
 
 void UILabel::Setup( const std::string& id, const std::string& label, TTF_Font* font,
     int posX, int posY, int width, int height,
-    Uint8 r, Uint8 g, Uint8 b, Uint8 a )
+    SDL_Color textColor )
 {
     Logger::Out( "Creating UILabel \"" + id + "\"", "UILabel::Setup" );
     m_position.x = posX;
     m_position.y = posY;
     m_position.w = width;
     m_position.h = height;
-    SetColor( r, g, b, a );
+    m_color = textColor;
     m_font = font;
     m_label = label;
     GenerateTexture();
