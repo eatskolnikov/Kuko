@@ -3,39 +3,59 @@
 #include "LuaManager.hpp"
 #include "../utilities/Logger.hpp"
 
-#include <lua.hpp>
-
-//extern "C"{
-//#include "lua.h"
-//#include "lualib.h"
-//#include "lauxlib.h"
-//}
-
 namespace kuko
 {
 
-void LuaManager::Test()
+lua_State* LuaManager::m_state;
+int LuaManager::m_args;
+
+void LuaManager::Setup()
 {
-    Logger::Out( "\n\nTest Lua" );
+    m_state = luaL_newstate();
+    luaL_openlibs( m_state );
+    // Load required scripts
+    // TODO: Possibly a problem due to project path
+    LoadScript( "Kuko/scripts/Language.lua" );
+}
 
-    lua_State* L = luaL_newstate();
-    luaL_openlibs( L );
+void LuaManager::Cleanup()
+{
+    lua_close( m_state );
+}
 
-    luaL_dofile(L, "temp.lua");
+void LuaManager::LoadScript( const std::string& path )
+{
+    Logger::Out( "Load script \"" + path + "\"", "LuaManager::LoadScript" );
+    luaL_dofile( m_state, path.c_str() );
+}
 
-    // Call function in sample file
-    lua_getglobal( L, "add" );
-    lua_pushnumber(L, 2);
-    lua_pushnumber(L, 3);
-    lua_call(L, 2, 1);
-    int sum = (int)lua_tointeger(L, -1);
-    lua_pop(L, 1);
+std::string LuaManager::Language_GetText( const std::string& key )
+{
+    Lua_ChooseFunction( "GetLanguageText" );
+    Lua_PushString( key.c_str() );
+    std::string result = Lua_GetStringResult();
+    Logger::Out( "GetLanguageText( \"" + key + "\" ) = " + result );
+    return result;
+}
 
-    Logger::Out( "Result: " + Logger::IntToString( sum ) );
+void LuaManager::Lua_ChooseFunction( const std::string& name )
+{
+    lua_getglobal( m_state, name.c_str() );
+    m_args = 0;
+}
 
-    lua_close( L );
+void LuaManager::Lua_PushString( const std::string& value )
+{
+    lua_pushstring( m_state, "menu_play" );
+    m_args++;
+}
 
-    Logger::Out( "Lua done\n\n" );
+std::string LuaManager::Lua_GetStringResult()
+{
+    lua_call( m_state, m_args, 1 );
+    std::string text = (std::string)lua_tostring( m_state, -1 );
+    lua_pop( m_state, 1 );
+    return text;
 }
 
 }
