@@ -17,11 +17,12 @@ class LanguageManager
     static void Cleanup();
 
     static void AddLanguage( const std::string& id, const std::string& path );
-    static void ClearLanguages();
 
     static std::string Text( const std::string& key );
+    static std::string CurrentLanguage();
 
     protected:
+    static std::string m_currentLanguage;
 };
 
 }

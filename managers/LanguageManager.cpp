@@ -7,6 +7,8 @@
 namespace kuko
 {
 
+std::string LanguageManager::m_currentLanguage;
+
 void LanguageManager::Setup()
 {
     Logger::Out( "LanguageManager::Setup" );
@@ -19,11 +21,13 @@ void LanguageManager::Cleanup()
 
 void LanguageManager::AddLanguage( const std::string& id, const std::string& path )
 {
+    m_currentLanguage = id;
     kuko::LuaManager::LoadScript( path );
 }
 
-void LanguageManager::ClearLanguages()
+std::string LanguageManager::CurrentLanguage()
 {
+    return m_currentLanguage;
 }
 
 std::string LanguageManager::Text( const std::string& key )

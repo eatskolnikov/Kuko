@@ -12,6 +12,7 @@ namespace kuko
 class UIImage : public IWidget
 {
     public:
+    virtual ~UIImage() { ; }
     void Setup( const std::string& id, SDL_Rect position, SDL_Texture* ptrTexture );
     void SetColor( SDL_Color color );
     virtual void Draw();

@@ -2,6 +2,8 @@
 #include "MenuManager.hpp"
 #include "ImageManager.hpp"
 #include "FontManager.hpp"
+#include "LuaManager.hpp"
+#include "LanguageManager.hpp"
 #include "../utilities/Logger.hpp"
 
 #include <fstream>
@@ -14,103 +16,100 @@ MenuManager::~MenuManager()
     ClearMenu();
 }
 
+void MenuManager::Reload()
+{
+    SetupMenu( m_currentMenu );
+}
+
 void MenuManager::SetupMenu( const std::string& path )
 {
     ClearMenu();
+    m_currentMenu = path;
 
-    std::ifstream infile;
-    infile.open( path.c_str() );
-    std::string buffer;
+    Logger::Out( "Load menu " + path, "MenuManager::SetupMenu" );
 
-    SDL_Rect pos;
-    int r, g, b, a;
-    SDL_Rect pad;
-    std::string text;
-    std::string id;
-    std::string fontId;
-    std::string textureId;
-    std::string type;
+    LuaManager::LoadScript( path );
+    int ct = LuaManager::Menu_GetElementCount();
 
-    while ( infile >> buffer )
+    for ( int i = 0; i < ct; i++ )
     {
-        // Find out what kind of UI element we're loading
-        if ( buffer == "IMAGE_BEGIN" )
+        int index = i+1; // account for Lua starting at 1
+        std::string type = LuaManager::Menu_GetElementString( index, "ui_type" );
+
+        if ( type == "image" )
         {
-            type = "image";
-        }
-        else if ( buffer == "BUTTON_BEGIN" )
-        {
-            type = "button";
-        }
-        else if ( buffer == "LABEL_BEGIN" )
-        {
-            type = "label";
-        }
+            std::string id = LuaManager::Menu_GetElementString( index, "id" );
+            std::string textureId = LuaManager::Menu_GetElementString( index, "texture_id" );
 
+            SDL_Rect pos;
+            pos.x = LuaManager::Menu_GetElementInt( index, "x" );
+            pos.y = LuaManager::Menu_GetElementInt( index, "y" );
+            pos.w = LuaManager::Menu_GetElementInt( index, "width" );
+            pos.h = LuaManager::Menu_GetElementInt( index, "height" );
 
-        // Load properties
-        if      ( buffer == "ID" )          { infile >> id; }
-
-        else if ( buffer == "POSX" )        { infile >> pos.x; }
-        else if ( buffer == "POSY" )        { infile >> pos.y; }
-        else if ( buffer == "WIDTH" )       { infile >> pos.w; }
-        else if ( buffer == "HEIGHT" )      { infile >> pos.h; }
-
-        else if ( buffer == "FONT_R" )      { infile >> r; }
-        else if ( buffer == "FONT_G" )      { infile >> g; }
-        else if ( buffer == "FONT_B" )      { infile >> b; }
-        else if ( buffer == "FONT_A" )      { infile >> a; }
-
-        else if ( buffer == "PADDING_X1" )  { infile >> pad.x; }
-        else if ( buffer == "PADDING_X2" )  { infile >> pad.w; }
-        else if ( buffer == "PADDING_Y1" )  { infile >> pad.y; }
-        else if ( buffer == "PADDING_Y2" )  { infile >> pad.h; }
-
-        else if ( buffer == "TEXTURE_ID" )  { infile >> textureId; }
-        else if ( buffer == "FONT_ID" )     { infile >> fontId; }
-
-        else if ( buffer == "TEXT_BEGIN" )
-        {
-            text = "";
-            // Stream in
-            do
-            {
-                if ( text != "" ) { text += " "; }
-                infile >> buffer;
-                if ( buffer != "TEXT_END" ) { text += buffer; }
-            } while ( buffer != "TEXT_END" );
-        }
-
-
-        // Push new UI elementt to list
-        if ( buffer == "IMAGE_END" )
-        {
             UIImage* image = new UIImage;
             image->Setup( id, pos, kuko::ImageManager::GetTexture( textureId ) );
             m_images.insert( std::pair<std::string, UIImage*>( id, image ) );
         }
-        else if ( buffer == "BUTTON_END" )
+        else if ( type == "button" )
         {
-            SDL_Color color = { r, g, b, a };
+            std::string id = LuaManager::Menu_GetElementString( index, "id" );
+            std::string textureId = LuaManager::Menu_GetElementString( index, "texture_id" );
+            std::string fontId = LuaManager::Menu_GetElementString( index, "font_id" );
+            std::string textId = LuaManager::Menu_GetElementString( index, "text_id" );
+            std::string text = LanguageManager::Text( textId );
+
+            SDL_Rect pos;
+            pos.x = LuaManager::Menu_GetElementInt( index, "x" );
+            pos.y = LuaManager::Menu_GetElementInt( index, "y" );
+            pos.w = LuaManager::Menu_GetElementInt( index, "width" );
+            pos.h = LuaManager::Menu_GetElementInt( index, "height" );
+
+            SDL_Rect pad;
+            pad.x = LuaManager::Menu_GetElementInt( index, "pad_x1" );
+            pad.y = LuaManager::Menu_GetElementInt( index, "pad_y1" );
+            pad.w = LuaManager::Menu_GetElementInt( index, "pad_x2" );
+            pad.h = LuaManager::Menu_GetElementInt( index, "pad_y2" );
+
+            SDL_Color color;
+            color.r = LuaManager::Menu_GetElementInt( index, "font_r" );
+            color.g = LuaManager::Menu_GetElementInt( index, "font_g" );
+            color.b = LuaManager::Menu_GetElementInt( index, "font_b" );
+            color.a = LuaManager::Menu_GetElementInt( index, "font_a" );
+
             UIButton* button = new UIButton;
             button->Setup( id, text, pos,
-                kuko::ImageManager::GetTexture( textureId ),
-                { 0xFF, 0xFF, 0xFF, 0xFF }, color,
-                kuko::FontManager::GetFont( fontId ), pad );
+            kuko::ImageManager::GetTexture( textureId ),
+            { 0xFF, 0xFF, 0xFF, 0xFF }, color,
+            kuko::FontManager::GetFont( fontId ), pad );
             m_buttons.insert( std::pair<std::string, UIButton*>( id, button ) );
         }
-        else if ( buffer == "LABEL_END" )
+        else if ( type == "label" )
         {
-            SDL_Color color = { r, g, b, a };
+            std::string id = LuaManager::Menu_GetElementString( index, "id" );
+            std::string fontId = LuaManager::Menu_GetElementString( index, "font_id" );
+            std::string textId = LuaManager::Menu_GetElementString( index, "text_id" );
+            std::string text = LanguageManager::Text( textId );
+
+            SDL_Color color;
+            color.r = LuaManager::Menu_GetElementInt( index, "font_r" );
+            color.g = LuaManager::Menu_GetElementInt( index, "font_g" );
+            color.b = LuaManager::Menu_GetElementInt( index, "font_b" );
+            color.a = LuaManager::Menu_GetElementInt( index, "font_a" );
+
+            SDL_Rect pos;
+            pos.x = LuaManager::Menu_GetElementInt( index, "x" );
+            pos.y = LuaManager::Menu_GetElementInt( index, "y" );
+            pos.w = LuaManager::Menu_GetElementInt( index, "width" );
+            pos.h = LuaManager::Menu_GetElementInt( index, "height" );
+
             UILabel* label = new UILabel;
             label->Setup( id, text,
-                pos, color,
-                kuko::FontManager::GetFont( fontId ) );
+            pos, color,
+            kuko::FontManager::GetFont( fontId ) );
             m_labels.insert( std::pair<std::string, UILabel*>( id, label ) );
         }
     }
-
-    infile.close();
 
     int uiElements = m_images.size() + m_labels.size() + m_buttons.size();
     Logger::Out( "Menu has " + Logger::IntToString( uiElements ) + " elements", "MenuManager::SetupMenu" );
