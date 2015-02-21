@@ -31,10 +31,11 @@ void LuaManager::LoadScript( const std::string& path )
 
 std::string LuaManager::Language_GetText( const std::string& key )
 {
+    Logger::Out( "Get text for \"" + key + "\"", "LuaManager::Language_GetText" );
     Lua_ChooseFunction( "GetLanguageText" );
     Lua_PushString( key.c_str() );
     std::string result = Lua_GetStringResult();
-    Logger::Out( "GetLanguageText( \"" + key + "\" ) = " + result );
+    Logger::Out( "Result: \"" + result + "\"", "LuaManager::Language_GetText" );
     return result;
 }
 

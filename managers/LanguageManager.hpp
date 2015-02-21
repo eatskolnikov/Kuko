@@ -5,7 +5,6 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
-#include <map>
 #include <string>
 
 namespace kuko
@@ -20,11 +19,9 @@ class LanguageManager
     static void AddLanguage( const std::string& id, const std::string& path );
     static void ClearLanguages();
 
-    static const std::string& Text( const std::string& key );
+    static std::string Text( const std::string& key );
 
     protected:
-    static std::map<std::string, std::string> m_text;
-    static void LoadFile( const std::string& path );
 };
 
 }
