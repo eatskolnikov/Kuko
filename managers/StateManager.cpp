@@ -64,7 +64,21 @@ void StateManager::UpdateCurrentState()
         if ( m_ptrCurrentState->IsDone() )
         {
             // TODO: Go to next state based on this
-            m_isDone = true;
+            std::string nextState = m_ptrCurrentState->GetNextState();
+            Logger::Out( "Received state change signal, go to: " + nextState, "StateManager::UpdateCurrentState" );
+
+            if ( nextState == "quit" )
+            {
+                m_isDone = true;
+            }
+            else if ( m_lstStates[ nextState ] != NULL )
+            {
+                SwitchState( nextState );
+            }
+            else
+            {
+                Logger::Error( "Error switching states: could not find state: " + nextState, "StateManager::UpdateCurrentState" );
+            }
         }
     }
 }

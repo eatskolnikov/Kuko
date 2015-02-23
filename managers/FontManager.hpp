@@ -3,7 +3,7 @@
 #define _KUKO_FONTMANAGER
 
 #include <SDL.h>
-#include <SDL_ttf.h>
+#include "SDL_ttf.h"
 
 #include <map>
 #include <string>

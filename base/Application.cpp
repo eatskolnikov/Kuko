@@ -4,7 +4,7 @@
 #include "../utilities/Logger.hpp"
 
 #include "SDL_image.h"
-#include "SDL_ttf.h"
+#include <SDL_ttf.h>
 
 namespace kuko
 {
