@@ -22,6 +22,7 @@ class UIButton : public IWidget
         SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, SDL_Rect padding );
     void Draw();
     bool IsTriggered( int actionX, int actionY );
+    // SDL_Rect GetPosition();
 
     protected:
     UIImage m_background;

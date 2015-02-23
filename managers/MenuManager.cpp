@@ -176,4 +176,18 @@ void MenuManager::Draw()
     }
 }
 
+bool MenuManager::IsButtonClicked( const std::string& key, int mouseX, int mouseY )
+{
+    // TODO: Accessing a key might automatically create the object - not certain, look into.
+    if ( m_buttons[ key ] == NULL )
+    {
+        return false;
+    }
+
+    SDL_Rect btn = m_buttons[ key ]->GetPosition();
+
+    return ( mouseX >= btn.x && mouseX <= btn.x + btn.w &&
+             mouseY >= btn.y && mouseY <= btn.y + btn.h );
+}
+
 }

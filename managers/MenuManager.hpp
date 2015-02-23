@@ -21,6 +21,7 @@ class MenuManager
     void ClearMenu();
     void Draw();
     void Reload();
+    bool IsButtonClicked( const std::string& key, int mouseX, int mouseY );
 
     protected:
     std::map<std::string, UIImage*> m_images;
