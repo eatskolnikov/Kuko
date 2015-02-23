@@ -9,7 +9,8 @@
 namespace kuko
 {
 
-enum CommandButton { TAP, SECONDARY_TAP };
+// TODO: Add "registration" of keys for commands.
+enum CommandButton { TAP, SECONDARY_TAP, MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT };
 
 struct TriggerInfo
 {
