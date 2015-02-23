@@ -1,6 +1,6 @@
 # Kuko Framework
 
-Built by Rachel J. Morris ([Moosader.com](http://www.moosader.com/)
+Built by Rachel J. Morris ([Moosader.com](http://www.moosader.com/))
 
 ## Kio estas Kuko? (What is Kuko?)
 
