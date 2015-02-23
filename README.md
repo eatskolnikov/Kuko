@@ -1,19 +1,46 @@
 # Kuko Framework
 
-## What is it?
+Built by Rachel J. Morris ([Moosader.com](http://www.moosader.com/)
 
-This is a framework built on SDL2 with C++ for cross-platform games (PC, Android).
+## Kio estas Kuko? (What is Kuko?)
 
-See "Issue" area for list of tasks, or the wiki for an overall to-do list.
+Kuko is a reusable game framework being built with C++, SDL2, and Lua.  The intention is to use it for cross-platform games (primarily Android, Windows, Linux, and Mac).
 
-MIT License
+## Features
 
-Built by Rachel J. Morris
+**Implemented:**
+
+* Multiple language support, with languages stored in .lua file
+* Simple UI functionality, with menu data stored in .lua file
+* State management
+* Asset management (graphics, fonts)
+* Input handling
+* Core game entity objects, with entity manager.
+
+**WIP:**
+
+* Tiled map file support
+* Game saves and saving game config, in .lua files
+* Remappable input, including keyboard, and location of on-screen controls for mobile  
+* Asset management (audio)
 
 ## Projects using Kuko
 
 * [Pickin' Sticks LXXIV](https://github.com/Moosader/Pickin-Sticks-LXXIV/tree/KukoUpdate)
 
-I have a planned Language Learning game that will use this.
+Future projects:
 
-And I might rewrite Del & Kat to use this.
+* Toki Pona Pal
+* Fin & Kit (Delfino & Katyuno)
+* Language Village (Fantazio de Esperanto)
+
+## To-Do List
+
+View the [Issues Section](https://github.com/Rejcx/Kuko/issues) for a list of current tasks.
+
+## License
+
+MIT License, see the [License Document](https://github.com/Rejcx/Kuko/blob/master/LICENSE)
+
+tl;dr: Use, modify, distribute, sell the framework - I don't care!
+
