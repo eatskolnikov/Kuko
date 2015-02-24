@@ -9,6 +9,7 @@
 #include <iostream>
 
 #include "../utilities/Logger.hpp"
+#include "PositionRect.hpp"
 
 namespace kuko
 {
@@ -21,6 +22,7 @@ class Sprite
 
     void SetTexture( SDL_Texture* ptrTexture );
     SDL_Texture* GetTexture();
+    void SetPosition( kuko::PositionRect pos );
 
     SDL_Texture*    texture;
     SDL_Rect        frame;

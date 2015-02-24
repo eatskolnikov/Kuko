@@ -45,12 +45,35 @@ void InputManager::Update()
             }
         }
     }
+
+    // Check keyboard state
+    const Uint8* keyStates = SDL_GetKeyboardState( NULL );
+    if ( keyStates[ SDL_SCANCODE_UP ] )
+    {
+        m_eventTriggered [ MOVE_UP ].down = true;
+    }
+    if ( keyStates[ SDL_SCANCODE_DOWN ] )
+    {
+        m_eventTriggered [ MOVE_DOWN ].down = true;
+    }
+    if ( keyStates[ SDL_SCANCODE_LEFT ] )
+    {
+        m_eventTriggered [ MOVE_LEFT ].down = true;
+    }
+    if ( keyStates[ SDL_SCANCODE_RIGHT ] )
+    {
+        m_eventTriggered [ MOVE_RIGHT ].down = true;
+    }
 }
 
 void InputManager::ResetTriggers()
 {
     m_eventTriggered[ TAP ].down = false;
     m_eventTriggered[ SECONDARY_TAP ].down = false;
+    m_eventTriggered[ MOVE_UP ].down = false;
+    m_eventTriggered[ MOVE_DOWN ].down = false;
+    m_eventTriggered[ MOVE_LEFT ].down = false;
+    m_eventTriggered[ MOVE_RIGHT ].down = false;
 }
 
 }

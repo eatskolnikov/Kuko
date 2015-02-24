@@ -5,6 +5,7 @@
 #include <SDL.h>
 
 #include "../base/Sprite.hpp"
+#include "../base/PositionRect.hpp"
 
 namespace kuko
 {
@@ -12,15 +13,17 @@ namespace kuko
 class BaseEntity
 {
     public:
-    virtual void Setup();
+    virtual void Setup( const std::string& name, SDL_Texture* texture );
     virtual void Cleanup();
 
     virtual void Update();
     virtual void Draw();
 
+    virtual kuko::PositionRect GetPosition();
+
     protected:
     std::string m_id;
-    SDL_Rect m_position;
+    kuko::PositionRect m_position;
     Sprite m_sprite;
 
     void UpdateSprite();

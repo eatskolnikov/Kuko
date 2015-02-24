@@ -18,6 +18,14 @@ Sprite::Sprite()
     angle = 0.0f;
 }
 
+void Sprite::SetPosition( kuko::PositionRect pos )
+{
+    position.x = int(pos.x);
+    position.y = int(pos.y);
+    position.w = int(pos.w);
+    position.h = int(pos.h);
+}
+
 void Sprite::SetTexture( SDL_Texture* ptrTexture )
 {
     texture = ptrTexture;//LoadFile( path );

@@ -13,17 +13,19 @@ namespace kuko
 class Character : public BaseEntity
 {
     public:
-    virtual void Setup();
-    virtual void Cleanup();
+    Character();
+    //virtual void Setup( const std::string& name, SDL_Texture* texture );
+    //virtual void Cleanup();
 
-    virtual void Update();
-    virtual void Draw();
+    //virtual void Update();
+    //virtual void Draw();
+
+    void SetPosition( int x, int y );
 
     protected:
     //std::string m_id;
     //SDL_Rect m_position;
     //Sprite m_sprite;
-
     //void UpdateSprite();
 };
 
