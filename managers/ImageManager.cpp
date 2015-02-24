@@ -45,6 +45,10 @@ SDL_Texture* ImageManager::LoadFile( const std::string& path )
 
 SDL_Texture* ImageManager::GetTexture( const std::string& key )
 {
+    if ( m_textures[ key ] == NULL )
+    {
+        Logger::Error( "Error - could not find image \"" + key + "\"" );
+    }
     return m_textures[ key ];
 }
 

@@ -7,10 +7,12 @@
 namespace kuko
 {
 
-void BaseEntity::Setup( const std::string& name, SDL_Texture* texture )
+void BaseEntity::Setup( const std::string& name, SDL_Texture* texture, PositionRect pos )
 {
     m_id = name;
     m_sprite.SetTexture( texture );
+    m_position = pos;
+    UpdateSprite();
 }
 
 void BaseEntity::UpdateSprite()
@@ -24,6 +26,7 @@ void BaseEntity::Cleanup()
 
 void BaseEntity::SetPosition( int x, int y )
 {
+    Logger::Out( I2S( x ) + "," + I2S( y ) );
     m_position.x = x;
     m_position.y = y;
     UpdateSprite();

@@ -13,7 +13,7 @@ namespace kuko
 class BaseEntity
 {
     public:
-    virtual void Setup( const std::string& name, SDL_Texture* texture );
+    virtual void Setup( const std::string& name, SDL_Texture* texture, PositionRect pos );
     virtual void Cleanup();
 
     virtual void Update();
