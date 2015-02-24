@@ -20,8 +20,6 @@ class Character : public BaseEntity
     //virtual void Update();
     //virtual void Draw();
 
-    void SetPosition( int x, int y );
-
     protected:
     //std::string m_id;
     //SDL_Rect m_position;

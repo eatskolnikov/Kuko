@@ -19,7 +19,10 @@ class BaseEntity
     virtual void Update();
     virtual void Draw();
 
-    virtual kuko::PositionRect GetPosition();
+    virtual kuko::PositionRect GetPosition() const;
+    void SetPosition( int x, int y );
+
+    bool IsCollision( const BaseEntity& other );
 
     protected:
     std::string m_id;
