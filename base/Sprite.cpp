@@ -45,11 +45,6 @@ SDL_Texture* Sprite::GetTexture()
 
 Sprite::~Sprite()
 {
-    if ( texture != NULL )
-    {
-        SDL_DestroyTexture( texture );
-        texture = NULL;
-    }
 }
 
 }

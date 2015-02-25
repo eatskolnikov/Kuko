@@ -24,11 +24,11 @@ class Sprite
     SDL_Texture* GetTexture();
     void SetPosition( kuko::PositionRect pos );
 
-    SDL_Texture*    texture;
-    SDL_Rect        frame;
-    SDL_Rect        position;
-    bool            isFlipped;
-    float           angle;
+    SDL_Texture*        texture;
+    SDL_Rect            frame;
+    SDL_Rect            position;
+    bool                isFlipped;
+    float               angle;
 };
 
 }
