@@ -15,11 +15,16 @@ class Map
 {
     public:
 //    ~Map();
-    void Setup( const std::string& id, SDL_Texture* tileset );
+    void Setup( const std::string& id, SDL_Texture* tileset, int widthHeight );
     void Draw();
+
+    int GetWidth();
+    int GetHeight();
 
     private:
     std::vector<BaseEntity> m_lstTiles;
+    kuko::PositionRect m_offset;
+    int m_tileWH;
 };
 
 }
