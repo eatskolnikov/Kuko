@@ -19,6 +19,7 @@ class UILabel : public IWidget
     void Setup( const std::string& id, const std::string& label, SDL_Rect position, SDL_Color textColor, TTF_Font* font );
     void SetColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a );
     virtual void Draw();
+    void ChangeText( const std::string& text );
 
     protected:
     // std::string m_id;

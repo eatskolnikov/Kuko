@@ -16,6 +16,12 @@ void UILabel::Setup( const std::string& id, const std::string& label, SDL_Rect p
     GenerateTexture();
 }
 
+void UILabel::ChangeText( const std::string& text )
+{
+    m_label = text;
+    GenerateTexture();
+}
+
 void UILabel::SetColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a )
 {
     m_color.r = r;
