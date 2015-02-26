@@ -2,7 +2,7 @@
 
 #include "../base/Sprite.hpp"
 #include "../base/Application.hpp"
-#include "../managers/LuaManager.hpp"
+#include "../managers/MapManager.hpp"
 
 namespace kuko
 {
@@ -11,13 +11,13 @@ void Map::Setup( const std::string& id, const std::string& file, SDL_Texture* ti
 {
     Logger::Out( "Loading map \"" + file + "\"", "Map::Setup" );
 
-    LuaManager::LoadScript( file );
+    MapManager::LoadMap( id, file );
 
-    int mapWidth = LuaManager::Map_GetWidth();
-    int mapHeight = LuaManager::Map_GetHeight();
+    int mapWidth = MapManager::GetMapWidth();
+    int mapHeight = MapManager::GetMapHeight();
 
-    m_tileWH = LuaManager::Map_GetTileWidth();
-    int tilesetWidth = LuaManager::Map_GetTilesetWidth();
+    m_tileWH = MapManager::GetTileWidth();
+    int tilesetWidth = MapManager::GetTilesetWidth();
 
     m_offset.w = mapWidth * m_tileWH;
     m_offset.h = mapHeight * m_tileWH;
@@ -27,7 +27,7 @@ void Map::Setup( const std::string& id, const std::string& file, SDL_Texture* ti
 
     for ( int i = 0; i < ( mapWidth * mapHeight ); i++ )
     {
-        int frame = LuaManager::Map_GetTileType( i );
+        int frame = MapManager::GetTileFrame( i );
         int frameX = ( frame % tilesetWidth ) * m_tileWH;
         int frameY = ( frame / tilesetWidth ) * m_tileWH;
 

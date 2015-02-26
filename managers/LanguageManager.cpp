@@ -9,16 +9,6 @@ namespace kuko
 
 std::string LanguageManager::m_currentLanguage;
 
-void LanguageManager::Setup()
-{
-    Logger::Out( "LanguageManager::Setup" );
-}
-
-void LanguageManager::Cleanup()
-{
-    Logger::Out( "LanguageManager::Cleanup" );
-}
-
 void LanguageManager::AddLanguage( const std::string& id, const std::string& path )
 {
     m_currentLanguage = id;

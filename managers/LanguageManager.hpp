@@ -13,9 +13,6 @@ namespace kuko
 class LanguageManager
 {
     public:
-    static void Setup();
-    static void Cleanup();
-
     static void AddLanguage( const std::string& id, const std::string& path );
 
     static std::string Text( const std::string& key );
