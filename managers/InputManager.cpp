@@ -14,10 +14,6 @@ void InputManager::Setup()
     ResetTriggers();
 }
 
-void InputManager::Cleanup()
-{
-}
-
 std::map<CommandButton, TriggerInfo> InputManager::GetTriggerInfo()
 {
     return m_eventTriggered;

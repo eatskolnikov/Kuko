@@ -12,10 +12,6 @@ StateManager::StateManager()
     m_isDone = false;
 }
 
-void StateManager::Setup()
-{
-}
-
 void StateManager::Cleanup()
 {
     for ( std::map< std::string, IState* >::iterator iter = m_lstStates.begin();
