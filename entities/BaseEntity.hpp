@@ -14,6 +14,7 @@ class BaseEntity
 {
     public:
     virtual void Setup( const std::string& name, SDL_Texture* texture, PositionRect pos );
+    virtual void SetFrame( SDL_Rect frame );
     virtual void Cleanup();
 
     virtual void Update();

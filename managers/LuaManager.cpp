@@ -17,6 +17,7 @@ void LuaManager::Setup()
     // TODO: Possibly a problem due to project path
     LoadScript( "Kuko/scripts/Language.lua" );
     LoadScript( "Kuko/scripts/Menu.lua" );
+    LoadScript( "Kuko/scripts/Map.lua" );
 }
 
 void LuaManager::Cleanup()
@@ -94,6 +95,43 @@ int LuaManager::Menu_GetElementInt( int index, const std::string& property )
     Lua_ChooseFunction( "Menu_GetElementProperty" );
     Lua_PushInt( index );
     Lua_PushString( property.c_str() );
+    int result = Lua_GetIntResult();
+    return result;
+}
+
+int LuaManager::Map_GetWidth()
+{
+    Lua_ChooseFunction( "Map_GetWidth" );
+    int result = Lua_GetIntResult();
+    return result;
+}
+
+int LuaManager::Map_GetHeight()
+{
+    Lua_ChooseFunction( "Map_GetHeight" );
+    int result = Lua_GetIntResult();
+    return result;
+}
+
+int LuaManager::Map_GetTileType( int index )
+{
+    // Don't forget that Lua arrays begin at 1.
+    Lua_ChooseFunction( "Map_GetTileType" );
+    Lua_PushInt( index+1 );
+    int result = Lua_GetIntResult();
+    return result-1;
+}
+
+int LuaManager::Map_GetTilesetWidth()
+{
+    Lua_ChooseFunction( "Map_GetTilesetWidth" );
+    int result = Lua_GetIntResult();
+    return result;
+}
+
+int LuaManager::Map_GetTileWidth()
+{
+    Lua_ChooseFunction( "Map_GetTileWidth" );
     int result = Lua_GetIntResult();
     return result;
 }

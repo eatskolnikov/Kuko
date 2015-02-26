@@ -1,3 +1,5 @@
+print( "Language.lua loaded" )
+
 function Language_GetText( key )
 
 	if ( language == nil or language[ key ] == nil ) then

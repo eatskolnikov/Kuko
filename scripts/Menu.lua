@@ -1,3 +1,5 @@
+print( "Menu.lua loaded" )
+
 function Menu_GetElementCount()
 	count = 0
 	if ( elements == nil ) then

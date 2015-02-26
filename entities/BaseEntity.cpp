@@ -24,6 +24,12 @@ void BaseEntity::Cleanup()
 {
 }
 
+void BaseEntity::SetFrame( SDL_Rect frame )
+{
+    m_sprite.frame = frame;
+    UpdateSprite();
+}
+
 void BaseEntity::SetPosition( int x, int y )
 {
     Logger::Out( I2S( x ) + "," + I2S( y ) );

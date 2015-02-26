@@ -15,7 +15,7 @@ class Map
 {
     public:
 //    ~Map();
-    void Setup( const std::string& id, SDL_Texture* tileset, int widthHeight );
+    void Setup( const std::string& id, const std::string& file, SDL_Texture* tileset, int widthHeight );
     void Draw();
 
     int GetWidth();

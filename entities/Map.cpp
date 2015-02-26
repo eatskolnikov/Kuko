@@ -2,40 +2,43 @@
 
 #include "../base/Sprite.hpp"
 #include "../base/Application.hpp"
+#include "../managers/LuaManager.hpp"
 
 namespace kuko
 {
 
-//Map::~Map()
-//{
-//    for ( unsigned int i = 0; i < m_lstTiles.size(); i++ )
-//    {
-//        if ( m_lstTiles[i] != NULL )
-//        {
-//            delete m_lstTiles[i];
-//            m_lstTiles[i] = NULL;
-//        }
-//    }
-//}
-
-void Map::Setup( const std::string& id, SDL_Texture* tileset, int widthHeight )
+void Map::Setup( const std::string& id, const std::string& file, SDL_Texture* tileset, int widthHeight )
 {
-    Logger::Out( "Map Setup, map width/height is " + I2S( widthHeight ), "Map::Setup" );
-    int tileWH = 40;
-    m_tileWH = tileWH;
-    m_offset.x = m_offset.y = 0;
-    m_offset.w = m_offset.h = widthHeight;
+    Logger::Out( "Loading map \"" + file + "\"", "Map::Setup" );
 
-    for ( int y = 0; y < widthHeight / tileWH; y++ )
+    LuaManager::LoadScript( file );
+
+    int mapWidth = LuaManager::Map_GetWidth();
+    int mapHeight = LuaManager::Map_GetHeight();
+
+    m_tileWH = LuaManager::Map_GetTileWidth();
+    int tilesetWidth = LuaManager::Map_GetTilesetWidth();
+
+    m_offset.w = mapWidth * m_tileWH;
+    m_offset.h = mapHeight * m_tileWH;
+
+    // Load in the tiles
+    // Currently assumes square tiles
+
+    for ( int i = 0; i < ( mapWidth * mapHeight ); i++ )
     {
-        for ( int x = 0; x < widthHeight / tileWH; x++ )
-        {
-            BaseEntity tile;
-            tile.Setup( "t", tileset, { x * tileWH, y * tileWH, tileWH, tileWH } );
-            m_lstTiles.push_back( tile );
-        }
+        int frame = LuaManager::Map_GetTileType( i );
+        int frameX = ( frame % tilesetWidth ) * m_tileWH;
+        int frameY = ( frame / tilesetWidth ) * m_tileWH;
+
+        int x = int( i % int ( mapWidth ) );
+        int y = int( i / int ( mapHeight ) );
+
+        BaseEntity tile;
+        tile.Setup( "t-" + I2S( i ), tileset, { x * m_tileWH, y * m_tileWH, m_tileWH, m_tileWH } );
+        tile.SetFrame( { frameX, frameY, m_tileWH, m_tileWH } );
+        m_lstTiles.push_back( tile );
     }
-    Logger::Out( "Tile width/height is " + I2S( m_tileWH ), "Map::Setup" );
 }
 
 int Map::GetWidth()
