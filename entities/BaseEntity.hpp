@@ -24,11 +24,14 @@ class BaseEntity
     void SetPosition( int x, int y );
 
     bool IsCollision( const BaseEntity& other );
+    bool IsSolid();
+    void SetSolid( bool val );
 
     protected:
     std::string m_id;
     kuko::PositionRect m_position;
     Sprite m_sprite;
+    bool m_isSolid;
 
     void UpdateSprite();
 };

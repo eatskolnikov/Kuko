@@ -32,6 +32,9 @@ namespace kuko
         static int Map_GetTileType( int index );
         static int Map_GetTilesetWidth();
         static int Map_GetTileWidth();
+        static int Map_GetCustomPropertyCount();
+        static bool Map_GetTileSolidity( int index );
+        static int Map_GetTileIndex( int index );
 
         private:
         static lua_State* m_state;

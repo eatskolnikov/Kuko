@@ -64,5 +64,15 @@ bool BaseEntity::IsCollision( const BaseEntity& other )
     return col;
 }
 
+bool BaseEntity::IsSolid()
+{
+    return m_isSolid;
+}
+
+void BaseEntity::SetSolid( bool val )
+{
+    m_isSolid = val;
+}
+
 }
 

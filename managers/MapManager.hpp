@@ -3,6 +3,7 @@
 #define _KUKO_MAPMANAGER
 
 #include <string>
+#include <map>
 
 namespace kuko
 {
@@ -19,9 +20,13 @@ class MapManager
     static int GetTilesetWidth();
 
     static int GetTileFrame( int index );
+    static bool GetTileSolidity( int frameIndex );
 
     protected:
     static std::string m_currentMap;
+    static std::map<int, bool> m_solidTiles;
+
+    static void LoadSolidTileTypes();
 };
 
 }

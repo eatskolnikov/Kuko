@@ -136,5 +136,28 @@ int LuaManager::Map_GetTileWidth()
     return result;
 }
 
+int LuaManager::Map_GetCustomPropertyCount()
+{
+    Lua_ChooseFunction( "Map_GetTilePropertyCount" );
+    int result = Lua_GetIntResult();
+    return result;
+}
+
+bool LuaManager::Map_GetTileSolidity( int index )
+{
+    // Index is the index of "tiles who have special properties"
+    Lua_ChooseFunction( "Map_GetCustomTileSolidity" );
+    Lua_PushInt( index+1 );
+    std::string result = Lua_GetStringResult();
+    return ( result == "1" ) ? true : false;
+}
+
+int LuaManager::Map_GetTileIndex( int index )
+{
+    Lua_ChooseFunction( "Map_GetCustomTileIndex" );
+    Lua_PushInt( index+1 );
+    int result = Lua_GetIntResult();
+    return result; // TODO: Double check the offset for this, not sure
+}
 
 }

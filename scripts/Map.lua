@@ -21,3 +21,15 @@ end
 function Map_GetTileWidth()
     return level[ "tilesets" ][1][ "tilewidth" ]
 end
+
+function Map_GetTilePropertyCount()
+    return #level[ "tilesets" ][1][ "tiles" ]
+end
+
+function Map_GetCustomTileSolidity( index )
+    return level[ "tilesets" ][1][ "tiles" ][ index ][ "properties" ][ "solid" ]
+end
+
+function Map_GetCustomTileIndex( index )
+    return level[ "tilesets" ][1][ "tiles" ][ index ][ "id" ]
+end
