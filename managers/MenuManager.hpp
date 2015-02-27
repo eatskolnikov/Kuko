@@ -9,6 +9,7 @@
 
 #include <map>
 #include <string>
+#include <set>
 
 namespace kuko
 {

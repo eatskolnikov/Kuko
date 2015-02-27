@@ -14,6 +14,7 @@ class IWidget
     public:
     virtual void Draw() = 0;
     SDL_Rect GetPosition() { return m_position; }
+    std::string GetId() { return m_id; }
 
     protected:
     std::string m_id;

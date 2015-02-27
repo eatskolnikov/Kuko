@@ -23,10 +23,9 @@ void MenuManager::Reload()
 
 void MenuManager::SetupMenu( const std::string& path )
 {
+    Logger::Out( "Setup Menu " + path, "MenuManager::SetupMenu" );
     ClearMenu();
     m_currentMenu = path;
-
-    Logger::Out( "Load menu " + path, "MenuManager::SetupMenu" );
 
     LuaManager::LoadScript( path );
     int ct = LuaManager::Menu_GetElementCount();
@@ -117,7 +116,6 @@ void MenuManager::SetupMenu( const std::string& path )
 
 void MenuManager::ClearMenu()
 {
-
     for (   std::map<std::string, UIImage*>::iterator it = m_images.begin();
             it != m_images.end();
             ++it )
@@ -178,16 +176,19 @@ void MenuManager::Draw()
 
 bool MenuManager::IsButtonClicked( const std::string& key, int mouseX, int mouseY )
 {
-    // TODO: Accessing a key might automatically create the object - not certain, look into.
-    if ( m_buttons[ key ] == NULL )
+    for ( std::map< std::string, UIButton* >::iterator iter = m_buttons.begin();
+            iter != m_buttons.end(); ++iter )
     {
-        return false;
+        if ( iter->second->GetId() == key )
+        {
+            SDL_Rect btn = iter->second->GetPosition();
+
+            return ( mouseX >= btn.x && mouseX <= btn.x + btn.w &&
+                     mouseY >= btn.y && mouseY <= btn.y + btn.h );
+        }
     }
 
-    SDL_Rect btn = m_buttons[ key ]->GetPosition();
-
-    return ( mouseX >= btn.x && mouseX <= btn.x + btn.w &&
-             mouseY >= btn.y && mouseY <= btn.y + btn.h );
+    return false;
 }
 
 }

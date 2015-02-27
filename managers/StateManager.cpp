@@ -59,7 +59,6 @@ void StateManager::UpdateCurrentState()
 
         if ( m_ptrCurrentState->IsDone() )
         {
-            // TODO: Go to next state based on this
             std::string nextState = m_ptrCurrentState->GetNextState();
             Logger::Out( "Received state change signal, go to: " + nextState, "StateManager::UpdateCurrentState" );
 
