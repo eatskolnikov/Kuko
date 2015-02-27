@@ -12,10 +12,10 @@ namespace kuko
     class LuaManager
     {
         public:
-
         static void Setup();
         static void Cleanup();
 
+        private:
         static void LoadScript( const std::string& path );
 
         // Language Functions
@@ -36,7 +36,6 @@ namespace kuko
         static bool Map_GetTileSolidity( int index );
         static int Map_GetTileIndex( int index );
 
-        private:
         static lua_State* m_state;
 
         static int m_args;
@@ -45,6 +44,10 @@ namespace kuko
         static void Lua_PushInt( int value );
         static std::string Lua_GetStringResult();
         static int Lua_GetIntResult();
+
+        friend class LanguageManager;
+        friend class MapManager;
+        friend class MenuManager;
     };
 }
 
