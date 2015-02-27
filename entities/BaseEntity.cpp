@@ -55,8 +55,14 @@ void BaseEntity::Draw()
 
 bool BaseEntity::IsCollision( const BaseEntity& other )
 {
-    PositionRect otherRect = other.GetPosition();
-    bool col = (
+    return IsCollision( other.GetPosition() );
+}
+
+
+bool BaseEntity::IsCollision( const PositionRect& otherRect )
+{
+
+    bool col = ( m_isSolid &&
                 m_position.x < otherRect.x + otherRect.w &&
                 m_position.x + m_position.w > otherRect.x &&
                 m_position.y < otherRect.y + otherRect.h &&
