@@ -29,6 +29,7 @@ class MenuManager
     std::map<std::string, UILabel*> m_labels;
     std::map<std::string, UIButton*> m_buttons;
     std::string m_currentMenu;
+    bool m_mouseDown;
 };
 
 }

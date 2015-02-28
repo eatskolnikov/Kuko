@@ -29,6 +29,7 @@ void MenuManager::SetupMenu( const std::string& path )
 
     LuaManager::LoadScript( path );
     int ct = LuaManager::Menu_GetElementCount();
+    m_mouseDown = false;
 
     for ( int i = 0; i < ct; i++ )
     {
@@ -176,18 +177,25 @@ void MenuManager::Draw()
 
 bool MenuManager::IsButtonClicked( const std::string& key, int mouseX, int mouseY )
 {
+    if ( m_mouseDown )
+    {
+        return false;
+    }
     for ( std::map< std::string, UIButton* >::iterator iter = m_buttons.begin();
             iter != m_buttons.end(); ++iter )
     {
         if ( iter->second->GetId() == key )
         {
             SDL_Rect btn = iter->second->GetPosition();
-
-            return ( mouseX >= btn.x && mouseX <= btn.x + btn.w &&
+            bool isHit = ( mouseX >= btn.x && mouseX <= btn.x + btn.w &&
                      mouseY >= btn.y && mouseY <= btn.y + btn.h );
+
+            m_mouseDown = isHit;
+            return isHit;
         }
     }
 
+    m_mouseDown = false;
     return false;
 }
 
