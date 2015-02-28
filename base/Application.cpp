@@ -3,8 +3,9 @@
 
 #include "../utilities/Logger.hpp"
 
-#include "SDL_image.h"
+#include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 
 namespace kuko
 {
@@ -50,7 +51,7 @@ bool Application::Start( const std::string& winTitle, int screenWidth /* = 480 *
 {
     m_timer.Setup( 60 );
 
-    if ( SDL_Init( SDL_INIT_VIDEO ) != 0 )
+    if ( SDL_Init( SDL_INIT_VIDEO | SDL_INIT_AUDIO ) != 0 )
     {
         std::string error( SDL_GetError() );
         Logger::Error( "Error initializing SDL: " + error, "Application::Start" );
@@ -97,6 +98,13 @@ bool Application::Start( const std::string& winTitle, int screenWidth /* = 480 *
     {
         std::string error( TTF_GetError() );
         Logger::Error( "Error initializing SDL_TTF: " + error, "Application::Start" );
+        return false;
+    }
+
+    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
+    {
+        std::string error( Mix_GetError() );
+        Logger::Error( "Error initializing SDL_Mixer: " + error, "Application::Start" );
         return false;
     }
 

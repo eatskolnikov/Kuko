@@ -175,6 +175,11 @@ void MenuManager::Draw()
     }
 }
 
+void MenuManager::ResetMouse()
+{
+    m_mouseDown = false;
+}
+
 bool MenuManager::IsButtonClicked( const std::string& key, int mouseX, int mouseY )
 {
     if ( m_mouseDown )
