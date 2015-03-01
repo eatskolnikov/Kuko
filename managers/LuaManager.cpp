@@ -73,6 +73,13 @@ std::string LuaManager::Language_GetText( const std::string& key )
     return result;
 }
 
+std::string LuaManager::Language_GetSuggestedFont()
+{
+    Lua_ChooseFunction( "Language_GetSuggestedFont" );
+    std::string result = Lua_GetStringResult();
+    return result;
+}
+
 int LuaManager::Menu_GetElementCount()
 {
     Lua_ChooseFunction( "Menu_GetElementCount" );

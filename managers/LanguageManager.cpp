@@ -26,4 +26,11 @@ std::string LanguageManager::Text( const std::string& key )
     return ( value == "NOTFOUND" ) ? key + " NOT FOUND" : value;
 }
 
+std::string LanguageManager::GetSuggestedFont()
+{
+    std::string suggested = kuko::LuaManager::Language_GetSuggestedFont();
+    Logger::Out( "Suggested font: " + suggested );
+    return suggested;
+}
+
 }

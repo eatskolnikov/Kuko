@@ -18,6 +18,8 @@ class LanguageManager
     static std::string Text( const std::string& key );
     static std::string CurrentLanguage();
 
+    static std::string GetSuggestedFont();
+
     protected:
     static std::string m_currentLanguage;
 };
