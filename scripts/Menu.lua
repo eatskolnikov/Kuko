@@ -13,5 +13,9 @@ function Menu_GetElementCount()
 end
 
 function Menu_GetElementProperty( index, property )
+	if ( elements == nil or elements[ index ][ property ] == nil ) then
+		if ( property == "centered_text" ) then return 0 end
+		return ""
+	end
 	return elements[ index ][ property ]
 end

@@ -4,13 +4,13 @@ namespace kuko
 {
 
 
-void UIButton::Setup( const std::string& id, const std::string& text, SDL_Rect position,
+void UIButton::Setup( const std::string& id, const std::string& text, SDL_Rect position, bool centered,
     SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, int padding /* = 0 */ )
 {
-    Setup( id, text, position, ptrTexture, buttonColor, textColor, font, { padding, padding, padding, padding } );
+    Setup( id, text, position, centered, ptrTexture, buttonColor, textColor, font, { padding, padding, padding, padding } );
 }
 
-void UIButton::Setup( const std::string& id, const std::string& text, SDL_Rect position,
+void UIButton::Setup( const std::string& id, const std::string& text, SDL_Rect position, bool centered,
     SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, SDL_Rect padding )
 {
     m_position = position;
@@ -25,7 +25,7 @@ void UIButton::Setup( const std::string& id, const std::string& text, SDL_Rect p
     textPos.w -= (padding.w * 2);
     textPos.h -= (padding.h * 2);
 
-    m_text.Setup( id + "-lbl", text, textPos, textColor, font );
+    m_text.Setup( id + "-lbl", text, textPos, centered, textColor, font );
 }
 
 void UIButton::Draw()

@@ -7,12 +7,14 @@
 namespace kuko
 {
 
-void UILabel::Setup( const std::string& id, const std::string& label, SDL_Rect position, SDL_Color textColor, TTF_Font* font )
+void UILabel::Setup( const std::string& id, const std::string& label, SDL_Rect position, bool centered, SDL_Color textColor, TTF_Font* font )
 {
+    Logger::Out( "Setup " + label + ", Centered " + I2S( centered ), "UILabel::Setup" );
     m_position = position;
     m_color = textColor;
     m_font = font;
     m_label = label;
+    m_centered = centered;
     GenerateTexture();
 }
 
@@ -34,6 +36,29 @@ void UILabel::GenerateTexture()
 {
     SDL_Surface* textSurface = TTF_RenderUTF8_Solid( m_font, m_label.c_str(), m_color );
     m_sprite.SetTexture ( SDL_CreateTextureFromSurface( kuko::Application::GetRenderer(), textSurface ) );
+
+    // Set w/h to fit the ratio
+    int fullWidth, fullHeight;
+    SDL_QueryTexture(m_sprite.texture, NULL, NULL, &fullWidth, &fullHeight);
+
+    float fontRatio = float(fullWidth) / float(fullHeight);
+
+    m_position.w = m_position.h * fontRatio;
+    // Don't go off-screen (adjust width)
+    if ( m_position.w > kuko::Application::GetScreenWidth() )
+    {
+        m_position.w = kuko::Application::GetScreenWidth() - 10;
+    }
+    // Don't go off-screen (adjust x)
+    if ( m_position.x + m_position.w > kuko::Application::GetScreenWidth() )
+    {
+        m_position.x = kuko::Application::GetScreenWidth() - m_position.w - 5;
+    }
+
+    if ( m_centered )
+    {
+        m_position.x = ( kuko::Application::GetScreenWidth() / 2 ) - ( m_position.w / 2 );
+    }
     m_sprite.position = m_position;
 
     SDL_FreeSurface( textSurface );
@@ -41,12 +66,6 @@ void UILabel::GenerateTexture()
 
 void UILabel::Draw()
 {
-//    Logger::Out( "Label " + m_id + " Color: " +
-//        Logger::IntToString( m_color.r ) + "," +
-//        Logger::IntToString( m_color.g ) + "," +
-//        Logger::IntToString( m_color.b ) + "," +
-//        Logger::IntToString( m_color.a ) );
-
     kuko::ImageManager::Draw( m_sprite );
 }
 

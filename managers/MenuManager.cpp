@@ -59,6 +59,8 @@ void MenuManager::SetupMenu( const std::string& path )
             std::string textId = LuaManager::Menu_GetElementString( index, "text_id" );
             std::string text = LanguageManager::Text( textId );
 
+            bool centered = ( LuaManager::Menu_GetElementInt( index, "centered_text" ) == 1 );
+
             SDL_Rect pos;
             pos.x = LuaManager::Menu_GetElementInt( index, "x" );
             pos.y = LuaManager::Menu_GetElementInt( index, "y" );
@@ -78,7 +80,7 @@ void MenuManager::SetupMenu( const std::string& path )
             color.a = LuaManager::Menu_GetElementInt( index, "font_a" );
 
             UIButton* button = new UIButton;
-            button->Setup( id, text, pos,
+            button->Setup( id, text, pos, centered,
             kuko::ImageManager::GetTexture( textureId ),
             { 0xFF, 0xFF, 0xFF, 0xFF }, color,
             kuko::FontManager::GetFont( fontId ), pad );
@@ -103,9 +105,11 @@ void MenuManager::SetupMenu( const std::string& path )
             pos.w = LuaManager::Menu_GetElementInt( index, "width" );
             pos.h = LuaManager::Menu_GetElementInt( index, "height" );
 
+            bool centered = ( LuaManager::Menu_GetElementInt( index, "centered_text" ) == 1 );
+
             UILabel* label = new UILabel;
             label->Setup( id, text,
-            pos, color,
+            pos, centered, color,
             kuko::FontManager::GetFont( fontId ) );
             m_labels.insert( std::pair<std::string, UILabel*>( id, label ) );
         }

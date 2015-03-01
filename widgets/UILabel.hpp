@@ -16,7 +16,7 @@ class UILabel : public IWidget
 {
     public:
     virtual ~UILabel() { ; }
-    void Setup( const std::string& id, const std::string& label, SDL_Rect position, SDL_Color textColor, TTF_Font* font );
+    void Setup( const std::string& id, const std::string& label, SDL_Rect position, bool centered, SDL_Color textColor, TTF_Font* font );
     void SetColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a );
     virtual void Draw();
     void ChangeText( const std::string& text );
@@ -31,6 +31,7 @@ class UILabel : public IWidget
     TTF_Font* m_font;
     Sprite m_sprite;
     SDL_Color m_color;
+    bool m_centered;
 };
 
 }
