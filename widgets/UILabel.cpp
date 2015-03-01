@@ -32,7 +32,7 @@ void UILabel::SetColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a )
 
 void UILabel::GenerateTexture()
 {
-    SDL_Surface* textSurface = TTF_RenderText_Solid( m_font, m_label.c_str(), m_color );
+    SDL_Surface* textSurface = TTF_RenderUTF8_Solid( m_font, m_label.c_str(), m_color );
     m_sprite.SetTexture ( SDL_CreateTextureFromSurface( kuko::Application::GetRenderer(), textSurface ) );
     m_sprite.position = m_position;
 
