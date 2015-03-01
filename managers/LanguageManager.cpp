@@ -22,7 +22,8 @@ std::string LanguageManager::CurrentLanguage()
 
 std::string LanguageManager::Text( const std::string& key )
 {
-    return kuko::LuaManager::Language_GetText( key );
+    std::string value = kuko::LuaManager::Language_GetText( key );
+    return ( value == "NOTFOUND" ) ? key + " NOT FOUND" : value;
 }
 
 }
