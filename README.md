@@ -13,26 +13,25 @@ Kuko is a reusable game framework being built with C++, SDL2, and Lua.  The inte
 * Multiple language support, with languages stored in .lua file
 * Simple UI functionality, with menu data stored in .lua file
 * State management
-* Asset management (graphics, fonts)
+* Asset management (graphics, fonts, audio)
 * Input handling
 * Core game entity objects, with entity manager.
 
 **WIP:**
 
-* Tiled map file support
+* Tiled map file support (partially implemented)
 * Game saves and saving game config, in .lua files
 * Remappable input, including keyboard, and location of on-screen controls for mobile  
-* Asset management (audio)
 
 ## Projects using Kuko
 
-* [Pickin' Sticks LXXIV](https://github.com/Moosader/Pickin-Sticks-LXXIV/tree/KukoUpdate)
+* [Pickin' Sticks LXXIV](https://github.com/Moosader/Pickin-Sticks-LXXIV/)
+* Language Village (Fantazio de Esperanto) - Early development (March 2015 - ?)
 
 Future projects:
 
 * Toki Pona Pal
 * Fin & Kit (Delfino & Katyuno)
-* Language Village (Fantazio de Esperanto)
 
 ## To-Do List
 
