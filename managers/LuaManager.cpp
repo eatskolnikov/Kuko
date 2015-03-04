@@ -25,6 +25,7 @@ void LuaManager::Setup()
     LoadScript( "Kuko/scripts/Language.lua" );
     LoadScript( "Kuko/scripts/Menu.lua" );
     LoadScript( "Kuko/scripts/Map.lua" );
+    LoadScript( "Kuko/scripts/State.lua" );
 }
 
 void LuaManager::Cleanup()
@@ -178,6 +179,12 @@ int LuaManager::Map_GetTileIndex( int index )
     Lua_PushInt( index+1 );
     int result = Lua_GetIntResult();
     return result; // TODO: Double check the offset for this, not sure
+}
+
+void LuaManager::State_Setup()
+{
+    Lua_ChooseFunction( "State_SetupState" );
+    Lua_RunVoidFunction();
 }
 
 }

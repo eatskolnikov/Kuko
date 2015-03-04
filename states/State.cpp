@@ -7,11 +7,12 @@
 namespace kuko
 {
 
-State::State( LuaManager* ptrLuaManager, const std::string& objName, const std::string& scriptPath )
+State::State( LuaManager* ptrLuaManager, const std::string& stateName, const std::string& scriptPath )
 {
     m_ptrLuaMgr = ptrLuaManager;
-    m_stateName = objName;
+    m_stateName = stateName;
     m_ptrLuaMgr->LoadScript( scriptPath );
+    m_ptrLuaMgr->State_Setup();
 }
 
 State::~State()

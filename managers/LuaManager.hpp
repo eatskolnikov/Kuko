@@ -40,6 +40,9 @@ namespace kuko
         bool Map_GetTileSolidity( int index );
         int Map_GetTileIndex( int index );
 
+        // States
+        void State_Setup();
+
         lua_State* m_state;
 
         int m_args;
