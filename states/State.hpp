@@ -16,7 +16,7 @@ namespace kuko
 class State
 {
     public:
-    State( LuaManager* ptrLuaManager, const std::string& stateName, const std::string& scriptPath );
+    State( LuaManager* ptrLuaManager, ImageManager* ptrImageManager, const std::string& stateName, const std::string& scriptPath );
     virtual ~State();
 
     virtual void Setup();

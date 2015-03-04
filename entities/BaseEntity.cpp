@@ -7,9 +7,11 @@
 namespace kuko
 {
 
-BaseEntity::BaseEntity( LuaManager* ptrLuaManager, int index )
+BaseEntity::BaseEntity( LuaManager* ptrLuaManager, ImageManager* ptrImageManager, int index )
 {
     Logger::Out( "begin", "BaseEntity::BaseEntity" );
+
+    m_ptrImgMgr = ptrImageManager;
 
     m_ptrLuaMgr = ptrLuaManager;
     Setup( index );
@@ -22,13 +24,15 @@ void BaseEntity::Setup( int index )
     m_id = m_ptrLuaMgr->State_GetEntityName( index );
     Logger::Out( "New Entity Name: " + m_id );
 
-    // Set texture
-//    m_sprite.SetTexture( texture );
-
     // Set position
     UpdatePosition();
 
-//    m_id = name;
+    // Set texture
+    std::string texturePath = m_ptrLuaMgr->State_GetEntityTextureFile( m_id );
+    Logger::Out( "Texture path " + texturePath );
+    m_ptrImgMgr->AddTexture( m_id, texturePath );
+    m_sprite.SetTexture( m_ptrImgMgr->GetTexture( m_id ) );
+
     UpdateSprite();
 }
 
@@ -49,10 +53,6 @@ void BaseEntity::UpdatePosition()
 void BaseEntity::UpdateSprite()
 {
     m_sprite.SetPosition( m_position );
-}
-
-void BaseEntity::Cleanup()
-{
 }
 
 void BaseEntity::SetFrame( SDL_Rect frame )
@@ -79,9 +79,9 @@ void BaseEntity::Update()
     m_sprite.SetPosition( m_position );
 }
 
-Sprite& BaseEntity::GetSprite()
+void BaseEntity::Draw()
 {
-    return m_sprite;
+    m_ptrImgMgr->Draw( m_sprite );
 }
 
 bool BaseEntity::IsCollision( const BaseEntity& other )

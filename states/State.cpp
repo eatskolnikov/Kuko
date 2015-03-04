@@ -9,7 +9,7 @@
 namespace kuko
 {
 
-State::State( LuaManager* ptrLuaManager, const std::string& stateName, const std::string& scriptPath )
+State::State( LuaManager* ptrLuaManager, ImageManager* ptrImageManager, const std::string& stateName, const std::string& scriptPath )
 {
     Logger::Out( "begin", "State::State" );
     m_ptrLuaMgr = ptrLuaManager;
@@ -25,8 +25,7 @@ State::State( LuaManager* ptrLuaManager, const std::string& stateName, const std
 
     for ( int i = 0; i < entityCount; i++ )
     {
-        BaseEntity* newEntity = new BaseEntity( m_ptrLuaMgr, i );
-
+        BaseEntity* newEntity = new BaseEntity( m_ptrLuaMgr, ptrImageManager, i );
         m_lstEntities.push_back( newEntity );
     }
 
@@ -59,6 +58,10 @@ void State::Update()
 
 void State::Draw()
 {
+    for ( unsigned int i = 0; i < m_lstEntities.size(); i++ )
+    {
+        m_lstEntities[i]->Draw();
+    }
 }
 
 

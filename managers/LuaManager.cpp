@@ -263,4 +263,12 @@ std::vector<int> LuaManager::State_GetEntityPosition( const std::string& name )
     return results;
 }
 
+std::string LuaManager::State_GetEntityTextureFile( const std::string& name )
+{
+    Lua_ChooseFunction( "State_GetEntityTexture" );
+    Lua_PushString( name );
+    std::string result = Lua_GetStringResult();
+    return result;
+}
+
 }

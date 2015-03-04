@@ -47,6 +47,7 @@ namespace kuko
         int State_GetEntityCount();
         std::string State_GetEntityName( int index );
         std::vector<int> State_GetEntityPosition( const std::string& name );
+        std::string State_GetEntityTextureFile( const std::string& name );
 
         lua_State* m_state;
 

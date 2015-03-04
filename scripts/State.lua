@@ -39,3 +39,10 @@ function State_GetEntityPosition( nameKey )
 	end
 	return 0, 0, 0, 0
 end
+
+function State_GetEntityTexture( nameKey )
+	if ( state ~= nil ) then
+		return state.entities[ nameKey ].texture
+	end
+	return ""
+end
