@@ -5,8 +5,10 @@
 #include "../managers/LuaManager.hpp"
 
 #include "../base/Application.hpp"
+#include "../entities/BaseEntity.hpp"
 
 #include <string>
+#include <vector>
 
 namespace kuko
 {
@@ -27,6 +29,7 @@ class State
     friend class StateManager;
     LuaManager* m_ptrLuaMgr;
     std::string m_stateName;
+    std::vector<BaseEntity*> m_lstEntities;
 };
 
 }

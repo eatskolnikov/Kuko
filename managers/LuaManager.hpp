@@ -44,6 +44,9 @@ namespace kuko
         // States
         void State_Setup();
         void State_LoadRequiredScripts();
+        int State_GetEntityCount();
+        std::string State_GetEntityName( int index );
+        std::vector<int> State_GetEntityPosition( const std::string& name );
 
         lua_State* m_state;
 
@@ -53,6 +56,7 @@ namespace kuko
         void Lua_PushInt( int value );
         std::string Lua_GetStringResult();
         std::vector<std::string> Lua_GetMultipleStringResult( int resultCount );
+        std::vector<int> Lua_GetMultipleIntResult( int resultCount );
         int Lua_GetIntResult();
         void Lua_RunVoidFunction();
 
@@ -60,6 +64,7 @@ namespace kuko
         friend class MapManager;
         friend class MenuManager;
         friend class State;
+        friend class BaseEntity;
     };
 }
 

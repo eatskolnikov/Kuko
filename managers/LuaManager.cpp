@@ -82,15 +82,26 @@ std::vector<std::string> LuaManager::Lua_GetMultipleStringResult( int resultCoun
     // First result is # of results, then pull that amount of reuslts.
     lua_call( m_state, m_args, resultCount );
 
-    Logger::Out( "Amount of results: " + I2S( resultCount ), "LuaManager::Lua_GetMultipleStringResult" );
-
     std::vector<std::string> results;
     // Get the result of the results
     for ( int i = 0; i < resultCount; i++ )
     {
-        Logger::Out( I2S( i ) );
         std::string result = (std::string)lua_tostring( m_state, -1 );
-        Logger::Out( "Result: " + result );
+        lua_pop( m_state, 1 );
+        results.push_back( result );
+    }
+
+    return results;
+}
+
+std::vector<int> LuaManager::Lua_GetMultipleIntResult( int resultCount )
+{
+    lua_call( m_state, m_args, resultCount );
+
+    std::vector<int> results;
+    for ( int i = 0; i < resultCount; i++ )
+    {
+        int result = (int)lua_tonumber( m_state, -1 );
         lua_pop( m_state, 1 );
         results.push_back( result );
     }
@@ -227,6 +238,29 @@ void LuaManager::State_LoadRequiredScripts()
         LoadScript( requirements[i] );
     }
     Logger::Out( "end", "LuaManager::State_GetRequiredScripts" );
+}
+
+int LuaManager::State_GetEntityCount()
+{
+    Lua_ChooseFunction( "State_GetEntityCount" );
+    int result = Lua_GetIntResult();
+    return result;
+}
+
+std::string LuaManager::State_GetEntityName( int index )
+{
+    Lua_ChooseFunction( "State_GetEntityName" );
+    Lua_PushInt( index+1 );
+    std::string result = Lua_GetStringResult();
+    return result;
+}
+
+std::vector<int> LuaManager::State_GetEntityPosition( const std::string& name )
+{
+    Lua_ChooseFunction( "State_GetEntityPosition" );
+    Lua_PushString( name );
+    std::vector<int> results = Lua_GetMultipleIntResult( 4 );
+    return results;
 }
 
 }

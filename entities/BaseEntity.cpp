@@ -7,12 +7,43 @@
 namespace kuko
 {
 
-void BaseEntity::Setup( const std::string& name, SDL_Texture* texture, PositionRect pos )
+BaseEntity::BaseEntity( LuaManager* ptrLuaManager, int index )
 {
-    m_id = name;
-    m_sprite.SetTexture( texture );
-    m_position = pos;
+    Logger::Out( "begin", "BaseEntity::BaseEntity" );
+
+    m_ptrLuaMgr = ptrLuaManager;
+    Setup( index );
+
+    Logger::Out( "end", "BaseEntity::BaseEntity" );
+}
+
+void BaseEntity::Setup( int index )
+{
+    m_id = m_ptrLuaMgr->State_GetEntityName( index );
+    Logger::Out( "New Entity Name: " + m_id );
+
+    // Set texture
+//    m_sprite.SetTexture( texture );
+
+    // Set position
+    UpdatePosition();
+
+//    m_id = name;
     UpdateSprite();
+}
+
+void BaseEntity::UpdatePosition()
+{
+    Logger::Out( "begin", "BaseEntity::UpdatePosition" );
+
+    std::vector<int> posResults = m_ptrLuaMgr->State_GetEntityPosition( m_id );
+    m_position.x = posResults[0];
+    m_position.y = posResults[1];
+    m_position.w = posResults[2];
+    m_position.h = posResults[3];
+
+    Logger::Out( "Pos: " + I2S( m_position.x ) + "," + I2S( m_position.y ) + " - "
+        + I2S( m_position.w ) + "x" + I2S( m_position.h ) );
 }
 
 void BaseEntity::UpdateSprite()

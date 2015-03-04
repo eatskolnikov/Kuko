@@ -6,6 +6,7 @@
 
 #include "../base/Sprite.hpp"
 #include "../base/PositionRect.hpp"
+#include "../managers/LuaManager.hpp"
 
 namespace kuko
 {
@@ -13,7 +14,8 @@ namespace kuko
 class BaseEntity
 {
     public:
-    virtual void Setup( const std::string& name, SDL_Texture* texture, PositionRect pos );
+    BaseEntity( LuaManager* ptrLuaManager, int index );
+    virtual void Setup( int index );
     virtual void SetFrame( SDL_Rect frame );
     virtual void Cleanup();
 
@@ -29,11 +31,13 @@ class BaseEntity
     void SetSolid( bool val );
 
     protected:
+    LuaManager* m_ptrLuaMgr;
     std::string m_id;
     kuko::PositionRect m_position;
     Sprite m_sprite;
     bool m_isSolid;
 
+    void UpdatePosition();
     void UpdateSprite();
 };
 
