@@ -6,6 +6,7 @@
 #include <lua.hpp>
 
 #include <string>
+#include <vector>
 
 namespace kuko
 {
@@ -42,6 +43,7 @@ namespace kuko
 
         // States
         void State_Setup();
+        void State_LoadRequiredScripts();
 
         lua_State* m_state;
 
@@ -50,6 +52,7 @@ namespace kuko
         void Lua_PushString( const std::string& value );
         void Lua_PushInt( int value );
         std::string Lua_GetStringResult();
+        std::vector<std::string> Lua_GetMultipleStringResult( int resultCount );
         int Lua_GetIntResult();
         void Lua_RunVoidFunction();
 

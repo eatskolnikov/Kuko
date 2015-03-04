@@ -23,6 +23,12 @@ void Logger::Cleanup()
 
 void Logger::Out( const std::string& message, const std::string& location /* = "" */, bool condition /* = true */ )
 {
+    if ( message == "begin" )
+    {
+        std::cout << std::endl;
+        m_file << std::endl;
+    }
+
     time_t timestamp = GetTimestamp();
     if ( m_lastTimestamp != timestamp )
     {

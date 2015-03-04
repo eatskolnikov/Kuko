@@ -18,6 +18,7 @@ LuaManager::~LuaManager()
 
 void LuaManager::Setup()
 {
+    Logger::Out( "begin", "LuaManager::Setup" );
     m_state = luaL_newstate();
     luaL_openlibs( m_state );
     // Load required scripts
@@ -26,6 +27,7 @@ void LuaManager::Setup()
     LoadScript( "Kuko/scripts/Menu.lua" );
     LoadScript( "Kuko/scripts/Map.lua" );
     LoadScript( "Kuko/scripts/State.lua" );
+    Logger::Out( "end", "LuaManager::Setup" );
 }
 
 void LuaManager::Cleanup()
@@ -71,6 +73,29 @@ int LuaManager::Lua_GetIntResult()
     int result = (int)lua_tonumber( m_state, -1 );
     lua_pop( m_state, 1 );
     return result;
+}
+
+std::vector<std::string> LuaManager::Lua_GetMultipleStringResult( int resultCount )
+{
+    Logger::Out( "", "LuaManager::Lua_GetMultipleStringResult" );
+
+    // First result is # of results, then pull that amount of reuslts.
+    lua_call( m_state, m_args, resultCount );
+
+    Logger::Out( "Amount of results: " + I2S( resultCount ), "LuaManager::Lua_GetMultipleStringResult" );
+
+    std::vector<std::string> results;
+    // Get the result of the results
+    for ( int i = 0; i < resultCount; i++ )
+    {
+        Logger::Out( I2S( i ) );
+        std::string result = (std::string)lua_tostring( m_state, -1 );
+        Logger::Out( "Result: " + result );
+        lua_pop( m_state, 1 );
+        results.push_back( result );
+    }
+
+    return results;
 }
 
 void LuaManager::Lua_RunVoidFunction()
@@ -183,8 +208,25 @@ int LuaManager::Map_GetTileIndex( int index )
 
 void LuaManager::State_Setup()
 {
+    Logger::Out( "begin", "LuaManager::State_Setup" );
     Lua_ChooseFunction( "State_SetupState" );
     Lua_RunVoidFunction();
+    Logger::Out( "end", "LuaManager::State_Setup" );
+}
+
+void LuaManager::State_LoadRequiredScripts()
+{
+    Logger::Out( "begin", "LuaManager::State_GetRequiredScripts" );
+
+    Lua_ChooseFunction( "State_GetPrerequisites" );
+    std::vector<std::string> requirements = Lua_GetMultipleStringResult( 2 );
+
+    for ( unsigned int i = 0; i < requirements.size(); i++ )
+    {
+        Logger::Out( "Require " + requirements[i] );
+        LoadScript( requirements[i] );
+    }
+    Logger::Out( "end", "LuaManager::State_GetRequiredScripts" );
 }
 
 }

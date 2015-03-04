@@ -5,3 +5,9 @@ function State_SetupState()
 		state.Setup()
 	end
 end
+
+function State_GetPrerequisites()
+	if ( state ~= nil ) then
+		return state.GetPrerequisites()
+	end
+end
