@@ -18,7 +18,7 @@ class BaseEntity
     virtual void Cleanup();
 
     virtual void Update();
-    virtual void Draw();
+    virtual Sprite& GetSprite();
 
     virtual kuko::PositionRect GetPosition() const;
     void SetPosition( int x, int y );

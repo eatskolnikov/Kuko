@@ -6,8 +6,15 @@
 namespace kuko
 {
 
-lua_State* LuaManager::m_state;
-int LuaManager::m_args;
+LuaManager::LuaManager()
+{
+    Setup();
+}
+
+LuaManager::~LuaManager()
+{
+    Cleanup();
+}
 
 void LuaManager::Setup()
 {

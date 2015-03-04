@@ -14,16 +14,16 @@ namespace kuko
 class FontManager
 {
     public:
-    static void Setup();
-    static void Cleanup();
+    void Setup();
+    void Cleanup();
 
-    static void AddFont( const std::string& id, const std::string& path, int size );
-    static void ClearFonts();
-    static TTF_Font* GetFont( const std::string& key );
+    void AddFont( const std::string& id, const std::string& path, int size );
+    void ClearFonts();
+    TTF_Font* GetFont( const std::string& key );
 
     protected:
-    static std::map<std::string, TTF_Font*> m_fonts;
-    static TTF_Font* LoadFile( const std::string& path );
+    std::map<std::string, TTF_Font*> m_fonts;
+    TTF_Font* LoadFile( const std::string& path );
 };
 
 }

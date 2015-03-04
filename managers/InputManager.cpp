@@ -6,9 +6,6 @@
 namespace kuko
 {
 
-SDL_Event InputManager::m_event;
-std::map<CommandButton, TriggerInfo> InputManager::m_eventTriggered;
-
 void InputManager::Setup()
 {
     ResetTriggers();

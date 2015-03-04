@@ -48,9 +48,9 @@ void BaseEntity::Update()
     m_sprite.SetPosition( m_position );
 }
 
-void BaseEntity::Draw()
+Sprite& BaseEntity::GetSprite()
 {
-    ImageManager::Draw( m_sprite );
+    return m_sprite;
 }
 
 bool BaseEntity::IsCollision( const BaseEntity& other )

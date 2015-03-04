@@ -2,6 +2,8 @@
 #ifndef _KUKO_LANGUAGEMANAGER
 #define _KUKO_LANGUAGEMANAGER
 
+#include "LuaManager.hpp"
+
 #include <SDL.h>
 #include <SDL_ttf.h>
 
@@ -13,15 +15,18 @@ namespace kuko
 class LanguageManager
 {
     public:
-    static void AddLanguage( const std::string& id, const std::string& path );
+    LanguageManager( LuaManager* ptrLuaManager );
 
-    static std::string Text( const std::string& key );
-    static std::string CurrentLanguage();
+    void AddLanguage( const std::string& id, const std::string& path );
 
-    static std::string GetSuggestedFont();
+    std::string Text( const std::string& key );
+    std::string CurrentLanguage();
+
+    std::string GetSuggestedFont();
 
     protected:
-    static std::string m_currentLanguage;
+    std::string m_currentLanguage;
+    LuaManager* m_ptrLuaMgr;
 };
 
 }

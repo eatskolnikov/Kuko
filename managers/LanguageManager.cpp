@@ -7,12 +7,15 @@
 namespace kuko
 {
 
-std::string LanguageManager::m_currentLanguage;
+LanguageManager::LanguageManager( LuaManager* ptrLuaManager )
+{
+    m_ptrLuaMgr = ptrLuaManager;
+}
 
 void LanguageManager::AddLanguage( const std::string& id, const std::string& path )
 {
     m_currentLanguage = id;
-    kuko::LuaManager::LoadScript( path );
+    m_ptrLuaMgr->LoadScript( path );
 }
 
 std::string LanguageManager::CurrentLanguage()
@@ -22,13 +25,13 @@ std::string LanguageManager::CurrentLanguage()
 
 std::string LanguageManager::Text( const std::string& key )
 {
-    std::string value = kuko::LuaManager::Language_GetText( key );
+    std::string value = m_ptrLuaMgr->Language_GetText( key );
     return ( value == "NOTFOUND" ) ? key + " NOT FOUND" : value;
 }
 
 std::string LanguageManager::GetSuggestedFont()
 {
-    std::string suggested = kuko::LuaManager::Language_GetSuggestedFont();
+    std::string suggested = m_ptrLuaMgr->Language_GetSuggestedFont();
     Logger::Out( "Suggested font: " + suggested );
     return suggested;
 }

@@ -34,39 +34,39 @@ void UILabel::SetColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a )
 
 void UILabel::GenerateTexture()
 {
-    SDL_Surface* textSurface = TTF_RenderUTF8_Solid( m_font, m_label.c_str(), m_color );
-    m_sprite.SetTexture ( SDL_CreateTextureFromSurface( kuko::Application::GetRenderer(), textSurface ) );
-
-    // Set w/h to fit the ratio
-    int fullWidth, fullHeight;
-    SDL_QueryTexture(m_sprite.texture, NULL, NULL, &fullWidth, &fullHeight);
-
-    float fontRatio = float(fullWidth) / float(fullHeight);
-
-    m_position.w = m_position.h * fontRatio;
-    // Don't go off-screen (adjust width)
-    if ( m_position.w > kuko::Application::GetScreenWidth() )
-    {
-        m_position.w = kuko::Application::GetScreenWidth() - 10;
-    }
-    // Don't go off-screen (adjust x)
-    if ( m_position.x + m_position.w > kuko::Application::GetScreenWidth() )
-    {
-        m_position.x = kuko::Application::GetScreenWidth() - m_position.w - 5;
-    }
-
-    if ( m_centered )
-    {
-        m_position.x = ( kuko::Application::GetScreenWidth() / 2 ) - ( m_position.w / 2 );
-    }
-    m_sprite.position = m_position;
-
-    SDL_FreeSurface( textSurface );
+//    SDL_Surface* textSurface = TTF_RenderUTF8_Solid( m_font, m_label.c_str(), m_color );
+//    m_sprite.SetTexture ( SDL_CreateTextureFromSurface( kuko::Application::GetRenderer(), textSurface ) );
+//
+//    // Set w/h to fit the ratio
+//    int fullWidth, fullHeight;
+//    SDL_QueryTexture(m_sprite.texture, NULL, NULL, &fullWidth, &fullHeight);
+//
+//    float fontRatio = float(fullWidth) / float(fullHeight);
+//
+//    m_position.w = m_position.h * fontRatio;
+//    // Don't go off-screen (adjust width)
+//    if ( m_position.w > kuko::Application::GetScreenWidth() )
+//    {
+//        m_position.w = kuko::Application::GetScreenWidth() - 10;
+//    }
+//    // Don't go off-screen (adjust x)
+//    if ( m_position.x + m_position.w > kuko::Application::GetScreenWidth() )
+//    {
+//        m_position.x = kuko::Application::GetScreenWidth() - m_position.w - 5;
+//    }
+//
+//    if ( m_centered )
+//    {
+//        m_position.x = ( kuko::Application::GetScreenWidth() / 2 ) - ( m_position.w / 2 );
+//    }
+//    m_sprite.position = m_position;
+//
+//    SDL_FreeSurface( textSurface );
 }
 
 void UILabel::Draw()
 {
-    kuko::ImageManager::Draw( m_sprite );
+//    kuko::ImageManager::Draw( m_sprite );
 }
 
 }

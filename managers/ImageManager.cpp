@@ -6,8 +6,6 @@
 namespace kuko
 {
 
-std::map<std::string, SDL_Texture*> ImageManager::m_textures;
-
 void ImageManager::AddTexture( const std::string& id, const std::string& path )
 {
     Logger::Out( "Add image " + id + " from path " + path, "ImageManager::AddTexture" );

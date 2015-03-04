@@ -21,18 +21,18 @@ struct TriggerInfo
 class InputManager
 {
     public:
-    static void Setup();
-    static void Cleanup();
+    void Setup();
+    void Cleanup();
 
-    static void Update();
+    void Update();
 
-    static std::map<CommandButton, TriggerInfo> GetTriggerInfo();
+    std::map<CommandButton, TriggerInfo> GetTriggerInfo();
 
     protected:
-    static void ResetTriggers();
+    void ResetTriggers();
 
-    static SDL_Event m_event;
-    static std::map<CommandButton, TriggerInfo> m_eventTriggered;
+    SDL_Event m_event;
+    std::map<CommandButton, TriggerInfo> m_eventTriggered;
 };
 
 }

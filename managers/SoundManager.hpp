@@ -15,21 +15,21 @@ namespace kuko
 class SoundManager
 {
     public:
-    static void Cleanup();
+    void Cleanup();
 
-    static void AddMusic( const std::string& id, const std::string& path );
-    static void AddSound( const std::string& id, const std::string& path );
-    static void ClearAudio();
+    void AddMusic( const std::string& id, const std::string& path );
+    void AddSound( const std::string& id, const std::string& path );
+    void ClearAudio();
 
-    static void PlayMusic( const std::string& key, bool loop );
-    static void PlaySound( const std::string& key );
+    void PlayMusic( const std::string& key, bool loop );
+    void PlaySound( const std::string& key );
 
     protected:
-    static std::map<std::string, Mix_Chunk*> m_sounds;
-    static std::map<std::string, Mix_Music*> m_music;
+    std::map<std::string, Mix_Chunk*> m_sounds;
+    std::map<std::string, Mix_Music*> m_music;
 
-    static Mix_Chunk* LoadSoundFile( const std::string& path );
-    static Mix_Music* LoadMusicFile( const std::string& path );
+    Mix_Chunk* LoadSoundFile( const std::string& path );
+    Mix_Music* LoadMusicFile( const std::string& path );
 };
 
 }

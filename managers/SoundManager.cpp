@@ -6,9 +6,6 @@
 namespace kuko
 {
 
-std::map<std::string, Mix_Chunk*> SoundManager::m_sounds;
-std::map<std::string, Mix_Music*> SoundManager::m_music;
-
 void SoundManager::Cleanup()
 {
     ClearAudio();

@@ -11,22 +11,22 @@ namespace kuko
 class MapManager
 {
     public:
-    static void LoadMap( const std::string& id, const std::string& path );
+    void LoadMap( const std::string& id, const std::string& path );
 
-    static int GetMapWidth();
-    static int GetMapHeight();
+    int GetMapWidth();
+    int GetMapHeight();
 
-    static int GetTileWidth();
-    static int GetTilesetWidth();
+    int GetTileWidth();
+    int GetTilesetWidth();
 
-    static int GetTileFrame( int index );
-    static bool GetTileSolidity( int frameIndex );
+    int GetTileFrame( int index );
+    bool GetTileSolidity( int frameIndex );
 
     protected:
-    static std::string m_currentMap;
-    static std::map<int, bool> m_solidTiles;
+    std::string m_currentMap;
+    std::map<int, bool> m_solidTiles;
 
-    static void LoadSolidTileTypes();
+    void LoadSolidTileTypes();
 };
 
 }
