@@ -65,6 +65,12 @@ int LuaManager::Lua_GetIntResult()
     return result;
 }
 
+void LuaManager::Lua_RunVoidFunction()
+{
+    // No Result to pop
+    lua_call( m_state, m_args, 1 );
+}
+
 std::string LuaManager::Language_GetText( const std::string& key )
 {
     Lua_ChooseFunction( "Language_GetText" );

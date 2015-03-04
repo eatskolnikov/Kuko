@@ -15,7 +15,7 @@ namespace kuko
         static void Setup();
         static void Cleanup();
 
-        private:
+        protected:
         static void LoadScript( const std::string& path );
 
         // Language Functions
@@ -45,6 +45,7 @@ namespace kuko
         static void Lua_PushInt( int value );
         static std::string Lua_GetStringResult();
         static int Lua_GetIntResult();
+        static void Lua_RunVoidFunction();
 
         friend class LanguageManager;
         friend class MapManager;
