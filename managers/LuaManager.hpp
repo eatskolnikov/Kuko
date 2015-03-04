@@ -53,6 +53,7 @@ namespace kuko
         friend class LanguageManager;
         friend class MapManager;
         friend class MenuManager;
+        friend class State;
     };
 }
 

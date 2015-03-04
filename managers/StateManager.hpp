@@ -2,7 +2,7 @@
 #ifndef _KUKO_STATEMANAGER
 #define _KUKO_STATEMANAGER
 
-#include "../states/IState.hpp"
+#include "../states/State.hpp"
 #include "../base/Application.hpp"
 
 #include <map>
@@ -19,7 +19,7 @@ class StateManager
     void Setup();
     void Cleanup();
 
-    void PushState( const std::string& title, IState* ptrState );
+    void PushState( const std::string& title, State* ptrState );
     void SwitchState( const std::string& key );
     void UpdateCurrentState();
     void DrawCurrentState();
@@ -29,8 +29,8 @@ class StateManager
     bool m_isDone;
     void CleanCurrentState();
 
-    std::map< std::string, IState* > m_lstStates;
-    IState* m_ptrCurrentState;
+    std::map< std::string, State* > m_lstStates;
+    State* m_ptrCurrentState;
 };
 
 }

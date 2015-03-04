@@ -14,7 +14,7 @@ StateManager::StateManager()
 
 void StateManager::Cleanup()
 {
-    for ( std::map< std::string, IState* >::iterator iter = m_lstStates.begin();
+    for ( std::map< std::string, State* >::iterator iter = m_lstStates.begin();
             iter != m_lstStates.end();
             ++iter )
     {
@@ -31,10 +31,10 @@ bool StateManager::IsDone()
     return m_isDone;
 }
 
-void StateManager::PushState( const std::string& title, IState* ptrState )
+void StateManager::PushState( const std::string& title, State* ptrState )
 {
     m_lstStates.insert(
-        std::pair< std::string, IState* >(
+        std::pair< std::string, State* >(
             title,
             ptrState
         ) );
@@ -53,29 +53,29 @@ void StateManager::SwitchState( const std::string& key )
 
 void StateManager::UpdateCurrentState()
 {
-    if ( m_ptrCurrentState != NULL )
-    {
-        m_ptrCurrentState->Update();
-
-        if ( m_ptrCurrentState->IsDone() )
-        {
-            std::string nextState = m_ptrCurrentState->GetNextState();
-            Logger::Out( "Received state change signal, go to: " + nextState, "StateManager::UpdateCurrentState" );
-
-            if ( nextState == "quit" )
-            {
-                m_isDone = true;
-            }
-            else if ( m_lstStates[ nextState ] != NULL )
-            {
-                SwitchState( nextState );
-            }
-            else
-            {
-                Logger::Error( "Error switching states: could not find state: " + nextState, "StateManager::UpdateCurrentState" );
-            }
-        }
-    }
+//    if ( m_ptrCurrentState != NULL )
+//    {
+//        m_ptrCurrentState->Update();
+//
+//        if ( m_ptrCurrentState->IsDone() )
+//        {
+//            std::string nextState = m_ptrCurrentState->GetNextState();
+//            Logger::Out( "Received state change signal, go to: " + nextState, "StateManager::UpdateCurrentState" );
+//
+//            if ( nextState == "quit" )
+//            {
+//                m_isDone = true;
+//            }
+//            else if ( m_lstStates[ nextState ] != NULL )
+//            {
+//                SwitchState( nextState );
+//            }
+//            else
+//            {
+//                Logger::Error( "Error switching states: could not find state: " + nextState, "StateManager::UpdateCurrentState" );
+//            }
+//        }
+//    }
 }
 
 void StateManager::DrawCurrentState()
