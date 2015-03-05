@@ -50,6 +50,7 @@ namespace kuko
         std::vector<int> State_GetEntityPosition( const std::string& name );
         std::string State_GetEntityTextureFile( const std::string& name );
         int State_GetEntityFrame( const std::string& name );
+        void State_HandleInput( std::vector<std::string>& keys );
 
         lua_State* m_state;
 

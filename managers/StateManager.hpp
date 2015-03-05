@@ -4,6 +4,7 @@
 
 #include "../states/State.hpp"
 #include "../base/Application.hpp"
+#include "../managers/InputManager.hpp"
 
 #include <map>
 #include <string>
@@ -14,7 +15,7 @@ namespace kuko
 class StateManager
 {
     public:
-    StateManager();
+    StateManager( InputManager* ptrInputManager );
 
     void Setup();
     void Cleanup();
@@ -31,6 +32,8 @@ class StateManager
 
     std::map< std::string, State* > m_lstStates;
     State* m_ptrCurrentState;
+
+    InputManager* m_ptrInputMgr;
 };
 
 }

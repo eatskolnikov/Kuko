@@ -285,4 +285,14 @@ int LuaManager::State_GetEntityFrame( const std::string& name )
     return result;
 }
 
+void LuaManager::State_HandleInput( std::vector<std::string>& keys )
+{
+    for ( unsigned int i = 0; i < keys.size(); i++ )
+    {
+        Lua_ChooseFunction( "State_HandleInput" );
+        Lua_PushString( keys[i] );
+        Lua_RunVoidFunction();
+    }
+}
+
 }

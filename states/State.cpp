@@ -69,5 +69,35 @@ void State::Draw()
     }
 }
 
+void State::HandleInput( std::map<kuko::CommandButton, kuko::TriggerInfo> input )
+{
+    if ( input[ kuko::TAP ].down )
+    {
+    }
+    else if( input[ kuko::SECONDARY_TAP ].down )
+    {
+    }
+
+    std::vector<std::string> keys;
+    if ( input[ kuko::MOVE_UP ].down )
+    {
+        keys.push_back( "MOVE_UP" );
+    }
+    else if ( input[ kuko::MOVE_DOWN ].down )
+    {
+        keys.push_back( "MOVE_DOWN" );
+    }
+    else if ( input[ kuko::MOVE_LEFT ].down )
+    {
+        keys.push_back( "MOVE_LEFT" );
+    }
+    else if ( input[ kuko::MOVE_RIGHT ].down )
+    {
+        keys.push_back( "MOVE_RIGHT" );
+    }
+
+    m_ptrLuaMgr->State_HandleInput( keys );
+}
+
 
 }

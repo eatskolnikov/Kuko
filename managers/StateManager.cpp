@@ -6,10 +6,11 @@
 namespace kuko
 {
 
-StateManager::StateManager()
+StateManager::StateManager( InputManager* ptrInputManager )
 {
     m_ptrCurrentState = NULL;
     m_isDone = false;
+    m_ptrInputMgr = ptrInputManager;
 }
 
 void StateManager::Cleanup()
@@ -55,7 +56,13 @@ void StateManager::UpdateCurrentState()
 {
     if ( m_ptrCurrentState != NULL )
     {
+        m_ptrInputMgr->Update();
+        std::map<kuko::CommandButton, kuko::TriggerInfo> input = m_ptrInputMgr->GetTriggerInfo();
+        m_ptrCurrentState->HandleInput( input );
         m_ptrCurrentState->Update();
+
+
+
 
 //        if ( m_ptrCurrentState->IsDone() )
 //        {

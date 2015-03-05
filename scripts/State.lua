@@ -53,3 +53,10 @@ function State_GetEntityFrame( nameKey )
 	end
 	return 0
 end
+
+function State_HandleInput( input )
+	if ( state ~= nil ) then
+		return state.HandleInput( input )
+	end
+end
+
