@@ -38,16 +38,12 @@ void BaseEntity::Setup( int index )
 
 void BaseEntity::UpdatePosition()
 {
-    Logger::Out( "begin", "BaseEntity::UpdatePosition" );
-
     std::vector<int> posResults = m_ptrLuaMgr->State_GetEntityPosition( m_id );
-    m_position.x = posResults[0];
-    m_position.y = posResults[1];
-    m_position.w = posResults[2];
-    m_position.h = posResults[3];
-
-    Logger::Out( "Pos: " + I2S( m_position.x ) + "," + I2S( m_position.y ) + " - "
-        + I2S( m_position.w ) + "x" + I2S( m_position.h ) );
+    // values are popped off the stack in opposite order?
+    m_position.x = posResults[3];
+    m_position.y = posResults[2];
+    m_position.w = posResults[1];
+    m_position.h = posResults[0];
 }
 
 void BaseEntity::UpdateSprite()
@@ -55,17 +51,10 @@ void BaseEntity::UpdateSprite()
     m_sprite.SetPosition( m_position );
 }
 
-void BaseEntity::SetFrame( SDL_Rect frame )
+void BaseEntity::SetFrame()
 {
-    m_sprite.frame = frame;
-    UpdateSprite();
-}
-
-void BaseEntity::SetPosition( int x, int y )
-{
-    Logger::Out( I2S( x ) + "," + I2S( y ) );
-    m_position.x = x;
-    m_position.y = y;
+    int fr = m_ptrLuaMgr->State_GetEntityFrame( m_id ) * m_position.w;
+    m_sprite.frame = { fr, 0, m_position.w, m_position.h };
     UpdateSprite();
 }
 
@@ -76,39 +65,14 @@ PositionRect BaseEntity::GetPosition() const
 
 void BaseEntity::Update()
 {
+    UpdatePosition();
+    SetFrame();
     m_sprite.SetPosition( m_position );
 }
 
 void BaseEntity::Draw()
 {
     m_ptrImgMgr->Draw( m_sprite );
-}
-
-bool BaseEntity::IsCollision( const BaseEntity& other )
-{
-    return IsCollision( other.GetPosition() );
-}
-
-
-bool BaseEntity::IsCollision( const PositionRect& otherRect )
-{
-
-    bool col = ( m_isSolid &&
-                m_position.x < otherRect.x + otherRect.w &&
-                m_position.x + m_position.w > otherRect.x &&
-                m_position.y < otherRect.y + otherRect.h &&
-                m_position.y + m_position.h > otherRect.y );
-    return col;
-}
-
-bool BaseEntity::IsSolid()
-{
-    return m_isSolid;
-}
-
-void BaseEntity::SetSolid( bool val )
-{
-    m_isSolid = val;
 }
 
 }

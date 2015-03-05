@@ -53,10 +53,10 @@ void StateManager::SwitchState( const std::string& key )
 
 void StateManager::UpdateCurrentState()
 {
-//    if ( m_ptrCurrentState != NULL )
-//    {
-//        m_ptrCurrentState->Update();
-//
+    if ( m_ptrCurrentState != NULL )
+    {
+        m_ptrCurrentState->Update();
+
 //        if ( m_ptrCurrentState->IsDone() )
 //        {
 //            std::string nextState = m_ptrCurrentState->GetNextState();
@@ -75,7 +75,7 @@ void StateManager::UpdateCurrentState()
 //                Logger::Error( "Error switching states: could not find state: " + nextState, "StateManager::UpdateCurrentState" );
 //            }
 //        }
-//    }
+    }
 }
 
 void StateManager::DrawCurrentState()

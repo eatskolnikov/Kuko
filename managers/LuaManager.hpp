@@ -43,11 +43,13 @@ namespace kuko
 
         // States
         void State_Setup();
+        void State_Update();
         void State_LoadRequiredScripts();
         int State_GetEntityCount();
         std::string State_GetEntityName( int index );
         std::vector<int> State_GetEntityPosition( const std::string& name );
         std::string State_GetEntityTextureFile( const std::string& name );
+        int State_GetEntityFrame( const std::string& name );
 
         lua_State* m_state;
 

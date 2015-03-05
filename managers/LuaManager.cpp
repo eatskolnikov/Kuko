@@ -225,6 +225,12 @@ void LuaManager::State_Setup()
     Logger::Out( "end", "LuaManager::State_Setup" );
 }
 
+void LuaManager::State_Update()
+{
+    Lua_ChooseFunction( "State_Update" );
+    Lua_RunVoidFunction();
+}
+
 void LuaManager::State_LoadRequiredScripts()
 {
     Logger::Out( "begin", "LuaManager::State_GetRequiredScripts" );
@@ -268,6 +274,14 @@ std::string LuaManager::State_GetEntityTextureFile( const std::string& name )
     Lua_ChooseFunction( "State_GetEntityTexture" );
     Lua_PushString( name );
     std::string result = Lua_GetStringResult();
+    return result;
+}
+
+int LuaManager::State_GetEntityFrame( const std::string& name )
+{
+    Lua_ChooseFunction( "State_GetEntityFrame" );
+    Lua_PushString( name );
+    int result = Lua_GetIntResult();
     return result;
 }
 

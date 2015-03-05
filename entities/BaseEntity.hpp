@@ -17,18 +17,12 @@ class BaseEntity
     public:
     BaseEntity( LuaManager* ptrLuaManager, ImageManager* ptrImageManager, int index );
     virtual void Setup( int index );
-    virtual void SetFrame( SDL_Rect frame );
+    virtual void SetFrame();
 
     virtual void Update();
     virtual void Draw();
 
     virtual kuko::PositionRect GetPosition() const;
-    void SetPosition( int x, int y );
-
-    bool IsCollision( const BaseEntity& other );
-    bool IsCollision( const PositionRect& otherRect );
-    bool IsSolid();
-    void SetSolid( bool val );
 
     protected:
     LuaManager* m_ptrLuaMgr;

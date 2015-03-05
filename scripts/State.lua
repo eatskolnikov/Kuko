@@ -46,3 +46,10 @@ function State_GetEntityTexture( nameKey )
 	end
 	return ""
 end
+
+function State_GetEntityFrame( nameKey )
+	if ( state ~= nil ) then
+		return state.entities[ nameKey ].frame
+	end
+	return 0
+end

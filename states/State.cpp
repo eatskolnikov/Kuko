@@ -54,6 +54,11 @@ void State::Cleanup()
 
 void State::Update()
 {
+    m_ptrLuaMgr->State_Update();
+    for ( unsigned int i = 0; i < m_lstEntities.size(); i++ )
+    {
+        m_lstEntities[i]->Update();
+    }
 }
 
 void State::Draw()
