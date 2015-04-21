@@ -15,9 +15,12 @@ namespace kuko
 class UILabel : public IWidget
 {
     public:
+    UILabel();
     virtual ~UILabel() { ; }
     void Setup( const std::string& id, const std::string& label, SDL_Rect position, bool centered, SDL_Color textColor, TTF_Font* font );
+    void Setup( const std::string& id, const std::string& label, SDL_Rect position, bool centered, SDL_Color textColor, TTF_Font* font, bool useShadow, SDL_Color shadowColor, int shadowOffsetX, int shadowOffsetY );
     void SetColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a );
+    void SetShadowColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a );
     virtual void Draw();
     void ChangeText( const std::string& text );
 
@@ -30,8 +33,13 @@ class UILabel : public IWidget
     std::string m_label;
     TTF_Font* m_font;
     Sprite m_sprite;
+    Sprite m_shadowSprite;
     SDL_Color m_color;
+    SDL_Color m_shadowColor;
     bool m_centered;
+    bool m_useShadow;
+    int m_shadowOffsetX;
+    int m_shadowOffsetY;
 };
 
 }

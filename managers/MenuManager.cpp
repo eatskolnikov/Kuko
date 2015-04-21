@@ -99,6 +99,19 @@ void MenuManager::SetupMenu( const std::string& path )
             color.b = LuaManager::Menu_GetElementInt( index, "font_b" );
             color.a = LuaManager::Menu_GetElementInt( index, "font_a" );
 
+            bool useShadow = LuaManager::Menu_GetElementInt( index, "use_shadow" );
+            SDL_Color shadowColor;
+            int offsetX, offsetY;
+            if ( useShadow )
+            {
+                shadowColor.r = LuaManager::Menu_GetElementInt( index, "shadow_r" );
+                shadowColor.g = LuaManager::Menu_GetElementInt( index, "shadow_g" );
+                shadowColor.b = LuaManager::Menu_GetElementInt( index, "shadow_b" );
+                shadowColor.a = LuaManager::Menu_GetElementInt( index, "shadow_a" );
+                offsetX = LuaManager::Menu_GetElementInt( index, "shadow_offset_x" );
+                offsetY = LuaManager::Menu_GetElementInt( index, "shadow_offset_y" );
+            }
+
             SDL_Rect pos;
             pos.x = LuaManager::Menu_GetElementInt( index, "x" );
             pos.y = LuaManager::Menu_GetElementInt( index, "y" );
@@ -109,8 +122,9 @@ void MenuManager::SetupMenu( const std::string& path )
 
             UILabel* label = new UILabel;
             label->Setup( id, text,
-            pos, centered, color,
-            kuko::FontManager::GetFont( fontId ) );
+                pos, centered, color,
+                kuko::FontManager::GetFont( fontId ), useShadow, shadowColor, offsetX, offsetY );
+
             m_labels.insert( std::pair<std::string, UILabel*>( id, label ) );
         }
     }

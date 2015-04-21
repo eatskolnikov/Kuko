@@ -7,6 +7,11 @@
 namespace kuko
 {
 
+UILabel::UILabel()
+{
+    m_useShadow = false;
+}
+
 void UILabel::Setup( const std::string& id, const std::string& label, SDL_Rect position, bool centered, SDL_Color textColor, TTF_Font* font )
 {
     Logger::Out( "Setup " + label + ", Centered " + I2S( centered ), "UILabel::Setup" );
@@ -16,6 +21,15 @@ void UILabel::Setup( const std::string& id, const std::string& label, SDL_Rect p
     m_label = label;
     m_centered = centered;
     GenerateTexture();
+}
+
+void UILabel::Setup( const std::string& id, const std::string& label, SDL_Rect position, bool centered, SDL_Color textColor, TTF_Font* font, bool useShadow, SDL_Color shadowColor, int shadowOffsetX, int shadowOffsetY )
+{
+    m_shadowColor = shadowColor;
+    m_useShadow = useShadow;
+    m_shadowOffsetX = shadowOffsetX;
+    m_shadowOffsetY = shadowOffsetY;
+    Setup( id, label, position, centered, textColor, font );
 }
 
 void UILabel::ChangeText( const std::string& text )
@@ -32,10 +46,19 @@ void UILabel::SetColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a )
     m_color.a = a;
 }
 
+void UILabel::SetShadowColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a )
+{
+    m_shadowColor.r = r;
+    m_shadowColor.g = g;
+    m_shadowColor.b = b;
+    m_shadowColor.a = a;
+}
+
 void UILabel::GenerateTexture()
 {
     SDL_Surface* textSurface = TTF_RenderUTF8_Solid( m_font, m_label.c_str(), m_color );
     m_sprite.SetTexture ( SDL_CreateTextureFromSurface( kuko::Application::GetRenderer(), textSurface ) );
+    SDL_FreeSurface( textSurface );
 
     // Set w/h to fit the ratio
     int fullWidth, fullHeight;
@@ -61,11 +84,24 @@ void UILabel::GenerateTexture()
     }
     m_sprite.position = m_position;
 
-    SDL_FreeSurface( textSurface );
+    if ( m_useShadow )
+    {
+        SDL_Surface* shadowSurface = TTF_RenderUTF8_Solid( m_font, m_label.c_str(), m_shadowColor );
+        m_shadowSprite.SetTexture ( SDL_CreateTextureFromSurface( kuko::Application::GetRenderer(), shadowSurface ) );
+        m_shadowSprite.position = m_position;
+        m_shadowSprite.position.x += m_shadowOffsetX;
+        m_shadowSprite.position.y += m_shadowOffsetY;
+
+        SDL_FreeSurface( shadowSurface );
+    }
 }
 
 void UILabel::Draw()
 {
+    if ( m_useShadow )
+    {
+        kuko::ImageManager::Draw( m_shadowSprite );
+    }
     kuko::ImageManager::Draw( m_sprite );
 }
 
