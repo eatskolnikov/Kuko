@@ -92,6 +92,8 @@ void MenuManager::SetupMenu( const std::string& path )
             std::string fontId = LuaManager::Menu_GetElementString( index, "font_id" );
             std::string textId = LuaManager::Menu_GetElementString( index, "text_id" );
             std::string text = LanguageManager::Text( textId );
+            std::string effect = LuaManager::Menu_GetElementString( index, "effect" );
+            int effectSpeed = LuaManager::Menu_GetElementInt( index, "effect_speed" );
 
             SDL_Color color;
             color.r = LuaManager::Menu_GetElementInt( index, "font_r" );
@@ -123,7 +125,7 @@ void MenuManager::SetupMenu( const std::string& path )
             UILabel* label = new UILabel;
             label->Setup( id, text,
                 pos, centered, color,
-                kuko::FontManager::GetFont( fontId ), useShadow, shadowColor, offsetX, offsetY );
+                kuko::FontManager::GetFont( fontId ), effect, effectSpeed, useShadow, shadowColor, offsetX, offsetY );
 
             m_labels.insert( std::pair<std::string, UILabel*>( id, label ) );
         }
@@ -169,6 +171,19 @@ void MenuManager::ClearMenu()
     m_images.clear();
     m_labels.clear();
     m_buttons.clear();
+}
+
+void MenuManager::Update()
+{
+    for (   std::map<std::string, UILabel*>::iterator it = m_labels.begin();
+            it != m_labels.end();
+            ++it )
+    {
+        if ( it->second != NULL )
+        {
+            it->second->Update();
+        }
+    }
 }
 
 void MenuManager::Draw()

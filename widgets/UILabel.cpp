@@ -12,7 +12,7 @@ UILabel::UILabel()
     m_useShadow = false;
 }
 
-void UILabel::Setup( const std::string& id, const std::string& label, SDL_Rect position, bool centered, SDL_Color textColor, TTF_Font* font )
+void UILabel::Setup( const std::string& id, const std::string& label, SDL_Rect position, bool centered, SDL_Color textColor, TTF_Font* font, const std::string& effect, int effectMax )
 {
     Logger::Out( "Setup " + label + ", Centered " + I2S( centered ), "UILabel::Setup" );
     m_position = position;
@@ -20,16 +20,18 @@ void UILabel::Setup( const std::string& id, const std::string& label, SDL_Rect p
     m_font = font;
     m_label = label;
     m_centered = centered;
+    m_effect = effect;
+    m_effectMax = effectMax;
     GenerateTexture();
 }
 
-void UILabel::Setup( const std::string& id, const std::string& label, SDL_Rect position, bool centered, SDL_Color textColor, TTF_Font* font, bool useShadow, SDL_Color shadowColor, int shadowOffsetX, int shadowOffsetY )
+void UILabel::Setup( const std::string& id, const std::string& label, SDL_Rect position, bool centered, SDL_Color textColor, TTF_Font* font, const std::string& effect, int effectMax, bool useShadow, SDL_Color shadowColor, int shadowOffsetX, int shadowOffsetY )
 {
     m_shadowColor = shadowColor;
     m_useShadow = useShadow;
     m_shadowOffsetX = shadowOffsetX;
     m_shadowOffsetY = shadowOffsetY;
-    Setup( id, label, position, centered, textColor, font );
+    Setup( id, label, position, centered, textColor, font, effect, effectMax );
 }
 
 void UILabel::ChangeText( const std::string& text )
@@ -96,13 +98,23 @@ void UILabel::GenerateTexture()
     }
 }
 
+void UILabel::Update()
+{
+    m_effectTimer--;
+    if ( m_effectTimer < 0 ) { m_effectTimer = m_effectMax; }
+}
+
 void UILabel::Draw()
 {
-    if ( m_useShadow )
+    if ( ( m_effect == "" )
+        || ( m_effect == "flash" && m_effectTimer < m_effectMax/2 ) )
     {
-        kuko::ImageManager::Draw( m_shadowSprite );
+        if ( m_useShadow )
+        {
+            kuko::ImageManager::Draw( m_shadowSprite );
+        }
+        kuko::ImageManager::Draw( m_sprite );
     }
-    kuko::ImageManager::Draw( m_sprite );
 }
 
 }

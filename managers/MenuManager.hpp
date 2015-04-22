@@ -21,6 +21,7 @@ class MenuManager
     void SetupMenu( const std::string& path );
     void ClearMenu();
     void Draw();
+    void Update();
     void Reload();
     bool IsButtonClicked( const std::string& key, int mouseX, int mouseY );
     void ResetMouse();
