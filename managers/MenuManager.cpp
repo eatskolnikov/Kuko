@@ -67,23 +67,33 @@ void MenuManager::SetupMenu( const std::string& path )
             pos.w = LuaManager::Menu_GetElementInt( index, "width" );
             pos.h = LuaManager::Menu_GetElementInt( index, "height" );
 
-            SDL_Rect pad;
-            pad.x = LuaManager::Menu_GetElementInt( index, "pad_x1" );
-            pad.y = LuaManager::Menu_GetElementInt( index, "pad_y1" );
-            pad.w = LuaManager::Menu_GetElementInt( index, "pad_x2" );
-            pad.h = LuaManager::Menu_GetElementInt( index, "pad_y2" );
-
-            SDL_Color color;
-            color.r = LuaManager::Menu_GetElementInt( index, "font_r" );
-            color.g = LuaManager::Menu_GetElementInt( index, "font_g" );
-            color.b = LuaManager::Menu_GetElementInt( index, "font_b" );
-            color.a = LuaManager::Menu_GetElementInt( index, "font_a" );
-
             UIButton* button = new UIButton;
-            button->Setup( id, text, pos, centered,
-            kuko::ImageManager::GetTexture( textureId ),
-            { 0xFF, 0xFF, 0xFF, 0xFF }, color,
-            kuko::FontManager::GetFont( fontId ), pad );
+            if ( textId != "" )
+            {
+                SDL_Rect pad;
+                pad.x = LuaManager::Menu_GetElementInt( index, "pad_x1" );
+                pad.y = LuaManager::Menu_GetElementInt( index, "pad_y1" );
+                pad.w = LuaManager::Menu_GetElementInt( index, "pad_x2" );
+                pad.h = LuaManager::Menu_GetElementInt( index, "pad_y2" );
+
+                SDL_Color color;
+                color.r = LuaManager::Menu_GetElementInt( index, "font_r" );
+                color.g = LuaManager::Menu_GetElementInt( index, "font_g" );
+                color.b = LuaManager::Menu_GetElementInt( index, "font_b" );
+                color.a = LuaManager::Menu_GetElementInt( index, "font_a" );
+
+                button->Setup( id, text, pos, centered,
+                    kuko::ImageManager::GetTexture( textureId ),
+                    { 0xFF, 0xFF, 0xFF, 0xFF }, color,
+                    kuko::FontManager::GetFont( fontId ), pad );
+            }
+            else
+            {
+                button->Setup( id, pos, centered,
+                    kuko::ImageManager::GetTexture( textureId ),
+                    { 0xFF, 0xFF, 0xFF, 0xFF } );
+            }
+
             m_buttons.insert( std::pair<std::string, UIButton*>( id, button ) );
         }
         else if ( type == "label" )

@@ -15,7 +15,9 @@ namespace kuko
 class UIButton : public IWidget
 {
     public:
+    UIButton();
     virtual ~UIButton() { ; }
+    void Setup( const std::string& id, SDL_Rect position, bool centered, SDL_Texture* ptrTexture, SDL_Color buttonColor );
     void Setup( const std::string& id, const std::string& text, SDL_Rect position, bool centered,
         SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, int padding = 0 );
     void Setup( const std::string& id, const std::string& text, SDL_Rect position, bool centered,
@@ -27,6 +29,7 @@ class UIButton : public IWidget
     protected:
     UIImage m_background;
     UILabel m_text;
+    bool m_useText;
     // Label
     // std::string m_id;
     // SDL_Rect m_position;
