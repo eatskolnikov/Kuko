@@ -12,14 +12,21 @@ void UIButton::Setup( const std::string& id, SDL_Rect position, bool centered, S
 {
     m_position = position;
     m_id = id;
-    m_background.Setup( id + "-img", position, ptrTexture );
-    m_background.SetColor( buttonColor );
+    m_background[0].Setup( id + "-img", position, ptrTexture );
+    m_background[0].SetColor( buttonColor );
 }
 
 void UIButton::Setup( const std::string& id, const std::string& text, SDL_Rect position, bool centered,
     SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, int padding /* = 0 */ )
 {
     Setup( id, text, position, centered, ptrTexture, buttonColor, textColor, font, { padding, padding, padding, padding } );
+}
+
+void UIButton::SetupAnimateEffect( const std::string& effectType, SDL_Texture* frame2, int effectMax )
+{
+    m_effectMax = effectMax;
+    m_effect = effectType;
+    m_background[1].Setup( m_id + "-alt-img", m_position, frame2 );
 }
 
 void UIButton::Setup( const std::string& id, const std::string& text, SDL_Rect position, bool centered,
@@ -35,9 +42,24 @@ void UIButton::Setup( const std::string& id, const std::string& text, SDL_Rect p
     Setup( id, position, centered, ptrTexture, buttonColor );
 }
 
+void UIButton::Update()
+{
+    m_effectTimer--;
+    if ( m_effectTimer < 0 ) { m_effectTimer = m_effectMax; }
+}
+
 void UIButton::Draw()
 {
-    m_background.Draw();
+    if ( ( m_effect == "" )
+        || ( m_effect == "animate" && m_effectTimer < m_effectMax/2 ) )
+    {
+        m_background[0].Draw();
+    }
+    else if ( m_effect == "animate" && m_effectTimer >= m_effectMax/2 )
+    {
+        m_background[1].Draw();
+    }
+
     if ( m_useText )
     {
         m_text.Draw();

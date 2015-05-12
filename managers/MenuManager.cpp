@@ -58,6 +58,7 @@ void MenuManager::SetupMenu( const std::string& path )
             std::string fontId = LuaManager::Menu_GetElementString( index, "font_id" );
             std::string textId = LuaManager::Menu_GetElementString( index, "text_id" );
             std::string text = LanguageManager::Text( textId );
+            std::string effect = LuaManager::Menu_GetElementString( index, "effect" );
 
             bool centered = ( LuaManager::Menu_GetElementInt( index, "centered_text" ) == 1 );
 
@@ -92,6 +93,13 @@ void MenuManager::SetupMenu( const std::string& path )
                 button->Setup( id, pos, centered,
                     kuko::ImageManager::GetTexture( textureId ),
                     { 0xFF, 0xFF, 0xFF, 0xFF } );
+            }
+            if ( effect != "" )
+            {
+                int speed = LuaManager::Menu_GetElementInt( index, "effect_speed" );
+                std::string subTexture = LuaManager::Menu_GetElementString( index, "texture_id_2" );
+
+                button->SetupAnimateEffect( effect, kuko::ImageManager::GetTexture( subTexture ), speed );
             }
 
             m_buttons.insert( std::pair<std::string, UIButton*>( id, button ) );
@@ -187,6 +195,15 @@ void MenuManager::Update()
 {
     for (   std::map<std::string, UILabel*>::iterator it = m_labels.begin();
             it != m_labels.end();
+            ++it )
+    {
+        if ( it->second != NULL )
+        {
+            it->second->Update();
+        }
+    }
+    for (   std::map<std::string, UIButton*>::iterator it = m_buttons.begin();
+            it != m_buttons.end();
             ++it )
     {
         if ( it->second != NULL )
