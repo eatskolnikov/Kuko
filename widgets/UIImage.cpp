@@ -7,6 +7,10 @@
 namespace kuko
 {
 
+UIImage::UIImage() : IWidget()
+{
+}
+
 void UIImage::Setup( const std::string& id, SDL_Rect position, SDL_Texture* ptrTexture )
 {
     m_position = position;

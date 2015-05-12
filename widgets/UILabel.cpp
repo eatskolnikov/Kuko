@@ -7,7 +7,7 @@
 namespace kuko
 {
 
-UILabel::UILabel()
+UILabel::UILabel() : IWidget()
 {
     m_useShadow = false;
 }

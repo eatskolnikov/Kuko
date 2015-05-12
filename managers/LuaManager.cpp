@@ -112,6 +112,14 @@ int LuaManager::Menu_GetElementInt( int index, const std::string& property )
     return result;
 }
 
+int LuaManager::Menu_GetOptionInt( const std::string& property )
+{
+    Lua_ChooseFunction( "Menu_GetOptionProperty" );
+    Lua_PushString( property.c_str() );
+    int result = Lua_GetIntResult();
+    return result;
+}
+
 int LuaManager::Map_GetWidth()
 {
     Lua_ChooseFunction( "Map_GetWidth" );

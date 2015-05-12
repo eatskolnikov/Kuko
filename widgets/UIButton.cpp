@@ -3,7 +3,7 @@
 namespace kuko
 {
 
-UIButton::UIButton()
+UIButton::UIButton() : IWidget()
 {
     m_useText = false;
 }

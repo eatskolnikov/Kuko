@@ -11,6 +11,13 @@
 namespace kuko
 {
 
+MenuManager::MenuManager()
+{
+    // pages start at 1, with an element visible on page 0 being visible on all pages.
+    m_currentPage = 1;
+    m_maxPages = 1;
+}
+
 MenuManager::~MenuManager()
 {
     ClearMenu();
@@ -21,6 +28,31 @@ void MenuManager::Reload()
     SetupMenu( m_currentMenu );
 }
 
+int MenuManager::GetCurrentPage()
+{
+    return m_currentPage;
+}
+
+void MenuManager::SetCurrentPage( int val )
+{
+    m_currentPage = val;
+    if ( m_currentPage > m_maxPages )
+    {
+        m_currentPage = m_maxPages;
+    }
+}
+
+void MenuManager::NextPage()
+{
+    m_currentPage++;
+    if ( m_currentPage > m_maxPages )
+    {
+        m_currentPage = 1;
+    }
+    Logger::Out( "Page menu is now " + Logger::IntToString( m_currentPage ) );
+}
+
+
 void MenuManager::SetupMenu( const std::string& path )
 {
     Logger::Out( "Setup Menu " + path, "MenuManager::SetupMenu" );
@@ -30,6 +62,7 @@ void MenuManager::SetupMenu( const std::string& path )
     LuaManager::LoadScript( path );
     int ct = LuaManager::Menu_GetElementCount();
     m_mouseDown = false;
+    m_maxPages = LuaManager::Menu_GetOptionInt( "total_pages" );
 
     for ( int i = 0; i < ct; i++ )
     {
@@ -47,8 +80,12 @@ void MenuManager::SetupMenu( const std::string& path )
             pos.w = LuaManager::Menu_GetElementInt( index, "width" );
             pos.h = LuaManager::Menu_GetElementInt( index, "height" );
 
+            // Visible page is 0 = all pages, 1 = page 1 (lua), page 0 (c++)
+            int page = LuaManager::Menu_GetElementInt( index, "page" );
+
             UIImage* image = new UIImage;
             image->Setup( id, pos, kuko::ImageManager::GetTexture( textureId ) );
+            if ( page != 0 ) { image->SetVisiblePage( page ); }
             m_images.insert( std::pair<std::string, UIImage*>( id, image ) );
         }
         else if ( type == "button" )
@@ -67,6 +104,8 @@ void MenuManager::SetupMenu( const std::string& path )
             pos.y = LuaManager::Menu_GetElementInt( index, "y" );
             pos.w = LuaManager::Menu_GetElementInt( index, "width" );
             pos.h = LuaManager::Menu_GetElementInt( index, "height" );
+
+            int page = LuaManager::Menu_GetElementInt( index, "page" );
 
             UIButton* button = new UIButton;
             if ( textId != "" )
@@ -101,6 +140,7 @@ void MenuManager::SetupMenu( const std::string& path )
 
                 button->SetupAnimateEffect( effect, kuko::ImageManager::GetTexture( subTexture ), speed );
             }
+            if ( page != 0 ) { button->SetVisiblePage( page ); }
 
             m_buttons.insert( std::pair<std::string, UIButton*>( id, button ) );
         }
@@ -118,6 +158,8 @@ void MenuManager::SetupMenu( const std::string& path )
             color.g = LuaManager::Menu_GetElementInt( index, "font_g" );
             color.b = LuaManager::Menu_GetElementInt( index, "font_b" );
             color.a = LuaManager::Menu_GetElementInt( index, "font_a" );
+
+            int page = LuaManager::Menu_GetElementInt( index, "page" );
 
             bool useShadow = LuaManager::Menu_GetElementInt( index, "use_shadow" );
             SDL_Color shadowColor;
@@ -144,6 +186,8 @@ void MenuManager::SetupMenu( const std::string& path )
             label->Setup( id, text,
                 pos, centered, color,
                 kuko::FontManager::GetFont( fontId ), effect, effectSpeed, useShadow, shadowColor, offsetX, offsetY );
+
+            if ( page != 0 ) { label->SetVisiblePage( page ); }
 
             m_labels.insert( std::pair<std::string, UILabel*>( id, label ) );
         }
@@ -219,19 +263,28 @@ void MenuManager::Draw()
             it != m_images.end();
             ++it )
     {
-        it->second->Draw();
+        if ( it->second->GetVisiblePage() == m_currentPage || it->second->GetVisiblePage() == 0 )
+        {
+            it->second->Draw();
+        }
     }
     for (   std::map<std::string, UIButton*>::iterator it = m_buttons.begin();
             it != m_buttons.end();
             ++it )
     {
-        it->second->Draw();
+        if ( it->second->GetVisiblePage() == m_currentPage || it->second->GetVisiblePage() == 0 )
+        {
+            it->second->Draw();
+        }
     }
     for (   std::map<std::string, UILabel*>::iterator it = m_labels.begin();
             it != m_labels.end();
             ++it )
     {
-        it->second->Draw();
+        if ( it->second->GetVisiblePage() == m_currentPage || it->second->GetVisiblePage() == 0 )
+        {
+            it->second->Draw();
+        }
     }
 }
 

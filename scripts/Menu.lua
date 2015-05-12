@@ -19,3 +19,11 @@ function Menu_GetElementProperty( index, property )
 	end
 	return elements[ index ][ property ]
 end
+
+function Menu_GetOptionProperty( property )
+	if ( menu_options == nil or menu_options[ property ] == nil ) then
+		if ( property == "centered_text" ) then return 0 end
+		return ""
+	end
+	return menu_options[ property ]
+end
