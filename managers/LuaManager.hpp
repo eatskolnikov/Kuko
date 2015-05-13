@@ -39,6 +39,9 @@ namespace kuko
         static bool Map_GetTileSolidity( int index );
         static int Map_GetTileIndex( int index );
 
+        // Config Functions
+        static std::string Config_GetOption( const std::string& key );
+
         static lua_State* m_state;
 
         static int m_args;

@@ -2,6 +2,7 @@
 #define _CONFIGMANAGER
 
 #include <string>
+#include <map>
 
 #include "LuaManager.hpp"
 
@@ -15,9 +16,12 @@ class ConfigManager
 {
     public:
     static void SaveConfig();
-    static void LoadConfig();
+    static bool LoadConfig();
+    static void SetConfig( const std::string& key, const std::string& val );
 
     private:
+    static void CreateNewConfig();
+    static std::map<std::string, std::string> m_settings;
 };
 
 }

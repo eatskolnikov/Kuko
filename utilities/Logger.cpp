@@ -8,6 +8,11 @@ time_t Logger::m_startTime;
 time_t Logger::m_lastTimestamp;
 int Logger::m_logLevel;
 
+/*
+    m_logLevel:
+    * 0: Mundane
+*/
+
 void Logger::Setup()
 {
     m_logLevel = 0;

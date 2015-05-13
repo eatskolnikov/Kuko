@@ -18,6 +18,7 @@ void LuaManager::Setup()
     LoadScript( "Kuko/scripts/Language.lua" );
     LoadScript( "Kuko/scripts/Menu.lua" );
     LoadScript( "Kuko/scripts/Map.lua" );
+    LoadScript( "Kuko/scripts/Config.lua" );
 }
 
 void LuaManager::Cleanup()
@@ -194,6 +195,14 @@ int LuaManager::Map_GetTileIndex( int index )
     Lua_PushInt( index+1 );
     int result = Lua_GetIntResult();
     return result; // TODO: Double check the offset for this, not sure
+}
+
+std::string LuaManager::Config_GetOption( const std::string& key )
+{
+    Lua_ChooseFunction( "Config_GetOption" );
+    Lua_PushString( key.c_str() );
+    std::string result = Lua_GetStringResult();
+    return result;
 }
 
 }
