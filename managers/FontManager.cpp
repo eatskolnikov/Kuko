@@ -30,6 +30,19 @@ void FontManager::AddFont( const std::string& id, const std::string& path, int s
     m_fonts.insert( std::pair<std::string, TTF_Font*>( id, LoadFile( path ) ) );
 }
 
+void FontManager::ReplaceFont( const std::string& id, const std::string& path, int size )
+{
+    Logger::Out( "Replace font " + id + " with path " + path, "FontManager::ReplaceFont" );
+
+    if ( m_fonts[ id ] != NULL )
+    {
+        Logger::Out( "Remove font at ID" );
+        TTF_CloseFont( m_fonts[ id ] );
+        Logger::Out( "Insert new" );
+        m_fonts[ id ] = LoadFile( path );
+    }
+}
+
 void FontManager::ClearFonts()
 {
     m_fonts.clear();

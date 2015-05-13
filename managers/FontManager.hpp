@@ -18,6 +18,7 @@ class FontManager
     static void Cleanup();
 
     static void AddFont( const std::string& id, const std::string& path, int size );
+    static void ReplaceFont( const std::string& id, const std::string& path, int size );
     static void ClearFonts();
     static TTF_Font* GetFont( const std::string& key );
 
