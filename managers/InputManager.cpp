@@ -25,7 +25,13 @@ void InputManager::Update()
 
     while ( SDL_PollEvent( &m_event ) != 0 )
     {
+        // Clicking around in-game?
         if ( m_event.type == SDL_MOUSEBUTTONDOWN )
+        {
+        }
+
+        // Taps for dealing with the menu
+        else if ( m_event.type == SDL_MOUSEBUTTONUP )
         {
             if ( m_event.button.button == SDL_BUTTON_LEFT )
             {
@@ -33,7 +39,8 @@ void InputManager::Update()
                 m_eventTriggered[ TAP ].actionX = m_event.motion.x;
                 m_eventTriggered[ TAP ].actionY = m_event.motion.y;
             }
-            else if ( m_event.button.button == SDL_BUTTON_RIGHT )
+
+            if ( m_event.button.button == SDL_BUTTON_RIGHT )
             {
                 m_eventTriggered[ SECONDARY_TAP ].down = true;
                 m_eventTriggered[ SECONDARY_TAP ].actionX = m_event.motion.x;

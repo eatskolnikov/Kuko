@@ -25,6 +25,7 @@ class InputManager
     static void Cleanup();
 
     static void Update();
+    static void IgnoreMouseUntilButtonUp();
 
     static std::map<CommandButton, TriggerInfo> GetTriggerInfo();
 

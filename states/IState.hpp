@@ -3,6 +3,7 @@
 #define _KUKO_ISTATE
 
 #include "../base/Application.hpp"
+#include "../managers/InputManager.hpp"
 
 #include <string>
 
@@ -15,7 +16,7 @@ class IState
     virtual ~IState() { ; }
     IState() { m_isDone = false; m_isSetup = false; m_gotoState = ""; }
 
-    virtual void Setup() = 0;
+    virtual void Setup() { m_gotoState = ""; }
     virtual void Cleanup() = 0;
 
     virtual void Update() = 0;
