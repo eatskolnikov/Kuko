@@ -17,7 +17,8 @@ class ConfigManager
     public:
     static void SaveConfig();
     static bool LoadConfig();
-    static void SetConfig( const std::string& key, const std::string& val );
+    static void SetOption( const std::string& key, const std::string& val );
+    static std::string GetOption( const std::string& key );
 
     private:
     static void CreateNewConfig();

@@ -21,22 +21,20 @@ bool ConfigManager::LoadConfig()
     }
 
     // Load in values to the key/value
-    SetConfig( "helper", LuaManager::Config_GetOption( "helper" ) );
-    Logger::Out( "Helper is " + m_settings[ "helper" ], "", true, 1 );
-    kuko::LanguageManager::AddLanguage( "helper", "languages/" + m_settings[ "helper" ] + "_helper.lua" );
-    // Load appropriate font
-    if ( m_settings[ "helper" ] == "english" || m_settings[ "helper" ] == "esperanto" || m_settings[ "helper" ] == "piglatin" )
-    {
-        kuko::FontManager::ReplaceFont( "helper", "font/NotoSans-Bold.ttf", 28 );
-    }
+    SetOption( "helper", LuaManager::Config_GetOption( "helper" ) );
 
     return true;
 }
 
-void ConfigManager::SetConfig( const std::string& key, const std::string& val )
+void ConfigManager::SetOption( const std::string& key, const std::string& val )
 {
     m_settings[ key ] = val;
     SaveConfig();
+}
+
+std::string ConfigManager::GetOption( const std::string& key )
+{
+    return m_settings[ key ];
 }
 
 /*
