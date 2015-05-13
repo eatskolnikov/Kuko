@@ -25,10 +25,16 @@ void LuaManager::Cleanup()
     lua_close( m_state );
 }
 
-void LuaManager::LoadScript( const std::string& path )
+bool LuaManager::LoadScript( const std::string& path )
 {
     Logger::Out( "Load script \"" + path + "\"", "LuaManager::LoadScript" );
-    luaL_dofile( m_state, path.c_str() );
+    if ( luaL_dofile( m_state, path.c_str() ) )
+    {
+        std::string status = lua_tostring( m_state, -1 );
+        Logger::Out( "Script loading state: " + status );
+        return false;
+    }
+    return true;
 }
 
 void LuaManager::Lua_ChooseFunction( const std::string& name )

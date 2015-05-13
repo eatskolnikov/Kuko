@@ -16,7 +16,7 @@ namespace kuko
         static void Cleanup();
 
         protected:
-        static void LoadScript( const std::string& path );
+        static bool LoadScript( const std::string& path );
 
         // Language Functions
         static std::string Language_GetText( const std::string& key );
@@ -52,6 +52,7 @@ namespace kuko
         friend class LanguageManager;
         friend class MapManager;
         friend class MenuManager;
+        friend class ConfigManager;
     };
 }
 

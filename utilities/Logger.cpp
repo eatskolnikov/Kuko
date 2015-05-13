@@ -6,13 +6,20 @@
 std::ofstream Logger::m_file;
 time_t Logger::m_startTime;
 time_t Logger::m_lastTimestamp;
+int Logger::m_logLevel;
 
 void Logger::Setup()
 {
+    m_logLevel = 0;
     m_file.open( "log.txt" );
     m_startTime = time( 0 );
     m_lastTimestamp = m_startTime;
     m_file << "Program begin at " << __DATE__ << " " << __TIME__ << std::endl << std::endl;
+}
+
+void Logger::SetLogLevel( int val )
+{
+    m_logLevel = val;
 }
 
 void Logger::Cleanup()
@@ -21,8 +28,13 @@ void Logger::Cleanup()
     m_file.close();
 }
 
-void Logger::Out( const std::string& message, const std::string& location /* = "" */, bool condition /* = true */ )
+void Logger::Out( const std::string& message, const std::string& location /* = "" */, bool condition /* = true */, int level /* = 0 */ )
 {
+    if ( level < m_logLevel )
+    {
+        return;
+    }
+
     time_t timestamp = GetTimestamp();
     if ( m_lastTimestamp != timestamp )
     {

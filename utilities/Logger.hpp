@@ -11,8 +11,9 @@ class Logger
     public:
     static void Setup();
     static void Cleanup();
+    static void SetLogLevel( int val );
 
-    static void Out( const std::string& message, const std::string& location = "", bool condition = true );
+    static void Out( const std::string& message, const std::string& location = "", bool condition = true, int level = 0 );
     static void Error( const std::string& message, const std::string& location = "" );
 
     static double GetTimestamp();
@@ -23,6 +24,7 @@ class Logger
     static std::ofstream m_file;
     static time_t m_startTime;
     static time_t m_lastTimestamp;
+    static int m_logLevel;
 };
 
 // Shortcut expressions for logger
