@@ -26,6 +26,12 @@ std::string LanguageManager::Text( const std::string& key )
     return ( value == "NOTFOUND" ) ? key + " NOT FOUND" : value;
 }
 
+std::string LanguageManager::Text( const std::string& langType, const std::string& key )
+{
+    std::string value = kuko::LuaManager::Language_GetText( langType, key );
+    return ( value == "NOTFOUND" ) ? key + " NOT FOUND" : value;
+}
+
 std::string LanguageManager::GetSuggestedFont()
 {
     std::string suggested = kuko::LuaManager::Language_GetSuggestedFont();

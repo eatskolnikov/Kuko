@@ -16,6 +16,7 @@ class LanguageManager
     static void AddLanguage( const std::string& id, const std::string& path );
 
     static std::string Text( const std::string& key );
+    static std::string Text( const std::string& langType, const std::string& key );
     static std::string CurrentLanguage();
 
     static std::string GetSuggestedFont();

@@ -92,10 +92,19 @@ void MenuManager::SetupMenu( const std::string& path )
         {
             std::string id = LuaManager::Menu_GetElementString( index, "id" );
             std::string textureId = LuaManager::Menu_GetElementString( index, "texture_id" );
+            std::string languageId = LuaManager::Menu_GetElementString( index, "language_id" );
             std::string fontId = LuaManager::Menu_GetElementString( index, "font_id" );
             std::string textId = LuaManager::Menu_GetElementString( index, "text_id" );
-            std::string text = LanguageManager::Text( textId );
             std::string effect = LuaManager::Menu_GetElementString( index, "effect" );
+            std::string text;
+            if ( languageId == "" )
+            {
+                text = LanguageManager::Text( textId );
+            }
+            else
+            {
+                text = LanguageManager::Text( languageId, textId );
+            }
 
             bool centered = ( LuaManager::Menu_GetElementInt( index, "centered_text" ) == 1 );
 
@@ -149,9 +158,18 @@ void MenuManager::SetupMenu( const std::string& path )
             std::string id = LuaManager::Menu_GetElementString( index, "id" );
             std::string fontId = LuaManager::Menu_GetElementString( index, "font_id" );
             std::string textId = LuaManager::Menu_GetElementString( index, "text_id" );
-            std::string text = LanguageManager::Text( textId );
             std::string effect = LuaManager::Menu_GetElementString( index, "effect" );
             int effectSpeed = LuaManager::Menu_GetElementInt( index, "effect_speed" );
+            std::string languageId = LuaManager::Menu_GetElementString( index, "language_id" );
+            std::string text;
+            if ( languageId == "" )
+            {
+                text = LanguageManager::Text( textId );
+            }
+            else
+            {
+                text = LanguageManager::Text( languageId, textId );
+            }
 
             SDL_Color color;
             color.r = LuaManager::Menu_GetElementInt( index, "font_r" );

@@ -79,6 +79,15 @@ std::string LuaManager::Language_GetText( const std::string& key )
     return result;
 }
 
+std::string LuaManager::Language_GetText( const std::string& langType, const std::string& key )
+{
+    Lua_ChooseFunction( "Language_GetTextFromLanguage" );
+    Lua_PushString( key.c_str() );
+    Lua_PushString( langType.c_str() );
+    std::string result = Lua_GetStringResult();
+    return result;
+}
+
 std::string LuaManager::Language_GetSuggestedFont()
 {
     Lua_ChooseFunction( "Language_GetSuggestedFont" );
