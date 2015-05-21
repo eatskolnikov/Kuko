@@ -8,7 +8,7 @@ namespace kuko
 
 UITextBox::UITextBox()
 {
-    m_label = "text";
+    m_label = "";
 }
 
 void UITextBox::Setup( const std::string& id, SDL_Rect position, SDL_Color bgColor, SDL_Color selectedColor, SDL_Color textColor, TTF_Font* font )
@@ -82,8 +82,13 @@ std::string UITextBox::GetText()
 
 void UITextBox::AppendText( const std::string& text )
 {
-    Logger::Out( "moo", "UITextBox::SetText" );
     m_label += text;
+    GenerateTexture();
+}
+
+void UITextBox::RemoveLastLetter()
+{
+    m_label = m_label.substr( 0, m_label.size() - 1 );
     GenerateTexture();
 }
 

@@ -11,12 +11,16 @@ namespace kuko
 {
 
 // TODO: Add "registration" of keys for commands.
-enum CommandButton { TAP, SECONDARY_TAP, MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT };
+enum CommandButton { TAP, SECONDARY_TAP, MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, BACKSPACE };
 
-struct TriggerInfo
+class TriggerInfo
 {
+    public:
+    TriggerInfo() { timeout = 0; }
+
     bool down;
     int actionX, actionY;
+    int timeout;
 };
 
 class InputManager

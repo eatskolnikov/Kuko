@@ -57,9 +57,21 @@ void InputManager::Update()
 
         else if ( m_event.type == SDL_TEXTINPUT )
         {
+            // type, timestamp, windowID, text
+            // https://wiki.libsdl.org/SDL_TextInputEvent
             Logger::Out( "Received SDL_TEXTINPUT event", "InputManager::Update" );
             strcat( m_textInputBuffer, m_event.text.text );
-            Logger::Out( "Value received: \"" + std::string(m_textInputBuffer) + "\"", "InputManager::Update" );
+            Logger::Out( "Value received: \"" + std::string( m_textInputBuffer ) + "\"", "InputManager::Update" );
+        }
+
+        else if ( m_event.type == SDL_TEXTEDITING )
+        {
+            // type, timestamp, windowID, text, start, length
+            // https://wiki.libsdl.org/SDL_TextEditingEvent
+            Logger::Out( "Received SDL_TEXTEDITING event", "InputManager::Update" );
+            char blah[256];
+            strcat( blah, m_event.text.text );
+            Logger::Out( "Value received: \"" + std::string( blah ) + "\"", "InputManager::Update" );
         }
     }
 
@@ -81,6 +93,17 @@ void InputManager::Update()
     {
         m_eventTriggered [ MOVE_RIGHT ].down = true;
     }
+    if ( keyStates[ SDL_SCANCODE_BACKSPACE ] && m_eventTriggered [ BACKSPACE ].timeout == 0 )
+    {
+        m_eventTriggered [ BACKSPACE ].down = true;
+        m_eventTriggered [ BACKSPACE ].timeout = 500;
+    }
+
+    // Handle timeouts
+    if ( m_eventTriggered [ BACKSPACE ].timeout > 0 )
+    {
+        m_eventTriggered [ BACKSPACE ].timeout -= 1;
+    }
 }
 
 void InputManager::ResetTriggers()
@@ -91,6 +114,7 @@ void InputManager::ResetTriggers()
     m_eventTriggered[ MOVE_DOWN ].down = false;
     m_eventTriggered[ MOVE_LEFT ].down = false;
     m_eventTriggered[ MOVE_RIGHT ].down = false;
+    m_eventTriggered[ BACKSPACE ].down = false;
     m_textInputBuffer[0] = '\0';
 }
 

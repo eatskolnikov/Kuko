@@ -30,6 +30,7 @@ class MenuManager
     void ResetMouse();
     void SetTextEditing( bool turnOn );
     void AppendToActiveTextBox( const std::string& text );
+    void RemoveLastCharacterOfActiveTextBox();
 
     int GetCurrentPage();
     void SetCurrentPage( int val );

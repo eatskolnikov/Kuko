@@ -25,6 +25,7 @@ class UITextBox : public IWidget
     virtual void SetText( const std::string& text );
     virtual std::string GetText();
     virtual void AppendText( const std::string& text );
+    virtual void RemoveLastLetter();
     virtual void SetActive( bool val );
 
     private:

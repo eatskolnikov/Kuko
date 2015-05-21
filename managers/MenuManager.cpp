@@ -453,4 +453,14 @@ void MenuManager::AppendToActiveTextBox( const std::string& text )
     m_activeTextbox->AppendText( text );
 }
 
+void MenuManager::RemoveLastCharacterOfActiveTextBox()
+{
+    if ( m_activeTextbox == NULL )
+    {
+        return;
+    }
+
+    m_activeTextbox->RemoveLastLetter();
+}
+
 }
