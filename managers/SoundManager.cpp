@@ -2,6 +2,7 @@
 #include "SoundManager.hpp"
 
 #include "../utilities/Logger.hpp"
+#include "../utilities/StringUtil.hpp"
 
 namespace kuko
 {
@@ -58,7 +59,7 @@ void SoundManager::ClearAudio()
 void SoundManager::PlayMusic( const std::string& key, bool loop )
 {
     Logger::Out( "play music " + key );
-    Logger::Out( "Music Count " + I2S( m_music.size() ) );
+    Logger::Out( "Music Count " + StringUtil::IntToString( m_music.size() ) );
 
     if ( m_music.find( key ) != m_music.end() )
     {

@@ -6,11 +6,13 @@
 #include "FontManager.hpp"
 
 #include "../utilities/Logger.hpp"
+#include "../utilities/StringUtil.hpp"
 
 namespace kuko
 {
 
 std::map<std::string, std::string> ConfigManager::m_settings;
+std::map<std::string, std::string> ConfigManager::m_saveData;
 
 bool ConfigManager::LoadConfig()
 {
@@ -67,13 +69,24 @@ void ConfigManager::CreateNewConfig()
 {
     Logger::Out( "Creating new config file", "ConfigManager::CreateNewConfig" );
 
-    std::ofstream out;
-    out.open( "config.lua" );
+    SetOption( "savegame_count", "0" );
+}
 
-    out << "config = {" << std::endl;
-    out << "}" << std::endl;
+void ConfigManager::CreateNewSave( const std::string& filename )
+{
+    int savegameCount = StringUtil::StringToInt( GetOption( "savegame_count" ) );
+}
 
-    out.close();
+void ConfigManager::SaveState()
+{
+}
+
+void ConfigManager::LoadState( const std::string& filename )
+{
+}
+
+std::string ConfigManager::GetSaveData( const std::string& key )
+{
 }
 
 }

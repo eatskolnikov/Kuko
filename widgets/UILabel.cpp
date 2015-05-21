@@ -3,6 +3,7 @@
 
 #include "../base/Application.hpp"
 #include "../managers/ImageManager.hpp"
+#include "../utilities/StringUtil.hpp"
 
 namespace kuko
 {
@@ -14,7 +15,7 @@ UILabel::UILabel() : IWidget()
 
 void UILabel::Setup( const std::string& id, const std::string& label, SDL_Rect position, bool centered, SDL_Color textColor, TTF_Font* font, const std::string& effect, int effectMax )
 {
-    Logger::Out( "Setup " + label + ", Centered " + I2S( centered ), "UILabel::Setup" );
+    Logger::Out( "Setup " + label + ", Centered " + StringUtil::IntToString( centered ), "UILabel::Setup" );
     m_position = position;
     m_color = textColor;
     m_font = font;

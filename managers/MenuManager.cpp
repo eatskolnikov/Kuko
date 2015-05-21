@@ -5,6 +5,7 @@
 #include "LuaManager.hpp"
 #include "LanguageManager.hpp"
 #include "../utilities/Logger.hpp"
+#include "../utilities/StringUtil.hpp"
 
 #include <fstream>
 
@@ -50,7 +51,7 @@ void MenuManager::NextPage()
     {
         m_currentPage = 1;
     }
-    Logger::Out( "Page menu is now " + Logger::IntToString( m_currentPage ) );
+    Logger::Out( "Page menu is now " + StringUtil::IntToString( m_currentPage ) );
 }
 
 
@@ -263,7 +264,7 @@ void MenuManager::SetupMenu( const std::string& path )
     }
 
     int uiElements = m_images.size() + m_labels.size() + m_buttons.size();
-    Logger::Out( "Menu has " + Logger::IntToString( uiElements ) + " elements", "MenuManager::SetupMenu" );
+    Logger::Out( "Menu has " + StringUtil::IntToString( uiElements ) + " elements", "MenuManager::SetupMenu" );
 }
 
 void MenuManager::ClearMenu()

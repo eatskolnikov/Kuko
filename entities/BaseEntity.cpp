@@ -3,6 +3,7 @@
 #include "BaseEntity.hpp"
 
 #include "../managers/ImageManager.hpp"
+#include "../utilities/StringUtil.hpp"
 
 namespace kuko
 {
@@ -32,7 +33,7 @@ void BaseEntity::SetFrame( SDL_Rect frame )
 
 void BaseEntity::SetPosition( int x, int y )
 {
-    Logger::Out( I2S( x ) + "," + I2S( y ) );
+    Logger::Out( StringUtil::IntToString( x ) + "," + StringUtil::IntToString( y ) );
     m_position.x = x;
     m_position.y = y;
     UpdateSprite();

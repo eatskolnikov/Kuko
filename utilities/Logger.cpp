@@ -1,7 +1,6 @@
 // Kuko Framework - https://github.com/Rejcx/Kuko - Rachel J. Morris - MIT License
 #include "Logger.hpp"
 #include <ctime>
-#include <sstream>
 
 std::ofstream Logger::m_file;
 time_t Logger::m_startTime;
@@ -78,13 +77,6 @@ double Logger::GetTimestamp()
     time_t now = time( 0 );
     double appTime = difftime( now, m_startTime );
     return appTime;
-}
-
-std::string Logger::IntToString( int number )
-{
-    std::stringstream ss;
-    ss << number;
-    return ss.str();
 }
 
 

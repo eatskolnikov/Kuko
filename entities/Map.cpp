@@ -3,6 +3,7 @@
 #include "../base/Sprite.hpp"
 #include "../base/Application.hpp"
 #include "../managers/MapManager.hpp"
+#include "../utilities/StringUtil.hpp"
 
 namespace kuko
 {
@@ -35,7 +36,7 @@ void Map::Setup( const std::string& id, const std::string& file, SDL_Texture* ti
         int y = int( i / int ( mapHeight ) );
 
         BaseEntity tile;
-        tile.Setup( "t-" + I2S( i ), tileset, { x * m_tileWH, y * m_tileWH, m_tileWH, m_tileWH } );
+        tile.Setup( "t-" + StringUtil::IntToString( i ), tileset, { x * m_tileWH, y * m_tileWH, m_tileWH, m_tileWH } );
         tile.SetFrame( { frameX, frameY, m_tileWH, m_tileWH } );
         tile.SetSolid( MapManager::GetTileSolidity( frame ) );
         m_lstTiles.push_back( tile );
