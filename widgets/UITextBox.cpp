@@ -11,7 +11,7 @@ UITextBox::UITextBox()
     m_label = "";
 }
 
-void UITextBox::Setup( const std::string& id, SDL_Rect position, SDL_Color bgColor, SDL_Color selectedColor, SDL_Color textColor, TTF_Font* font )
+void UITextBox::Setup( const std::string& id, SDL_Rect position, SDL_Color bgColor, SDL_Color selectedColor, SDL_Color textColor, TTF_Font* font, int maxChars )
 {
     Logger::Out( "Setup " + id, "UITextBox::Setup" );
     m_position = position;
@@ -22,6 +22,7 @@ void UITextBox::Setup( const std::string& id, SDL_Rect position, SDL_Color bgCol
     m_font = font;
     GenerateTexture();
     SDL_SetTextInputRect( &m_position );
+    m_maxChars = maxChars;
 }
 
 void UITextBox::SetTextColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a )
@@ -92,8 +93,18 @@ void UITextBox::RemoveLastLetter()
     GenerateTexture();
 }
 
+void UITextBox::ValidateText()
+{
+    if ( m_label.size() > m_maxChars )
+    {
+        m_label = m_label.substr( 0, m_maxChars );
+    }
+}
+
 void UITextBox::GenerateTexture()
 {
+    ValidateText();
+
     SDL_Surface* textSurface = TTF_RenderUTF8_Solid( m_font, m_label.c_str(), m_textColor );
     m_sprite.SetTexture ( SDL_CreateTextureFromSurface( kuko::Application::GetRenderer(), textSurface ) );
     SDL_FreeSurface( textSurface );

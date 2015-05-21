@@ -17,7 +17,7 @@ class UITextBox : public IWidget
     public:
     UITextBox();
     virtual ~UITextBox() { ; }
-    void Setup( const std::string& id, SDL_Rect position, SDL_Color bgColor, SDL_Color selectedColor, SDL_Color textColor, TTF_Font* font );
+    void Setup( const std::string& id, SDL_Rect position, SDL_Color bgColor, SDL_Color selectedColor, SDL_Color textColor, TTF_Font* font, int maxChars );
     void SetTextColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a );
     void SetBackgroundColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a );
     virtual void Draw();
@@ -30,6 +30,7 @@ class UITextBox : public IWidget
 
     private:
     void GenerateTexture();
+    void ValidateText();
 
     std::string m_label;
     TTF_Font* m_font;
@@ -38,6 +39,7 @@ class UITextBox : public IWidget
     SDL_Color m_bgColor;
     SDL_Color m_defaultBgColor;
     SDL_Color m_selectedBgColor;
+    int m_maxChars; // set to 0 or < 0 to ignore
 };
 
 }

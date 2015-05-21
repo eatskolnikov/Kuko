@@ -217,6 +217,7 @@ void MenuManager::SetupMenu( const std::string& path )
             std::string textId = LuaManager::Menu_GetElementString( index, "text_id" );
             std::string languageId = LuaManager::Menu_GetElementString( index, "language_id" );
             std::string text;
+            int maxLength = LuaManager::Menu_GetElementInt( index, "max_length" );
 
             if ( languageId == "" )
             {
@@ -253,10 +254,8 @@ void MenuManager::SetupMenu( const std::string& path )
             pos.w = LuaManager::Menu_GetElementInt( index, "width" );
             pos.h = LuaManager::Menu_GetElementInt( index, "height" );
 
-            bool centered = ( LuaManager::Menu_GetElementInt( index, "centered_text" ) == 1 );
-
             UITextBox* textbox = new UITextBox;
-            textbox->Setup( id, pos, bgColor, selectedBgColor, textColor, kuko::FontManager::GetFont( fontId ) );
+            textbox->Setup( id, pos, bgColor, selectedBgColor, textColor, kuko::FontManager::GetFont( fontId ), maxLength );
 
             if ( page != 0 ) { textbox->SetVisiblePage( page ); }
             m_textboxes.insert( std::pair<std::string, UITextBox*>( id, textbox ) );

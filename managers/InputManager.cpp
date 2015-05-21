@@ -96,7 +96,7 @@ void InputManager::Update()
     if ( keyStates[ SDL_SCANCODE_BACKSPACE ] && m_eventTriggered [ BACKSPACE ].timeout == 0 )
     {
         m_eventTriggered [ BACKSPACE ].down = true;
-        m_eventTriggered [ BACKSPACE ].timeout = 500;
+        m_eventTriggered [ BACKSPACE ].timeout = m_eventTriggered [ BACKSPACE ].maxTimeout;
     }
 
     // Handle timeouts
