@@ -209,6 +209,51 @@ void MenuManager::SetupMenu( const std::string& path )
 
             m_labels.insert( std::pair<std::string, UILabel*>( id, label ) );
         }
+        else if ( type == "textbox" )
+        {
+            std::string id = LuaManager::Menu_GetElementString( index, "id" );
+            std::string fontId = LuaManager::Menu_GetElementString( index, "font_id" );
+            std::string textId = LuaManager::Menu_GetElementString( index, "text_id" );
+            std::string languageId = LuaManager::Menu_GetElementString( index, "language_id" );
+            std::string text;
+
+            if ( languageId == "" )
+            {
+                text = LanguageManager::Text( textId );
+            }
+            else
+            {
+                text = LanguageManager::Text( languageId, textId );
+            }
+
+            SDL_Color bgColor;
+            bgColor.r = LuaManager::Menu_GetElementInt( index, "background_r" );
+            bgColor.g = LuaManager::Menu_GetElementInt( index, "background_g" );
+            bgColor.b = LuaManager::Menu_GetElementInt( index, "background_b" );
+            bgColor.a = LuaManager::Menu_GetElementInt( index, "background_a" );
+
+            SDL_Color textColor;
+            textColor.r = LuaManager::Menu_GetElementInt( index, "font_r" );
+            textColor.g = LuaManager::Menu_GetElementInt( index, "font_g" );
+            textColor.b = LuaManager::Menu_GetElementInt( index, "font_b" );
+            textColor.a = LuaManager::Menu_GetElementInt( index, "font_a" );
+
+            int page = LuaManager::Menu_GetElementInt( index, "page" );
+
+            SDL_Rect pos;
+            pos.x = LuaManager::Menu_GetElementInt( index, "x" );
+            pos.y = LuaManager::Menu_GetElementInt( index, "y" );
+            pos.w = LuaManager::Menu_GetElementInt( index, "width" );
+            pos.h = LuaManager::Menu_GetElementInt( index, "height" );
+
+            bool centered = ( LuaManager::Menu_GetElementInt( index, "centered_text" ) == 1 );
+
+            UITextBox* textbox = new UITextBox;
+            textbox->Setup( id, pos, bgColor, textColor, kuko::FontManager::GetFont( fontId ) );
+
+            if ( page != 0 ) { textbox->SetVisiblePage( page ); }
+            m_textboxes.insert( std::pair<std::string, UITextBox*>( id, textbox ) );
+        }
     }
 
     int uiElements = m_images.size() + m_labels.size() + m_buttons.size();
@@ -247,10 +292,21 @@ void MenuManager::ClearMenu()
             it->second = NULL;
         }
     }
+    for (   std::map<std::string, UITextBox*>::iterator it = m_textboxes.begin();
+            it != m_textboxes.end();
+            ++it )
+    {
+        if ( it->second != NULL )
+        {
+            delete it->second;
+            it->second = NULL;
+        }
+    }
 
     m_images.clear();
     m_labels.clear();
     m_buttons.clear();
+    m_textboxes.clear();
 }
 
 void MenuManager::Update()
@@ -304,6 +360,15 @@ void MenuManager::Draw()
             it->second->Draw();
         }
     }
+    for (   std::map<std::string, UITextBox*>::iterator it = m_textboxes.begin();
+            it != m_textboxes.end();
+            ++it )
+    {
+        if ( it->second->GetVisiblePage() == m_currentPage || it->second->GetVisiblePage() == 0 )
+        {
+            it->second->Draw();
+        }
+    }
 }
 
 void MenuManager::ResetMouse()
@@ -333,6 +398,22 @@ bool MenuManager::IsButtonClicked( const std::string& key, int mouseX, int mouse
 
     m_mouseDown = false;
     return false;
+}
+
+void MenuManager::CheckTextboxClick( int mouseX, int mouseY )
+{
+    // If a textbox is clicked, make sure the widget visually represents that.
+    for ( std::map< std::string, UITextBox* >::iterator iter = m_textboxes.begin();
+            iter != m_textboxes.end(); ++iter )
+    {
+        SDL_Rect widget = iter->second->GetPosition();
+        bool isHit = ( mouseX >= widget.x && mouseX <= widget.x + widget.w &&
+                 mouseY >= widget.y && mouseY <= widget.y + widget.h );
+
+        if ( isHit )
+        {
+        }
+    }
 }
 
 }

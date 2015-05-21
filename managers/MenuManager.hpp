@@ -6,6 +6,7 @@
 #include "../widgets/UIButton.hpp"
 #include "../widgets/UILabel.hpp"
 #include "../widgets/UIImage.hpp"
+#include "../widgets/UITextBox.hpp"
 
 #include <map>
 #include <string>
@@ -25,6 +26,7 @@ class MenuManager
     void Update();
     void Reload();
     bool IsButtonClicked( const std::string& key, int mouseX, int mouseY );
+    void CheckTextboxClick( int mouseX, int mouseY );
     void ResetMouse();
 
     int GetCurrentPage();
@@ -35,6 +37,7 @@ class MenuManager
     std::map<std::string, UIImage*> m_images;
     std::map<std::string, UILabel*> m_labels;
     std::map<std::string, UIButton*> m_buttons;
+    std::map<std::string, UITextBox*> m_textboxes;
     std::string m_currentMenu;
     bool m_mouseDown;
     int m_currentPage;
