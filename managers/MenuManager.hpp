@@ -28,6 +28,8 @@ class MenuManager
     bool IsButtonClicked( const std::string& key, int mouseX, int mouseY );
     void CheckTextboxClick( int mouseX, int mouseY );
     void ResetMouse();
+    void SetTextEditing( bool turnOn );
+    void AppendToActiveTextBox( const std::string& text );
 
     int GetCurrentPage();
     void SetCurrentPage( int val );
@@ -42,6 +44,7 @@ class MenuManager
     bool m_mouseDown;
     int m_currentPage;
     int m_maxPages;
+    UITextBox* m_activeTextbox;
 };
 
 }

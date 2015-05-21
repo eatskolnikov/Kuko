@@ -5,6 +5,7 @@
 #include <SDL.h>
 
 #include <map>
+#include <string>
 
 namespace kuko
 {
@@ -28,12 +29,15 @@ class InputManager
     static void IgnoreMouseUntilButtonUp();
 
     static std::map<CommandButton, TriggerInfo> GetTriggerInfo();
+    static std::string GetTextInputBuffer();
 
     protected:
     static void ResetTriggers();
 
     static SDL_Event m_event;
     static std::map<CommandButton, TriggerInfo> m_eventTriggered;
+
+    static char m_textInputBuffer[256];
 };
 
 }

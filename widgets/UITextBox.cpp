@@ -11,14 +11,17 @@ UITextBox::UITextBox()
     m_label = "text";
 }
 
-void UITextBox::Setup( const std::string& id, SDL_Rect position, SDL_Color bgColor, SDL_Color textColor, TTF_Font* font )
+void UITextBox::Setup( const std::string& id, SDL_Rect position, SDL_Color bgColor, SDL_Color selectedColor, SDL_Color textColor, TTF_Font* font )
 {
     Logger::Out( "Setup " + id, "UITextBox::Setup" );
     m_position = position;
     m_textColor = textColor;
     m_bgColor = bgColor;
+    m_defaultBgColor = bgColor;
+    m_selectedBgColor = selectedColor;
     m_font = font;
     GenerateTexture();
+    SDL_SetTextInputRect( &m_position );
 }
 
 void UITextBox::SetTextColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a )
@@ -49,13 +52,43 @@ void UITextBox::Draw()
     kuko::ImageManager::Draw( m_sprite );
 }
 
+void UITextBox::SetActive( bool val )
+{
+    if ( val )
+    {
+        m_bgColor = m_selectedBgColor;
+    }
+    else
+    {
+        m_bgColor = m_defaultBgColor;
+    }
+}
+
 void UITextBox::Update()
 {
 }
 
+
+void UITextBox::SetText( const std::string& text )
+{
+    m_label = text;
+    GenerateTexture();
+}
+
+std::string UITextBox::GetText()
+{
+    return m_label;
+}
+
+void UITextBox::AppendText( const std::string& text )
+{
+    Logger::Out( "moo", "UITextBox::SetText" );
+    m_label += text;
+    GenerateTexture();
+}
+
 void UITextBox::GenerateTexture()
 {
-    Logger::Out( "text: " + m_label );
     SDL_Surface* textSurface = TTF_RenderUTF8_Solid( m_font, m_label.c_str(), m_textColor );
     m_sprite.SetTexture ( SDL_CreateTextureFromSurface( kuko::Application::GetRenderer(), textSurface ) );
     SDL_FreeSurface( textSurface );

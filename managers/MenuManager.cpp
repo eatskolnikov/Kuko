@@ -16,6 +16,7 @@ MenuManager::MenuManager()
     // pages start at 1, with an element visible on page 0 being visible on all pages.
     m_currentPage = 1;
     m_maxPages = 1;
+    m_activeTextbox = NULL;
 }
 
 MenuManager::~MenuManager()
@@ -232,6 +233,12 @@ void MenuManager::SetupMenu( const std::string& path )
             bgColor.b = LuaManager::Menu_GetElementInt( index, "background_b" );
             bgColor.a = LuaManager::Menu_GetElementInt( index, "background_a" );
 
+            SDL_Color selectedBgColor;
+            selectedBgColor.r = LuaManager::Menu_GetElementInt( index, "selected_r" );
+            selectedBgColor.g = LuaManager::Menu_GetElementInt( index, "selected_g" );
+            selectedBgColor.b = LuaManager::Menu_GetElementInt( index, "selected_b" );
+            selectedBgColor.a = LuaManager::Menu_GetElementInt( index, "selected_a" );
+
             SDL_Color textColor;
             textColor.r = LuaManager::Menu_GetElementInt( index, "font_r" );
             textColor.g = LuaManager::Menu_GetElementInt( index, "font_g" );
@@ -249,7 +256,7 @@ void MenuManager::SetupMenu( const std::string& path )
             bool centered = ( LuaManager::Menu_GetElementInt( index, "centered_text" ) == 1 );
 
             UITextBox* textbox = new UITextBox;
-            textbox->Setup( id, pos, bgColor, textColor, kuko::FontManager::GetFont( fontId ) );
+            textbox->Setup( id, pos, bgColor, selectedBgColor, textColor, kuko::FontManager::GetFont( fontId ) );
 
             if ( page != 0 ) { textbox->SetVisiblePage( page ); }
             m_textboxes.insert( std::pair<std::string, UITextBox*>( id, textbox ) );
@@ -412,8 +419,38 @@ void MenuManager::CheckTextboxClick( int mouseX, int mouseY )
 
         if ( isHit )
         {
+            if ( m_activeTextbox != NULL )
+            {
+                m_activeTextbox->SetActive( false );
+            }
+            Logger::Out( "Set active text box to " + iter->second->GetId(), "MenuManager::CheckTextboxClick" );
+            m_activeTextbox = iter->second;
+            m_activeTextbox->SetActive( true );
         }
     }
+}
+
+void MenuManager::SetTextEditing( bool turnOn )
+{
+    if ( turnOn )
+    {
+        SDL_StartTextInput();
+    }
+    else
+    {
+        SDL_StopTextInput();
+    }
+}
+
+void MenuManager::AppendToActiveTextBox( const std::string& text )
+{
+    Logger::Out( "Append \"" + text + "\" to active text box.", "MenuManager::AppendToActiveTextBox" );
+    if ( m_activeTextbox == NULL )
+    {
+        return;
+    }
+
+    m_activeTextbox->AppendText( text );
 }
 
 }
