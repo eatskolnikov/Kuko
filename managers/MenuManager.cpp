@@ -430,6 +430,19 @@ void MenuManager::CheckTextboxClick( int mouseX, int mouseY )
     }
 }
 
+std::string MenuManager::GetTextboxValue( const std::string& key )
+{
+    for ( std::map< std::string, UITextBox* >::iterator iter = m_textboxes.begin();
+            iter != m_textboxes.end(); ++iter )
+    {
+        if ( iter->second->GetId() == key )
+        {
+            return iter->second->GetText();
+        }
+    }
+    return "";
+}
+
 void MenuManager::SetTextEditing( bool turnOn )
 {
     if ( turnOn )

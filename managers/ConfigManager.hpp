@@ -22,10 +22,12 @@ class ConfigManager
     static std::string GetOption( const std::string& key );
 
     // Savegames
-    static void CreateNewSave( const std::string& filename );
+    static void CreateNewSave( const std::string& playername );
     static void SaveState();
-    static void LoadState( const std::string& filename );
+    static bool LoadState( const std::string& filename );
     static std::string GetSaveData( const std::string& key );
+    static void SetSaveData( const std::string& key, const std::string& val );
+    static void DeleteCurrentSavefile();
 
     private:
     // Configuration
@@ -34,6 +36,7 @@ class ConfigManager
 
     // Savegames
     static std::map<std::string, std::string> m_saveData;
+    static std::string m_currentSavegame;
 };
 
 }

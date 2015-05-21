@@ -31,6 +31,7 @@ class MenuManager
     void SetTextEditing( bool turnOn );
     void AppendToActiveTextBox( const std::string& text );
     void RemoveLastCharacterOfActiveTextBox();
+    std::string GetTextboxValue( const std::string& key );
 
     int GetCurrentPage();
     void SetCurrentPage( int val );

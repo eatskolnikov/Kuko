@@ -14,6 +14,7 @@ UITextBox::UITextBox()
 void UITextBox::Setup( const std::string& id, SDL_Rect position, SDL_Color bgColor, SDL_Color selectedColor, SDL_Color textColor, TTF_Font* font, int maxChars )
 {
     Logger::Out( "Setup " + id, "UITextBox::Setup" );
+    m_id = id;
     m_position = position;
     m_textColor = textColor;
     m_bgColor = bgColor;

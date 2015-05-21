@@ -205,4 +205,12 @@ std::string LuaManager::Config_GetOption( const std::string& key )
     return result;
 }
 
+std::string LuaManager::Savegame_GetData( const std::string& key )
+{
+    Lua_ChooseFunction( "Savegame_GetData" );
+    Lua_PushString( key.c_str() );
+    std::string result = Lua_GetStringResult();
+    return result;
+}
+
 }

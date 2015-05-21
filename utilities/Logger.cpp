@@ -6,6 +6,7 @@ std::ofstream Logger::m_file;
 time_t Logger::m_startTime;
 time_t Logger::m_lastTimestamp;
 int Logger::m_logLevel;
+std::string Logger::m_categoryFilter;
 
 /*
     m_logLevel:
@@ -26,14 +27,31 @@ void Logger::SetLogLevel( int val )
     m_logLevel = val;
 }
 
+void Logger::SetFilterWord( const std::string& filter )
+{
+    Out( "Setting filter to only display messages of category \"" + filter + "\"" );
+    m_categoryFilter = filter;
+}
+
 void Logger::Cleanup()
 {
     m_file << std::endl << "Program end, elapsed time: " << GetTimestamp() << " second(s)" << std::endl;
     m_file.close();
 }
 
-void Logger::Out( const std::string& message, const std::string& location /* = "" */, bool condition /* = true */, int level /* = 0 */ )
+void Logger::Out( const std::string& message, const std::string& location /* = "" */, const std::string& category /* = "" */, bool condition /* = true */, int level /* = 0 */ )
 {
+    if ( m_categoryFilter.size() > 0 )
+    {
+        // Filter is active
+
+        if ( category.size() == 0
+            || m_categoryFilter.find( category ) == std::string::npos )
+        {
+            return;
+        }
+    }
+
     if ( level < m_logLevel )
     {
         return;

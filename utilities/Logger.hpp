@@ -12,8 +12,9 @@ class Logger
     static void Setup();
     static void Cleanup();
     static void SetLogLevel( int val );
+    static void SetFilterWord( const std::string& filter );
 
-    static void Out( const std::string& message, const std::string& location = "", bool condition = true, int level = 0 );
+    static void Out( const std::string& message, const std::string& location = "", const std::string& category = "", bool condition = true, int level = 0 );
     static void Error( const std::string& message, const std::string& location = "" );
 
     static double GetTimestamp();
@@ -23,6 +24,7 @@ class Logger
     static time_t m_startTime;
     static time_t m_lastTimestamp;
     static int m_logLevel;
+    static std::string m_categoryFilter;
 };
 
 // Shortcut expressions for logger

@@ -41,6 +41,7 @@ namespace kuko
 
         // Config Functions
         static std::string Config_GetOption( const std::string& key );
+        static std::string Savegame_GetData( const std::string& key );
 
         static lua_State* m_state;
 
