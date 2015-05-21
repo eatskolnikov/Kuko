@@ -26,7 +26,7 @@ Kuko is a reusable game framework being built with C++, SDL2, and Lua.  The inte
 ## Projects using Kuko
 
 * [Pickin' Sticks LXXIV](https://github.com/Moosader/Pickin-Sticks-LXXIV/)
-* Language Village (Fantazio de Esperanto) - Early development (March 2015 - ?)
+* [Rayto Language Fantasy](https://github.com/Moosader/Rayto-Language-Fantasy)
 
 Future projects:
 
