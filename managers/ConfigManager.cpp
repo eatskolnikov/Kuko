@@ -28,6 +28,7 @@ bool ConfigManager::LoadConfig()
 
 void ConfigManager::SetOption( const std::string& key, const std::string& val )
 {
+    Logger::Out( "Set config option \"" + key + "\" to value \"" + val + "\".", "ConfigManager::SetOption" );
     m_settings[ key ] = val;
     SaveConfig();
 }
