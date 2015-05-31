@@ -22,6 +22,9 @@ namespace kuko
         static std::string Language_GetText( const std::string& key );
         static std::string Language_GetText( const std::string& langType, const std::string& key );
         static std::string Language_GetSuggestedFont();
+        static std::string Language_GetSpecialField( const std::string& langType, const std::string& field, const std::string& key );
+        static std::string Language_GetSpecialField( const std::string& langType, const std::string& field, int key );
+        static int Language_GetSpecialFieldCount( const std::string& langType, const std::string& field );
 
         // Menu Functions
         static int Menu_GetElementCount();

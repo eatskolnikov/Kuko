@@ -32,6 +32,11 @@ class MenuManager
     void AppendToActiveTextBox( const std::string& text );
     void RemoveLastCharacterOfActiveTextBox();
     std::string GetTextboxValue( const std::string& key );
+    void UpdateLabelText( const std::string& id, const std::string& text );
+
+    void AddLabel( const std::string& id, UILabel* label );
+    void AddButton( const std::string& id, UIButton* button );
+    void AddImage( const std::string& id, UIImage* image );
 
     int GetCurrentPage();
     void SetCurrentPage( int val );

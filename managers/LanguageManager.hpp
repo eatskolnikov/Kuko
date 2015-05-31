@@ -21,6 +21,10 @@ class LanguageManager
 
     static std::string GetSuggestedFont();
 
+    static std::string SpecialField( const std::string& langType, const std::string& field, const std::string& key );
+    static std::string SpecialField( const std::string& langType, const std::string& field, int key );
+    static int SpecialFieldCount( const std::string& langType, const std::string& field );
+
     protected:
     static std::string m_currentLanguage;
 };

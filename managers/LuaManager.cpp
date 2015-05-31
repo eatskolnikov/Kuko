@@ -102,6 +102,35 @@ std::string LuaManager::Language_GetSuggestedFont()
     return result;
 }
 
+std::string LuaManager::Language_GetSpecialField( const std::string& langType, const std::string& field, const std::string& key )
+{
+    Lua_ChooseFunction( "Language_GetSpecialField" );
+    Lua_PushString( langType.c_str() );
+    Lua_PushString( field.c_str() );
+    Lua_PushString( key.c_str() );
+    std::string result = Lua_GetStringResult();
+    return result;
+}
+
+std::string LuaManager::Language_GetSpecialField( const std::string& langType, const std::string& field, int key )
+{
+    Lua_ChooseFunction( "Language_GetSpecialField" );
+    Lua_PushString( langType.c_str() );
+    Lua_PushString( field.c_str() );
+    Lua_PushInt( key );
+    std::string result = Lua_GetStringResult();
+    return result;
+}
+
+int LuaManager::Language_GetSpecialFieldCount( const std::string& langType, const std::string& field )
+{
+    Lua_ChooseFunction( "Language_GetSpecialFieldCount" );
+    Lua_PushString( langType.c_str() );
+    Lua_PushString( field.c_str() );
+    int result = Lua_GetIntResult();
+    return result;
+}
+
 int LuaManager::Menu_GetElementCount()
 {
     Lua_ChooseFunction( "Menu_GetElementCount" );

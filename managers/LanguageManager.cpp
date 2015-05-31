@@ -39,4 +39,22 @@ std::string LanguageManager::GetSuggestedFont()
     return suggested;
 }
 
+std::string LanguageManager::SpecialField( const std::string& langType, const std::string& field, const std::string& key )
+{
+    std::string value = kuko::LuaManager::Language_GetSpecialField( langType, field, key );
+    return ( value == "NOTFOUND" ) ? key + " NOT FOUND" : value;
+}
+
+std::string LanguageManager::SpecialField( const std::string& langType, const std::string& field, int key )
+{
+    std::string value = kuko::LuaManager::Language_GetSpecialField( langType, field, key );
+    return ( value == "NOTFOUND" ) ? key + " NOT FOUND" : value;
+}
+
+int LanguageManager::SpecialFieldCount( const std::string& langType, const std::string& field )
+{
+    int value = kuko::LuaManager::Language_GetSpecialFieldCount( langType, field );
+    return value;
+}
+
 }

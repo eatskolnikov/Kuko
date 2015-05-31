@@ -88,7 +88,8 @@ void MenuManager::SetupMenu( const std::string& path )
             UIImage* image = new UIImage;
             image->Setup( id, pos, kuko::ImageManager::GetTexture( textureId ) );
             if ( page != 0 ) { image->SetVisiblePage( page ); }
-            m_images.insert( std::pair<std::string, UIImage*>( id, image ) );
+
+            AddImage( id, image );
         }
         else if ( type == "button" )
         {
@@ -153,7 +154,7 @@ void MenuManager::SetupMenu( const std::string& path )
             }
             if ( page != 0 ) { button->SetVisiblePage( page ); }
 
-            m_buttons.insert( std::pair<std::string, UIButton*>( id, button ) );
+            AddButton( id, button );
         }
         else if ( type == "label" )
         {
@@ -209,7 +210,7 @@ void MenuManager::SetupMenu( const std::string& path )
 
             if ( page != 0 ) { label->SetVisiblePage( page ); }
 
-            m_labels.insert( std::pair<std::string, UILabel*>( id, label ) );
+            AddLabel( id, label );
         }
         else if ( type == "textbox" )
         {
@@ -265,6 +266,21 @@ void MenuManager::SetupMenu( const std::string& path )
 
     int uiElements = m_images.size() + m_labels.size() + m_buttons.size();
     Logger::Out( "Menu has " + StringUtil::IntToString( uiElements ) + " elements", "MenuManager::SetupMenu" );
+}
+
+void MenuManager::AddLabel( const std::string& id, UILabel* label )
+{
+    m_labels.insert( std::pair<std::string, UILabel*>( id, label ) );
+}
+
+void MenuManager::AddButton( const std::string& id, UIButton* button )
+{
+    m_buttons.insert( std::pair<std::string, UIButton*>( id, button ) );
+}
+
+void MenuManager::AddImage( const std::string& id, UIImage* image )
+{
+    m_images.insert( std::pair<std::string, UIImage*>( id, image ) );
 }
 
 void MenuManager::ClearMenu()
@@ -474,6 +490,11 @@ void MenuManager::RemoveLastCharacterOfActiveTextBox()
     }
 
     m_activeTextbox->RemoveLastLetter();
+}
+
+void MenuManager::UpdateLabelText( const std::string& id, const std::string& text )
+{
+    m_labels[ id ]->ChangeText( text );
 }
 
 }
