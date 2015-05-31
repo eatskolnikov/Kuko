@@ -28,6 +28,7 @@ class ConfigManager
     static std::string GetSaveData( const std::string& key );
     static void SetSaveData( const std::string& key, const std::string& val );
     static void DeleteCurrentSavefile();
+    static std::string GetSavegameName();
 
     private:
     // Configuration

@@ -27,6 +27,13 @@ bool ConfigManager::LoadConfig()
     SetOption( "helper", LuaManager::Config_GetOption( "helper" ) );
     SetOption( "savegame_count", LuaManager::Config_GetOption( "savegame_count" ) );
 
+    int savegameCount = StringUtil::StringToInt( GetOption( "savegame_count" ) );
+    for ( int i = 1; i <= savegameCount; i++ )
+    {
+        std::string opt = "savegame_" + StringUtil::IntToString( i );
+        SetOption( opt, LuaManager::Config_GetOption( opt ) );
+    }
+
     return true;
 }
 
@@ -155,6 +162,11 @@ void ConfigManager::SetSaveData( const std::string& key, const std::string& val 
 {
     Logger::Out( "Set save data \"" + key + "\" to value \"" + val + "\".", "ConfigManager::SetSaveData", "config" );
     m_saveData[ key ] = val;
+}
+
+std::string ConfigManager::GetSavegameName()
+{
+    return m_currentSavegame;
 }
 
 }
