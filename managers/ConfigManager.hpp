@@ -3,6 +3,7 @@
 
 #include <string>
 #include <map>
+#include <vector>
 
 #include "LuaManager.hpp"
 
@@ -17,12 +18,12 @@ class ConfigManager
     public:
     // Configuration
     static void SaveConfig();
-    static bool LoadConfig();
+    static bool LoadConfig( const std::vector<std::string>& settings );
     static void SetOption( const std::string& key, const std::string& val );
     static std::string GetOption( const std::string& key );
 
     // Savegames
-    static void CreateNewSave( const std::string& playername );
+    static void CreateNewSave( const std::string& playername, const std::map<std::string, std::string>& settings );
     static void SaveState();
     static bool LoadState( const std::string& filename );
     static std::string GetSaveData( const std::string& key );

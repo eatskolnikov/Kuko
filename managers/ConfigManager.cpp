@@ -15,7 +15,7 @@ std::map<std::string, std::string> ConfigManager::m_settings;
 std::map<std::string, std::string> ConfigManager::m_saveData;
 std::string ConfigManager::m_currentSavegame;
 
-bool ConfigManager::LoadConfig()
+bool ConfigManager::LoadConfig( const std::vector<std::string>& settings )
 {
     if ( !LuaManager::LoadScript( "config.lua" ) )
     {
@@ -24,8 +24,10 @@ bool ConfigManager::LoadConfig()
     }
 
     // Load in values to the key/value
-    SetOption( "helper", LuaManager::Config_GetOption( "helper" ) );
-    SetOption( "savegame_count", LuaManager::Config_GetOption( "savegame_count" ) );
+    for ( int i = 0; i < settings.size(); i++ )
+    {
+        SetOption( settings[i], LuaManager::Config_GetOption( settings[i] ) );
+    }
 
     int savegameCount = StringUtil::StringToInt( GetOption( "savegame_count" ) );
     for ( int i = 1; i <= savegameCount; i++ )
@@ -80,7 +82,7 @@ void ConfigManager::CreateNewConfig()
     SaveConfig();
 }
 
-void ConfigManager::CreateNewSave( const std::string& playername )
+void ConfigManager::CreateNewSave( const std::string& playername, const std::map<std::string, std::string>& settings )
 {
     Logger::Out( "Create a new save file for " + playername, "ConfigManager::CreateNewSave", "config" );
     std::string savegameFile = playername + "-save.lua";
