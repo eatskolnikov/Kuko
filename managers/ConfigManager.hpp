@@ -25,7 +25,7 @@ class ConfigManager
     // Savegames
     static void CreateNewSave( const std::string& playername, std::map<std::string, std::string>& settings );
     static void SaveState();
-    static bool LoadState( const std::string& filename );
+    static bool LoadState( const std::string& filename, const std::vector<std::string>& settings );
     static std::string GetSaveData( const std::string& key );
     static void SetSaveData( const std::string& key, const std::string& val );
     static void DeleteCurrentSavefile();

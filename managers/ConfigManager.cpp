@@ -129,7 +129,7 @@ void ConfigManager::SaveState()
     out.close();
 }
 
-bool ConfigManager::LoadState( const std::string& filename )
+bool ConfigManager::LoadState( const std::string& filename, const std::vector<std::string>& settings )
 {
     m_currentSavegame = filename;
 
@@ -139,15 +139,10 @@ bool ConfigManager::LoadState( const std::string& filename )
     }
 
     // Load in values to the key/value
-    SetSaveData( "name", LuaManager::Savegame_GetData( "name" ) );
-    SetSaveData( "helper", LuaManager::Savegame_GetData( "helper" ) );
-    SetSaveData( "target", LuaManager::Savegame_GetData( "target" ) );
-    SetSaveData( "pronoun", LuaManager::Savegame_GetData( "pronoun" ) );
-    SetSaveData( "hair_type", LuaManager::Savegame_GetData( "hair_type" ) );
-    SetSaveData( "hair_color", LuaManager::Savegame_GetData( "hair_color" ) );
-    SetSaveData( "clothes_type", LuaManager::Savegame_GetData( "clothes_type" ) );
-    SetSaveData( "face_type", LuaManager::Savegame_GetData( "face_type" ) );
-    SetSaveData( "skin_color", LuaManager::Savegame_GetData( "skin_color" ) );
+    for ( unsigned int i = 0; i < settings.size(); i++ )
+    {
+        SetOption( settings[i], LuaManager::Savegame_GetData( settings[i] ) );
+    }
 
     return true;
 }
