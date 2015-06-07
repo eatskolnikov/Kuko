@@ -24,7 +24,7 @@ bool ConfigManager::LoadConfig( const std::vector<std::string>& settings )
     }
 
     // Load in values to the key/value
-    for ( int i = 0; i < settings.size(); i++ )
+    for ( unsigned int i = 0; i < settings.size(); i++ )
     {
         SetOption( settings[i], LuaManager::Config_GetOption( settings[i] ) );
     }
@@ -82,7 +82,7 @@ void ConfigManager::CreateNewConfig()
     SaveConfig();
 }
 
-void ConfigManager::CreateNewSave( const std::string& playername, const std::map<std::string, std::string>& settings )
+void ConfigManager::CreateNewSave( const std::string& playername, std::map<std::string, std::string>& settings )
 {
     Logger::Out( "Create a new save file for " + playername, "ConfigManager::CreateNewSave", "config" );
     std::string savegameFile = playername + "-save.lua";
@@ -92,15 +92,12 @@ void ConfigManager::CreateNewSave( const std::string& playername, const std::map
 
     Logger::Out( "Savegame file is " + m_currentSavegame, "ConfigManager::CreateNewSave", "config" );
 
-    SetSaveData( "name", playername );
-    SetSaveData( "helper", GetOption( "helper" ) ); // Get the config file's helper
-    SetSaveData( "target", "" );
-    SetSaveData( "pronoun", "" );
-    SetSaveData( "hair_type", "" );
-    SetSaveData( "hair_color", "" );
-    SetSaveData( "clothes_type", "" );
-    SetSaveData( "face_type", "" );
-    SetSaveData( "skin_color", "" );
+    for ( std::map<std::string, std::string>::iterator it = settings.begin();
+            it != settings.end(); ++it )
+    {
+        std::pair<std::string, std::string> setting = (*it);
+        SetSaveData( setting.first, setting.second );
+    }
     SaveState();
 }
 

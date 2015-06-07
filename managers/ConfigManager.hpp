@@ -23,7 +23,7 @@ class ConfigManager
     static std::string GetOption( const std::string& key );
 
     // Savegames
-    static void CreateNewSave( const std::string& playername, const std::map<std::string, std::string>& settings );
+    static void CreateNewSave( const std::string& playername, std::map<std::string, std::string>& settings );
     static void SaveState();
     static bool LoadState( const std::string& filename );
     static std::string GetSaveData( const std::string& key );
