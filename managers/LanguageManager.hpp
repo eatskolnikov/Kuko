@@ -3,9 +3,10 @@
 #define _KUKO_LANGUAGEMANAGER
 
 #include <SDL.h>
-#include <SDL_ttf.h>
 
 #include <string>
+
+#include "interfaces/ILanguage.hpp"
 
 namespace kuko
 {
@@ -13,6 +14,10 @@ namespace kuko
 class LanguageManager
 {
     public:
+    // Setup
+    static void Setup();
+    static void Cleanup();
+
     static void AddLanguage( const std::string& id, const std::string& path );
 
     static std::string Text( const std::string& key );
@@ -26,7 +31,7 @@ class LanguageManager
     static int SpecialFieldCount( const std::string& langType, const std::string& field );
 
     protected:
-    static std::string m_currentLanguage;
+    static ILanguage* m_language;
 };
 
 }

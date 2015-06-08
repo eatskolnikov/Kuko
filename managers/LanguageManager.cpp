@@ -1,60 +1,72 @@
 // Kuko Framework - https://github.com/Rejcx/Kuko - Rachel J. Morris - MIT License
 #include "LanguageManager.hpp"
-#include "LuaManager.hpp"
 
+#include "interfaces/LuaLanguage.hpp"
+#include "interfaces/LualessLanguage.hpp"
 #include "../utilities/Logger.hpp"
 
 namespace kuko
 {
 
-std::string LanguageManager::m_currentLanguage;
+ILanguage* LanguageManager::m_language;
+
+void LanguageManager::Setup()
+{
+    m_language = NULL;
+    #ifdef NOLUA
+        m_language = new LualessLanguage;
+    #else
+        m_language = new LuaLanguage;
+    #endif
+}
+
+void LanguageManager::Cleanup()
+{
+    if ( m_language != NULL )
+    {
+        delete m_language;
+        m_language = NULL;
+    }
+}
 
 void LanguageManager::AddLanguage( const std::string& id, const std::string& path )
 {
-    m_currentLanguage = id;
-    kuko::LuaManager::LoadScript( path );
+    m_language->AddLanguage( id, path );
 }
 
 std::string LanguageManager::CurrentLanguage()
 {
-    return m_currentLanguage;
+    return m_language->CurrentLanguage();
 }
 
 std::string LanguageManager::Text( const std::string& key )
 {
-    std::string value = kuko::LuaManager::Language_GetText( key );
-    return ( value == "NOTFOUND" ) ? key + " NOT FOUND" : value;
+    return m_language->Text( key );
 }
 
 std::string LanguageManager::Text( const std::string& langType, const std::string& key )
 {
-    std::string value = kuko::LuaManager::Language_GetText( langType, key );
-    return ( value == "NOTFOUND" ) ? key + " NOT FOUND" : value;
+    return m_language->Text( langType, key );
 }
 
 std::string LanguageManager::GetSuggestedFont()
 {
-    std::string suggested = kuko::LuaManager::Language_GetSuggestedFont();
-    Logger::Out( "Suggested font: " + suggested );
-    return suggested;
+    return m_language->GetSuggestedFont();
 }
 
 std::string LanguageManager::SpecialField( const std::string& langType, const std::string& field, const std::string& key )
 {
-    std::string value = kuko::LuaManager::Language_GetSpecialField( langType, field, key );
-    return ( value == "NOTFOUND" ) ? key + " NOT FOUND" : value;
+    return m_language->SpecialField( langType, field, key );
 }
 
 std::string LanguageManager::SpecialField( const std::string& langType, const std::string& field, int key )
 {
-    std::string value = kuko::LuaManager::Language_GetSpecialField( langType, field, key );
-    return ( value == "NOTFOUND" ) ? key + " NOT FOUND" : value;
+    return m_language->SpecialField( langType, field, key );
 }
 
 int LanguageManager::SpecialFieldCount( const std::string& langType, const std::string& field )
 {
-    int value = kuko::LuaManager::Language_GetSpecialFieldCount( langType, field );
-    return value;
+    return m_language->SpecialFieldCount( langType, field );
 }
 
 }

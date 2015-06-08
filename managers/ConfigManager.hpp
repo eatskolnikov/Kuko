@@ -1,7 +1,7 @@
 #ifndef _CONFIGMANAGER
 #define _CONFIGMANAGER
 
-#include "IConfig.hpp"
+#include "interfaces/IConfig.hpp"
 
 /*
 This is for use to save config files and savegames
@@ -32,7 +32,6 @@ class ConfigManager
     static std::string GetSavegameName();
 
     private:
-    static bool m_useLua;
     static IConfig* m_config;
 };
 

@@ -8,23 +8,20 @@
 #include "../utilities/Logger.hpp"
 #include "../utilities/StringUtil.hpp"
 
-#include "LuaConfig.hpp"
-#include "LualessConfig.hpp"
+#include "interfaces/LuaConfig.hpp"
+#include "interfaces/LualessConfig.hpp"
 
 namespace kuko
 {
 
-bool ConfigManager::m_useLua;
 IConfig* ConfigManager::m_config;
 
 void ConfigManager::Setup()
 {
     m_config = NULL;
     #ifdef NOLUA
-        m_useLua = false;
         m_config = new LualessConfig;
     #else
-        m_useLua = true;
         m_config = new LuaConfig;
     #endif
 }
@@ -70,7 +67,7 @@ bool ConfigManager::LoadState( const std::string& filename, const std::vector<st
 
 std::string ConfigManager::GetSaveData( const std::string& key )
 {
-    m_config->GetSaveData( key );
+    return m_config->GetSaveData( key );
 }
 
 void ConfigManager::SetSaveData( const std::string& key, const std::string& val )

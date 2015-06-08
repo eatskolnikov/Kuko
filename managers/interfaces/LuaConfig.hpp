@@ -11,6 +11,8 @@ namespace kuko
 class LuaConfig : public IConfig
 {
     public:
+    virtual ~LuaConfig() { ; }
+
     // Configuration
     virtual void SaveConfig();
     virtual bool LoadConfig( const std::vector<std::string>& settings );

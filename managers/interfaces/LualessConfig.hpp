@@ -11,6 +11,8 @@ namespace kuko
 class LualessConfig : public IConfig
 {
     public:
+    virtual ~LualessConfig() { ; }
+
     // Configuration
     virtual void SaveConfig();
     virtual bool LoadConfig( const std::vector<std::string>& settings );

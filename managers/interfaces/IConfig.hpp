@@ -11,6 +11,8 @@ namespace kuko
 class IConfig
 {
     public:
+    virtual ~IConfig() { ; }
+
     // Configuration
     virtual void SaveConfig() = 0;
     virtual bool LoadConfig( const std::vector<std::string>& settings ) = 0;
