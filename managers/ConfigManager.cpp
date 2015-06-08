@@ -55,6 +55,11 @@ std::string ConfigManager::GetOption( const std::string& key )
     return m_config->GetOption( key );
 }
 
+int ConfigManager::GetIntOption( const std::string& key )
+{
+    return StringUtil::StringToInt( GetOption( key ) );
+}
+
 void ConfigManager::CreateNewSave( const std::string& playername, std::map<std::string, std::string>& settings )
 {
     m_config->CreateNewSave( playername, settings );

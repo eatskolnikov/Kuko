@@ -21,6 +21,7 @@ class ConfigManager
     static bool LoadConfig( const std::vector<std::string>& settings );
     static void SetOption( const std::string& key, const std::string& val );
     static std::string GetOption( const std::string& key );
+    static int GetIntOption( const std::string& key );
 
     // Savegames
     static void CreateNewSave( const std::string& playername, std::map<std::string, std::string>& settings );

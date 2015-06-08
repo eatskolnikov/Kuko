@@ -2,6 +2,7 @@
 #include "Application.hpp"
 
 #include "../utilities/Logger.hpp"
+#include "../utilities/StringUtil.hpp"
 
 #include <SDL_image.h>
 #include <SDL_ttf.h>
@@ -12,6 +13,8 @@ namespace kuko
 
 int Application::m_screenWidth;
 int Application::m_screenHeight;
+int Application::m_defaultWidth;
+int Application::m_defaultHeight;
 SDL_Window* Application::m_window = NULL;
 SDL_Renderer* Application::m_renderer = NULL;
 Timer Application::m_timer;
@@ -47,8 +50,18 @@ void Application::TimerUpdate()
     m_timer.Update();
 }
 
-bool Application::Start( const std::string& winTitle, int screenWidth /* = 480 */, int screenHeight /* = 480 */ )
+void Application::SetDefaultResolution( int width, int height )
 {
+    m_defaultWidth = width;
+    m_defaultHeight = height;
+}
+
+bool Application::Start( const std::string& winTitle, int screenWidth /* = 480 */, int screenHeight /* = 480 */, int defaultWidth, int defaultHeight )
+{
+    Logger::Out( "Begin", "Application::Start" );
+    // Screen scaling is based on the default width/height
+    SetDefaultResolution( defaultWidth, defaultHeight );
+
     m_timer.Setup( 60 );
 
     if ( SDL_Init( SDL_INIT_VIDEO | SDL_INIT_AUDIO ) != 0 )
@@ -107,6 +120,14 @@ bool Application::Start( const std::string& winTitle, int screenWidth /* = 480 *
         Logger::Error( "Error initializing SDL_Mixer: " + error, "Application::Start" );
         return false;
     }
+
+    float xRatio = float( m_screenWidth ) / float( m_defaultWidth );
+    float yRatio = float( m_screenHeight ) / float( m_defaultHeight );
+
+    Logger::Out( "Renderer scale ratio: " + StringUtil::FloatToString( xRatio ) + "x" + StringUtil::FloatToString( yRatio ), "Application::Start" );
+
+    //SDL_RenderSetScale( m_renderer, 0.5, 0.5 );
+    SDL_RenderSetScale( m_renderer, xRatio, yRatio );
 
     return true;
 }

@@ -8,6 +8,7 @@ class StringUtil
 {
     public:
     static std::string IntToString( int number );
+    static std::string FloatToString( float number );
     static int StringToInt( const std::string& text );
 };
 

@@ -28,11 +28,13 @@ namespace kuko
     class Application
     {
         public:
-        static bool Start( const std::string& winTitle, int screenWidth = 480, int screenHeight = 480 );
+        static bool Start( const std::string& winTitle, int screenWidth = 480, int screenHeight = 480, int defaultWidth = 480, int defaultHeight = 480 );
         static void End();
 
         static int GetScreenWidth();
         static int GetScreenHeight();
+
+        static void SetDefaultResolution( int width, int height );
 
         static SDL_Renderer* GetRenderer();
         static void BeginDraw();
@@ -44,6 +46,10 @@ namespace kuko
         private:
         static int m_screenWidth;
         static int m_screenHeight;
+
+        static int m_defaultWidth;
+        static int m_defaultHeight;
+
         static SDL_Window* m_window;
         static SDL_Renderer* m_renderer;
 
