@@ -33,7 +33,7 @@ bool LuaManager::LoadScript( const std::string& path )
     {
         std::string status = lua_tostring( m_state, -1 );
         Logger::Out( "Script loading state: " + status );
-        return false;
+        return false;   // TODO: is this right?
     }
     return true;
 }

@@ -3,8 +3,9 @@
 #ifndef _KUKO_LUAMANAGER
 #define _KUKO_LUAMANAGER
 
-#include <lua.hpp>
+#ifndef NOLUA
 
+#include <lua.hpp>
 #include <string>
 
 namespace kuko
@@ -59,8 +60,10 @@ namespace kuko
         friend class LanguageManager;
         friend class MapManager;
         friend class MenuManager;
-        friend class ConfigManager;
+        friend class LuaConfig;
     };
 }
 
-#endif
+#endif // ifndef NOLUA
+
+#endif // ifndef _KUKO_LUAMANAGER

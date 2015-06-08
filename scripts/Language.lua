@@ -16,6 +16,9 @@ function Language_GetTextFromLanguage( key, langType )
 end
 
 function Language_GetSuggestedFont()
+	if ( language == nil or language[ "suggested_font" ] == nil ) then
+		return "NOTFOUND"
+	end
 	return language[ "suggested_font" ]
 end
 
