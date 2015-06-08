@@ -2,8 +2,8 @@
 
 #ifdef NOLUA
 
-#include "../utilities/StringUtil.hpp"
-#include "../utilities/Logger.hpp"
+#include "../../utilities/StringUtil.hpp"
+#include "../../utilities/Logger.hpp"
 
 #include <fstream>
 
