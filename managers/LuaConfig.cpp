@@ -135,7 +135,7 @@ bool LuaConfig::LoadState( const std::string& filename, const std::vector<std::s
     // Load in values to the key/value
     for ( unsigned int i = 0; i < settings.size(); i++ )
     {
-        SetOption( settings[i], LuaManager::Savegame_GetData( settings[i] ) );
+        SetSaveData( settings[i], LuaManager::Savegame_GetData( settings[i] ) );
     }
 
     return true;

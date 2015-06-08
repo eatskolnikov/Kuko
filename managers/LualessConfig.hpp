@@ -3,6 +3,8 @@
 
 #ifdef NOLUA
 
+#include "IConfig.hpp"
+
 namespace kuko
 {
 
