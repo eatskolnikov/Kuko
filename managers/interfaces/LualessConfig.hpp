@@ -11,6 +11,7 @@ namespace kuko
 class LualessConfig : public IConfig
 {
     public:
+    LualessConfig();
     virtual ~LualessConfig() { ; }
 
     // Configuration

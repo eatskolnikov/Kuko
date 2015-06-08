@@ -14,7 +14,8 @@ namespace kuko
 class LualessLanguage : public ILanguage
 {
     public:
-    virtual ~LualessLanguage();
+    LualessLanguage();
+    virtual ~LualessLanguage() { ; }
 
     virtual bool AddLanguage( const std::string& id, const std::string& path );
 

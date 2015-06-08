@@ -31,6 +31,7 @@ void LanguageManager::Cleanup()
 
 void LanguageManager::AddLanguage( const std::string& id, const std::string& path )
 {
+    Logger::Out( "Add language \"" + id + "\" from path \"" + path + "\"", "LanguageManager::AddLanguage" );
     m_language->AddLanguage( id, path );
 }
 

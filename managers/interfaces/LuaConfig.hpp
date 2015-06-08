@@ -11,6 +11,7 @@ namespace kuko
 class LuaConfig : public IConfig
 {
     public:
+    LuaConfig();
     virtual ~LuaConfig() { ; }
 
     // Configuration

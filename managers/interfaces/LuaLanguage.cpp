@@ -7,6 +7,11 @@
 namespace kuko
 {
 
+LuaLanguage::LuaLanguage()
+{
+    Logger::Out( "LuaLanguage Constructor" );
+}
+
 bool LuaLanguage::AddLanguage( const std::string& id, const std::string& path )
 {
     m_currentLanguage = id;

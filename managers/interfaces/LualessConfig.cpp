@@ -10,6 +10,11 @@
 namespace kuko
 {
 
+LualessConfig::LualessConfig()
+{
+    Logger::Out( "LualessConfig Constructor" );
+}
+
 bool LualessConfig::LoadConfig( const std::vector<std::string>& settings )
 {
     std::ifstream infile( "config.agordo" );

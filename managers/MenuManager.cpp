@@ -54,7 +54,13 @@ void MenuManager::NextPage()
     Logger::Out( "Page menu is now " + StringUtil::IntToString( m_currentPage ) );
 }
 
+#ifdef NOLUA
+void MenuManager::SetupMenu( const std::string& path )
+{
+    Logger::Error( "Error: Lualess Kuko does not currently support creating menus from external files.", "MenuManager::SetupMenu" );
+}
 
+#else
 void MenuManager::SetupMenu( const std::string& path )
 {
     Logger::Out( "Setup Menu " + path, "MenuManager::SetupMenu" );
@@ -267,6 +273,7 @@ void MenuManager::SetupMenu( const std::string& path )
     int uiElements = m_images.size() + m_labels.size() + m_buttons.size();
     Logger::Out( "Menu has " + StringUtil::IntToString( uiElements ) + " elements", "MenuManager::SetupMenu" );
 }
+#endif
 
 void MenuManager::AddLabel( const std::string& id, UILabel* label )
 {

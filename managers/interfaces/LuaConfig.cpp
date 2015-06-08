@@ -9,6 +9,11 @@
 namespace kuko
 {
 
+LuaConfig::LuaConfig()
+{
+    Logger::Out( "LuaConfig Constructor" );
+}
+
 bool LuaConfig::LoadConfig( const std::vector<std::string>& settings )
 {
     if ( !LuaManager::LoadScript( "config.lua" ) )
