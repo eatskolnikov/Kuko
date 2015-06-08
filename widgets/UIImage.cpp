@@ -3,6 +3,7 @@
 
 #include "../managers/ImageManager.hpp"
 #include "../base/Application.hpp"
+#include "../utilities/StringUtil.hpp"
 
 namespace kuko
 {
@@ -13,7 +14,7 @@ UIImage::UIImage() : IWidget()
 
 void UIImage::Setup( const std::string& id, SDL_Rect position, SDL_Texture* ptrTexture )
 {
-    m_position = position;
+    m_position.Set( position );
 
     if ( ptrTexture == NULL )
     {
@@ -33,12 +34,47 @@ void UIImage::SetColor( SDL_Color color )
     m_color = color;
 }
 
+void UIImage::Update()
+{
+    float amountX = 0.05;
+    float amountY = 0.025;
+    if ( m_effect != "" )
+    {
+        m_effectTimer -= 1;
+        if ( m_effectTimer <= 0 )
+        {
+            m_effectTimer = m_effectMax;
+        }
+    }
+
+    if ( m_effect == "bob" )
+    {
+        if ( m_effectTimer > m_effectMax/2 )
+        {
+            m_position.x -= amountX / 2;
+            m_position.y -= amountY / 2;
+            m_position.w += amountX;
+            m_position.h += amountY;
+        }
+        else
+        {
+            m_position.x += amountX / 2;
+            m_position.y += amountY / 2;
+            m_position.w -= amountX;
+            m_position.h -= amountY;
+        }
+
+        m_background.position = m_position.ToSDLRect();
+    }
+}
+
 void UIImage::Draw()
 {
     if ( m_primitiveBackground )
     {
+        SDL_Rect rect = m_position.ToSDLRect();
         SDL_SetRenderDrawColor( Application::GetRenderer(), m_color.r, m_color.g, m_color.b, m_color.a );
-        SDL_RenderFillRect( Application::GetRenderer(), &m_position );
+        SDL_RenderFillRect( Application::GetRenderer(), &rect );
     }
     else
     {

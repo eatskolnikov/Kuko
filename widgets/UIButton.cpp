@@ -10,7 +10,7 @@ UIButton::UIButton() : IWidget()
 
 void UIButton::Setup( const std::string& id, SDL_Rect position, bool centered, SDL_Texture* ptrTexture, SDL_Color buttonColor )
 {
-    m_position = position;
+    m_position.Set( position );
     m_id = id;
     m_background[0].Setup( id + "-img", position, ptrTexture );
     m_background[0].SetColor( buttonColor );
@@ -24,9 +24,10 @@ void UIButton::Setup( const std::string& id, const std::string& text, SDL_Rect p
 
 void UIButton::SetupAnimateEffect( const std::string& effectType, SDL_Texture* frame2, int effectMax )
 {
+    SDL_Rect rect = m_position.ToSDLRect();
     m_effectMax = effectMax;
     m_effect = effectType;
-    m_background[1].Setup( m_id + "-alt-img", m_position, frame2 );
+    m_background[1].Setup( m_id + "-alt-img", rect, frame2 );
 }
 
 void UIButton::Setup( const std::string& id, const std::string& text, SDL_Rect position, bool centered,

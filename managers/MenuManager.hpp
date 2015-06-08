@@ -35,8 +35,13 @@ class MenuManager
     void UpdateLabelText( const std::string& id, const std::string& text );
 
     void AddLabel( const std::string& id, UILabel* label );
+    void AddLabel( const std::string& id, const std::string& lbl, int x, int y, int width, int height, bool centered, SDL_Color textColor, TTF_Font* font );
+
     void AddButton( const std::string& id, UIButton* button );
+    //void AddButton( const std::string& id,, Effect effects );
+
     void AddImage( const std::string& id, UIImage* image );
+    void AddImage( const std::string& id, SDL_Texture* ptrTexture, int x, int y, int width, int height, const std::string& effectName = "", int effectMax = 0 );
 
     int GetCurrentPage();
     void SetCurrentPage( int val );

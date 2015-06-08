@@ -15,14 +15,14 @@ void UITextBox::Setup( const std::string& id, SDL_Rect position, SDL_Color bgCol
 {
     Logger::Out( "Setup " + id, "UITextBox::Setup" );
     m_id = id;
-    m_position = position;
+    m_position.Set( position );
     m_textColor = textColor;
     m_bgColor = bgColor;
     m_defaultBgColor = bgColor;
     m_selectedBgColor = selectedColor;
     m_font = font;
     GenerateTexture();
-    SDL_SetTextInputRect( &m_position );
+    SDL_SetTextInputRect( &position );
     m_maxChars = maxChars;
 }
 
@@ -44,12 +44,13 @@ void UITextBox::SetBackgroundColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a )
 
 void UITextBox::Draw()
 {
+    SDL_Rect rect = m_position.ToSDLRect();
     // Text Rect
     SDL_SetRenderDrawColor( Application::GetRenderer(), m_bgColor.r, m_bgColor.g, m_bgColor.b, m_bgColor.a );
-    SDL_RenderFillRect( Application::GetRenderer(), &m_position );
+    SDL_RenderFillRect( Application::GetRenderer(), &rect );
     // Outline
     SDL_SetRenderDrawColor( Application::GetRenderer(), 0, 0, 0, 255 );
-    SDL_RenderDrawRect( Application::GetRenderer(), &m_position );
+    SDL_RenderDrawRect( Application::GetRenderer(), &rect );
     // Text
     kuko::ImageManager::Draw( m_sprite );
 }
@@ -110,7 +111,7 @@ void UITextBox::GenerateTexture()
     m_sprite.SetTexture ( SDL_CreateTextureFromSurface( kuko::Application::GetRenderer(), textSurface ) );
     SDL_FreeSurface( textSurface );
 
-    m_sprite.position = m_position;
+    m_sprite.position = m_position.ToSDLRect();
 
     // Set w/h to fit the ratio
     int fullWidth, fullHeight;

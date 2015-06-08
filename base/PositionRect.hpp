@@ -16,6 +16,24 @@ class PositionRect
         this->w = w;
         this->h = h;
     }
+
+    SDL_Rect ToSDLRect()
+    {
+        SDL_Rect rect;
+        rect.x = int( x );
+        rect.y = int( y );
+        rect.w = int( w );
+        rect.h = int( h );
+        return rect;
+    }
+
+    void Set( SDL_Rect rect )
+    {
+        x = rect.x;
+        y = rect.y;
+        w = rect.w;
+        h = rect.h;
+    }
 };
 
 }

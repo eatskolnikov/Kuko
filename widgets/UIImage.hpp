@@ -17,6 +17,7 @@ class UIImage : public IWidget
     void Setup( const std::string& id, SDL_Rect position, SDL_Texture* ptrTexture );
     void SetColor( SDL_Color color );
     virtual void Draw();
+    virtual void Update();
 
     protected:
     // std::string m_id;

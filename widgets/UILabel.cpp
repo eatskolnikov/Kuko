@@ -16,7 +16,7 @@ UILabel::UILabel() : IWidget()
 void UILabel::Setup( const std::string& id, const std::string& label, SDL_Rect position, bool centered, SDL_Color textColor, TTF_Font* font, const std::string& effect, int effectMax )
 {
     Logger::Out( "Setup " + label + ", Centered " + StringUtil::IntToString( centered ), "UILabel::Setup" );
-    m_position = position;
+    m_position.Set( position );
     m_color = textColor;
     m_font = font;
     m_label = label;
@@ -85,24 +85,18 @@ void UILabel::GenerateTexture()
     {
         m_position.x = ( kuko::Application::GetScreenWidth() / 2 ) - ( m_position.w / 2 );
     }
-    m_sprite.position = m_position;
+    m_sprite.position = m_position.ToSDLRect();
 
     if ( m_useShadow )
     {
         SDL_Surface* shadowSurface = TTF_RenderUTF8_Solid( m_font, m_label.c_str(), m_shadowColor );
         m_shadowSprite.SetTexture ( SDL_CreateTextureFromSurface( kuko::Application::GetRenderer(), shadowSurface ) );
-        m_shadowSprite.position = m_position;
+        m_shadowSprite.position = m_position.ToSDLRect();
         m_shadowSprite.position.x += m_shadowOffsetX;
         m_shadowSprite.position.y += m_shadowOffsetY;
 
         SDL_FreeSurface( shadowSurface );
     }
-}
-
-void UILabel::Update()
-{
-    m_effectTimer--;
-    if ( m_effectTimer < 0 ) { m_effectTimer = m_effectMax; }
 }
 
 void UILabel::Draw()

@@ -280,6 +280,13 @@ void MenuManager::AddLabel( const std::string& id, UILabel* label )
     m_labels.insert( std::pair<std::string, UILabel*>( id, label ) );
 }
 
+void MenuManager::AddLabel( const std::string& id, const std::string& lbl, int x, int y, int width, int height, bool centered, SDL_Color textColor, TTF_Font* font )
+{
+    UILabel* label = new UILabel;
+    SDL_Rect pos; pos.x = x; pos.y = y; pos.w = width; pos.h = height;
+    label->Setup( id, lbl, pos, centered, textColor, font );
+}
+
 void MenuManager::AddButton( const std::string& id, UIButton* button )
 {
     m_buttons.insert( std::pair<std::string, UIButton*>( id, button ) );
@@ -288,6 +295,18 @@ void MenuManager::AddButton( const std::string& id, UIButton* button )
 void MenuManager::AddImage( const std::string& id, UIImage* image )
 {
     m_images.insert( std::pair<std::string, UIImage*>( id, image ) );
+}
+
+void MenuManager::AddImage( const std::string& id, SDL_Texture* ptrTexture, int x, int y, int width, int height, const std::string& effectName, int effectMax )
+{
+    UIImage* image = new UIImage;
+    SDL_Rect pos; pos.x = x; pos.y = y; pos.w = width; pos.h = height;
+    image->Setup( id, pos, ptrTexture );
+    if ( effectName != "" )
+    {
+        image->SetEffect( effectName, effectMax );
+    }
+    AddImage( id, image );
 }
 
 void MenuManager::ClearMenu()
@@ -352,6 +371,15 @@ void MenuManager::Update()
     }
     for (   std::map<std::string, UIButton*>::iterator it = m_buttons.begin();
             it != m_buttons.end();
+            ++it )
+    {
+        if ( it->second != NULL )
+        {
+            it->second->Update();
+        }
+    }
+    for (   std::map<std::string, UIImage*>::iterator it = m_images.begin();
+            it != m_images.end();
             ++it )
     {
         if ( it->second != NULL )
