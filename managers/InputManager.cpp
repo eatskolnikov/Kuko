@@ -37,6 +37,12 @@ void InputManager::Update()
         {
         }
 
+        // Window Events
+        else if ( m_event.type == SDL_QUIT )
+        {
+            m_eventTriggered[ WINDOW_CLOSE ].down = true;
+        }
+
         // Taps for dealing with the menu
         else if ( m_event.type == SDL_MOUSEBUTTONUP )
         {
@@ -114,6 +120,7 @@ void InputManager::ResetTriggers()
     m_eventTriggered[ MOVE_DOWN ].down = false;
     m_eventTriggered[ MOVE_LEFT ].down = false;
     m_eventTriggered[ MOVE_RIGHT ].down = false;
+    m_eventTriggered[ WINDOW_CLOSE ].down = false;
     m_eventTriggered[ BACKSPACE ].down = false;
     m_textInputBuffer[0] = '\0';
 }

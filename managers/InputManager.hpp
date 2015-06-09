@@ -11,7 +11,7 @@ namespace kuko
 {
 
 // TODO: Add "registration" of keys for commands.
-enum CommandButton { TAP, SECONDARY_TAP, MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, BACKSPACE };
+enum CommandButton { TAP, SECONDARY_TAP, MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, BACKSPACE, WINDOW_CLOSE };
 
 class TriggerInfo
 {
