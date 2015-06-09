@@ -25,8 +25,8 @@ class MenuManager
     void Draw();
     void Update();
     void Reload();
-    bool IsButtonClicked( const std::string& key, int mouseX, int mouseY );
-    void CheckTextboxClick( int mouseX, int mouseY );
+    bool IsButtonClicked( const std::string& key, float mouseX, float mouseY );
+    void CheckTextboxClick( float mouseX, float mouseY );
     void ResetMouse();
     void SetTextEditing( bool turnOn );
     void AppendToActiveTextBox( const std::string& text );
@@ -38,10 +38,10 @@ class MenuManager
     void AddLabel( const std::string& id, const std::string& lbl, int x, int y, int width, int height, bool centered, SDL_Color textColor, TTF_Font* font );
 
     void AddButton( const std::string& id, UIButton* button );
-    //void AddButton( const std::string& id,, Effect effects );
+    void AddButton( const std::string& id,SDL_Texture* ptrTexture,  int x, int y, int width, int height, bool centered, SDL_Color buttonColor );
 
     void AddImage( const std::string& id, UIImage* image );
-    void AddImage( const std::string& id, SDL_Texture* ptrTexture, int x, int y, int width, int height, const std::string& effectName = "", int effectMax = 0 );
+    void AddImage( const std::string& id, SDL_Texture* ptrTexture, int x, int y, int width, int height, bool centered, const std::string& effectName = "", int effectMax = 0 );
 
     int GetCurrentPage();
     void SetCurrentPage( int val );

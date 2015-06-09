@@ -285,6 +285,7 @@ void MenuManager::AddLabel( const std::string& id, const std::string& lbl, int x
     UILabel* label = new UILabel;
     SDL_Rect pos; pos.x = x; pos.y = y; pos.w = width; pos.h = height;
     label->Setup( id, lbl, pos, centered, textColor, font );
+    AddLabel( id, label );
 }
 
 void MenuManager::AddButton( const std::string& id, UIButton* button )
@@ -292,15 +293,26 @@ void MenuManager::AddButton( const std::string& id, UIButton* button )
     m_buttons.insert( std::pair<std::string, UIButton*>( id, button ) );
 }
 
+void MenuManager::AddButton( const std::string& id,SDL_Texture* ptrTexture,  int x, int y, int width, int height, bool centered,
+    SDL_Color buttonColor )
+{
+    UIButton* button = new UIButton;
+    SDL_Rect pos; pos.x = x; pos.y = y; pos.w = width; pos.h = height;
+    button->Setup( id, pos, centered, ptrTexture, buttonColor );
+    AddButton( id, button );
+}
+
 void MenuManager::AddImage( const std::string& id, UIImage* image )
 {
     m_images.insert( std::pair<std::string, UIImage*>( id, image ) );
 }
 
-void MenuManager::AddImage( const std::string& id, SDL_Texture* ptrTexture, int x, int y, int width, int height, const std::string& effectName, int effectMax )
+void MenuManager::AddImage( const std::string& id, SDL_Texture* ptrTexture, int x, int y, int width, int height, bool centered,
+    const std::string& effectName, int effectMax )
 {
     UIImage* image = new UIImage;
     SDL_Rect pos; pos.x = x; pos.y = y; pos.w = width; pos.h = height;
+    pos.x = kuko::Application::GetDefaultWidth() / 2 - width / 2;
     image->Setup( id, pos, ptrTexture );
     if ( effectName != "" )
     {
@@ -434,8 +446,11 @@ void MenuManager::ResetMouse()
     m_mouseDown = false;
 }
 
-bool MenuManager::IsButtonClicked( const std::string& key, int mouseX, int mouseY )
+bool MenuManager::IsButtonClicked( const std::string& key, float mouseX, float mouseY )
 {
+    float adjX = mouseX / kuko::Application::GetWidthRatio();
+    float adjY = mouseY / kuko::Application::GetHeightRatio();
+
     if ( m_mouseDown )
     {
         return false;
@@ -446,8 +461,9 @@ bool MenuManager::IsButtonClicked( const std::string& key, int mouseX, int mouse
         if ( iter->second->GetId() == key )
         {
             SDL_Rect btn = iter->second->GetPosition();
-            bool isHit = ( mouseX >= btn.x && mouseX <= btn.x + btn.w &&
-                     mouseY >= btn.y && mouseY <= btn.y + btn.h );
+
+            bool isHit = ( adjX >= btn.x && adjX <= btn.x + btn.w &&
+                     adjY >= btn.y && adjY <= btn.y + btn.h );
 
             m_mouseDown = isHit;
             return isHit;
@@ -458,7 +474,7 @@ bool MenuManager::IsButtonClicked( const std::string& key, int mouseX, int mouse
     return false;
 }
 
-void MenuManager::CheckTextboxClick( int mouseX, int mouseY )
+void MenuManager::CheckTextboxClick( float mouseX, float mouseY )
 {
     // If a textbox is clicked, make sure the widget visually represents that.
     for ( std::map< std::string, UITextBox* >::iterator iter = m_textboxes.begin();

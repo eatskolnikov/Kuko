@@ -1,5 +1,9 @@
 #include "UIButton.hpp"
 
+#include "../base/Application.hpp"
+#include "../utilities/Logger.hpp"
+#include "../utilities/StringUtil.hpp"
+
 namespace kuko
 {
 
@@ -10,6 +14,12 @@ UIButton::UIButton() : IWidget()
 
 void UIButton::Setup( const std::string& id, SDL_Rect position, bool centered, SDL_Texture* ptrTexture, SDL_Color buttonColor )
 {
+    if ( centered )
+    {
+        position.x = kuko::Application::GetDefaultWidth() / 2 - position.w / 2;
+        Logger::Out( "Screen width: " + StringUtil::IntToString( kuko::Application::GetScreenWidth() ) );
+    }
+
     m_position.Set( position );
     m_id = id;
     m_background[0].Setup( id + "-img", position, ptrTexture );

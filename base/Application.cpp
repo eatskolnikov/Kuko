@@ -15,6 +15,9 @@ int Application::m_screenWidth;
 int Application::m_screenHeight;
 int Application::m_defaultWidth;
 int Application::m_defaultHeight;
+float Application::m_widthRatio;
+float Application::m_heightRatio;
+
 SDL_Window* Application::m_window = NULL;
 SDL_Renderer* Application::m_renderer = NULL;
 Timer Application::m_timer;
@@ -121,13 +124,13 @@ bool Application::Start( const std::string& winTitle, int screenWidth /* = 480 *
         return false;
     }
 
-    float xRatio = float( m_screenWidth ) / float( m_defaultWidth );
-    float yRatio = float( m_screenHeight ) / float( m_defaultHeight );
+    m_widthRatio = float( m_screenWidth ) / float( m_defaultWidth );
+    m_heightRatio = float( m_screenHeight ) / float( m_defaultHeight );
 
-    Logger::Out( "Renderer scale ratio: " + StringUtil::FloatToString( xRatio ) + "x" + StringUtil::FloatToString( yRatio ), "Application::Start" );
+    Logger::Out( "Renderer scale ratio: " + StringUtil::FloatToString( m_widthRatio ) + "x" + StringUtil::FloatToString( m_heightRatio ), "Application::Start" );
 
     //SDL_RenderSetScale( m_renderer, 0.5, 0.5 );
-    SDL_RenderSetScale( m_renderer, xRatio, yRatio );
+    SDL_RenderSetScale( m_renderer, m_widthRatio, m_heightRatio );
 
     return true;
 }
@@ -159,6 +162,26 @@ int Application::GetScreenWidth()
 int Application::GetScreenHeight()
 {
     return m_screenHeight;
+}
+
+int Application::GetDefaultWidth()
+{
+    return m_defaultWidth;
+}
+
+int Application::GetDefaultHeight()
+{
+    return m_defaultHeight;
+}
+
+float Application::GetWidthRatio()
+{
+    return m_widthRatio;
+}
+
+float Application::GetHeightRatio()
+{
+    return m_heightRatio;
 }
 
 SDL_Renderer* Application::GetRenderer()

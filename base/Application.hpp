@@ -34,6 +34,12 @@ namespace kuko
         static int GetScreenWidth();
         static int GetScreenHeight();
 
+        static int GetDefaultWidth();
+        static int GetDefaultHeight();
+
+        static float GetWidthRatio();
+        static float GetHeightRatio();
+
         static void SetDefaultResolution( int width, int height );
 
         static SDL_Renderer* GetRenderer();
@@ -49,6 +55,9 @@ namespace kuko
 
         static int m_defaultWidth;
         static int m_defaultHeight;
+
+        static float m_widthRatio;
+        static float m_heightRatio;
 
         static SDL_Window* m_window;
         static SDL_Renderer* m_renderer;

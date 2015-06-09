@@ -71,19 +71,19 @@ void UILabel::GenerateTexture()
 
     m_position.w = m_position.h * fontRatio;
     // Don't go off-screen (adjust width)
-    if ( m_position.w > kuko::Application::GetScreenWidth() )
+    if ( m_position.w > kuko::Application::GetDefaultWidth() )
     {
-        m_position.w = kuko::Application::GetScreenWidth() - 10;
+        m_position.w = kuko::Application::GetDefaultWidth() - 10;
     }
     // Don't go off-screen (adjust x)
     if ( m_position.x + m_position.w > kuko::Application::GetScreenWidth() )
     {
-        m_position.x = kuko::Application::GetScreenWidth() - m_position.w - 5;
+        m_position.x = kuko::Application::GetDefaultWidth() - m_position.w - 5;
     }
 
     if ( m_centered )
     {
-        m_position.x = ( kuko::Application::GetScreenWidth() / 2 ) - ( m_position.w / 2 );
+        m_position.x = ( kuko::Application::GetDefaultWidth() / 2 ) - ( m_position.w / 2 );
     }
     m_sprite.position = m_position.ToSDLRect();
 
