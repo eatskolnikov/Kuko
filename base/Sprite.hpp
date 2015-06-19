@@ -23,6 +23,7 @@ class Sprite
     void SetTexture( SDL_Texture* ptrTexture );
     SDL_Texture* GetTexture();
     void SetPosition( kuko::PositionRect pos );
+    bool IsClicked( int x, int y );
 
     SDL_Texture*        texture;
     SDL_Rect            frame;

@@ -18,6 +18,11 @@ Sprite::Sprite()
     angle = 0.0f;
 }
 
+bool Sprite::IsClicked( int x, int y )
+{
+    return ( position.x <= x && position.x + position.w > x && position.y <= y && position.y + position.h > y );
+}
+
 void Sprite::SetPosition( kuko::PositionRect pos )
 {
     position.x = int(pos.x);
