@@ -25,6 +25,7 @@ class BaseEntity
 
     bool IsCollision( const BaseEntity& other );
     bool IsCollision( const PositionRect& otherRect );
+    bool IsClicked( int x, int y );
     bool IsSolid();
     void SetSolid( bool val );
 

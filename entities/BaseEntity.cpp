@@ -71,6 +71,14 @@ bool BaseEntity::IsCollision( const PositionRect& otherRect )
     return col;
 }
 
+bool BaseEntity::IsClicked( int x, int y )
+{
+    return (    m_position.x <= x &&
+                m_position.x + m_position.w > x &&
+                m_position.y <= y &&
+                m_position.y + m_position.h > y );
+}
+
 bool BaseEntity::IsSolid()
 {
     return m_isSolid;
