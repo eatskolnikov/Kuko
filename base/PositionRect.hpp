@@ -17,7 +17,7 @@ class PositionRect
         this->h = h;
     }
 
-    SDL_Rect ToSDLRect()
+    SDL_Rect ToSDLRect() const
     {
         SDL_Rect rect;
         rect.x = int( x );

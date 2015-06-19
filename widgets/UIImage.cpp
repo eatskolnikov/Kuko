@@ -24,7 +24,7 @@ void UIImage::Setup( const std::string& id, SDL_Rect position, SDL_Texture* ptrT
     else
     {
         m_background.SetTexture( ptrTexture );
-        m_background.position = position;
+        m_background.position.Set( position );
         m_primitiveBackground = false;
     }
 }
@@ -64,7 +64,7 @@ void UIImage::Update()
             m_position.h -= amountY;
         }
 
-        m_background.position = m_position.ToSDLRect();
+        m_background.position = m_position;
     }
 }
 

@@ -26,7 +26,7 @@ class Sprite
 
     SDL_Texture*        texture;
     SDL_Rect            frame;
-    SDL_Rect            position;
+    PositionRect        position;
     bool                isFlipped;
     float               angle;
 };

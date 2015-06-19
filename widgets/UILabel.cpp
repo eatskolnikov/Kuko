@@ -85,13 +85,13 @@ void UILabel::GenerateTexture()
     {
         m_position.x = ( kuko::Application::GetDefaultWidth() / 2 ) - ( m_position.w / 2 );
     }
-    m_sprite.position = m_position.ToSDLRect();
+    m_sprite.position = m_position;
 
     if ( m_useShadow )
     {
         SDL_Surface* shadowSurface = TTF_RenderUTF8_Solid( m_font, m_label.c_str(), m_shadowColor );
         m_shadowSprite.SetTexture ( SDL_CreateTextureFromSurface( kuko::Application::GetRenderer(), shadowSurface ) );
-        m_shadowSprite.position = m_position.ToSDLRect();
+        m_shadowSprite.position = m_position;
         m_shadowSprite.position.x += m_shadowOffsetX;
         m_shadowSprite.position.y += m_shadowOffsetY;
 

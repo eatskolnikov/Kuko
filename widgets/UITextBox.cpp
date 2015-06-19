@@ -111,7 +111,7 @@ void UITextBox::GenerateTexture()
     m_sprite.SetTexture ( SDL_CreateTextureFromSurface( kuko::Application::GetRenderer(), textSurface ) );
     SDL_FreeSurface( textSurface );
 
-    m_sprite.position = m_position.ToSDLRect();
+    m_sprite.position = m_position;
 
     // Set w/h to fit the ratio
     int fullWidth, fullHeight;
