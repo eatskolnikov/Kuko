@@ -33,8 +33,10 @@ std::string LualessLanguage::Text( const std::string& key )
 
 std::string LualessLanguage::Text( const std::string& langType, const std::string& key )
 {
+    Logger::Error( "Not implemented", "LualessLanguage::Text( const std::string& langType, const std::string& key )" );
 //    std::string value = kuko::LuaManager::Language_GetText( langType, key );
 //    return ( value == "NOTFOUND" ) ? key + " NOT FOUND" : value;
+    return "NOTIMPLEMENTED";
 }
 
 std::string LualessLanguage::GetSuggestedFont()
@@ -46,24 +48,31 @@ std::string LualessLanguage::GetSuggestedFont()
 
 std::string LualessLanguage::SpecialField( const std::string& langType, const std::string& field, const std::string& key )
 {
+    Logger::Error( "Not implemented", "LualessLanguage::SpecialField( const std::string& langType, const std::string& field, const std::string& key )" );
 //    std::string value = kuko::LuaManager::Language_GetSpecialField( langType, field, key );
 //    return ( value == "NOTFOUND" ) ? key + " NOT FOUND" : value;
+    return "NOTIMPLEMENTED";
 }
 
 std::string LualessLanguage::SpecialField( const std::string& langType, const std::string& field, int key )
 {
+    Logger::Error( "Not implemented", "LualessLanguage::SpecialField( const std::string& langType, const std::string& field, int key )" );
 //    std::string value = kuko::LuaManager::Language_GetSpecialField( langType, field, key );
 //    return ( value == "NOTFOUND" ) ? key + " NOT FOUND" : value;
+    return "NOTIMPLEMENTED";
 }
 
 int LualessLanguage::SpecialFieldCount( const std::string& langType, const std::string& field )
 {
+    Logger::Error( "Not implemented", "LualessLanguage::SpecialFieldCount( const std::string& langType, const std::string& field )" );
 //    int value = kuko::LuaManager::Language_GetSpecialFieldCount( langType, field );
 //    return value;
+    return 0;
 }
 
 bool LualessLanguage::LoadLanguageFile( const std::string& path )
 {
+    m_gameText.clear();
     std::ifstream infile( path.c_str() );
     if ( !infile.good() )
     {
@@ -87,7 +96,7 @@ bool LualessLanguage::LoadLanguageFile( const std::string& path )
             value += buffer;
         }
 
-        Logger::Out( "\t" + key + " = " + value, "LualessLanguage::LoadLanguageFile" );
+        Logger::Out( "KEY: " + key + ", VALUE: " + value, "LualessLanguage::LoadLanguageFile" );
         m_gameText[ key ] = value;
     }
 
