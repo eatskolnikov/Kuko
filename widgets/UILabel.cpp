@@ -10,12 +10,13 @@ namespace kuko
 
 UILabel::UILabel() : IWidget()
 {
+    m_position.x = m_position.y = 0;
+    m_position.w = m_position.h = 10;
     m_useShadow = false;
 }
 
 void UILabel::Setup( const std::string& id, const std::string& label, SDL_Rect position, bool centered, SDL_Color textColor, TTF_Font* font, const std::string& effect, int effectMax )
 {
-    Logger::Out( "Setup " + label + ", Centered " + StringUtil::IntToString( centered ), "UILabel::Setup" );
     m_position.Set( position );
     m_color = textColor;
     m_font = font;
@@ -59,6 +60,7 @@ void UILabel::SetShadowColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a )
 
 void UILabel::GenerateTexture()
 {
+    Logger::Out( "Generate label texture, text: \"" + m_label + "\"", "UILabel::GenerateTexture" );
     SDL_Surface* textSurface = TTF_RenderUTF8_Solid( m_font, m_label.c_str(), m_color );
     m_sprite.SetTexture ( SDL_CreateTextureFromSurface( kuko::Application::GetRenderer(), textSurface ) );
     SDL_FreeSurface( textSurface );

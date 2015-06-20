@@ -69,6 +69,8 @@ void LualessConfig::CreateNewConfig()
     Logger::Out( "Creating new config file", "LualessConfig::CreateNewConfig", "config" );
     SetOption( "savegame_count", "0" );
     SetOption( "language", "english" );
+    SetOption( "screen_width", "960" );
+    SetOption( "screen_height", "640" );
     SaveConfig();
 }
 

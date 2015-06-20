@@ -26,13 +26,13 @@ void FontManager::Cleanup()
 
 void FontManager::AddFont( const std::string& id, const std::string& path, int size )
 {
-    Logger::Out( "Add font " + id + " from path " + path, "FontManager::AddFont" );
+    Logger::Out( "Add font \"" + id + "\" from path " + path, "FontManager::AddFont", "fonts" );
     m_fonts.insert( std::pair<std::string, TTF_Font*>( id, LoadFile( path ) ) );
 }
 
 void FontManager::ReplaceFont( const std::string& id, const std::string& path, int size )
 {
-    Logger::Out( "Replace font " + id + " with path " + path, "FontManager::ReplaceFont" );
+    Logger::Out( "Replace font \"" + id + "\" with path " + path, "FontManager::ReplaceFont", "fonts" );
 
     if ( m_fonts[ id ] != NULL )
     {
@@ -50,12 +50,19 @@ void FontManager::ClearFonts()
 
 TTF_Font* FontManager::GetFont( const std::string& key )
 {
+    Logger::Out( "Get font \"" + key + "\"", "FontManager::GetFont", "fonts" );
+    if ( m_fonts.find( key ) == m_fonts.end() )
+    {
+        Logger::Error( "Error finding font \"" + key + "\"", "FontManager::GetFont" );
+        Logger::Out( "Error finding font \"" + key + "\"", "FontManager::GetFont", "fonts", true );
+        return NULL;
+    }
     return m_fonts[ key ];
 }
 
 TTF_Font* FontManager::LoadFile( const std::string& path )
 {
-    Logger::Out( "Load font \"" + path + "\"", "FontManager::LoadFile" );
+    Logger::Out( "Load font \"" + path + "\"", "FontManager::LoadFile", "fonts" );
     TTF_Font* font = TTF_OpenFont( path.c_str(), 28 );
     return font;
 }
