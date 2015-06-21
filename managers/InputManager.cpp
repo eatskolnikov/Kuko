@@ -9,16 +9,23 @@ namespace kuko
 SDL_Event InputManager::m_event;
 std::map<CommandButton, TriggerInfo> InputManager::m_eventTriggered;
 char InputManager::m_textInputBuffer[256];
+bool InputManager::m_enableTextInput;
 
 void InputManager::Setup()
 {
     m_textInputBuffer;
+    m_enableTextInput = false;
     ResetTriggers();
 }
 
 std::map<CommandButton, TriggerInfo> InputManager::GetTriggerInfo()
 {
     return m_eventTriggered;
+}
+
+void InputManager::SetTextBufferActive( bool val )
+{
+    m_enableTextInput = val;
 }
 
 std::string InputManager::GetTextInputBuffer()
@@ -65,9 +72,33 @@ void InputManager::Update()
         {
             // type, timestamp, windowID, text
             // https://wiki.libsdl.org/SDL_TextInputEvent
-            Logger::Out( "Received SDL_TEXTINPUT event", "InputManager::Update" );
-            strcat( m_textInputBuffer, m_event.text.text );
-            Logger::Out( "Value received: \"" + std::string( m_textInputBuffer ) + "\"", "InputManager::Update" );
+            std::string value = m_event.text.text;
+            Logger::Out( "Received SDL_TEXTINPUT event: " + value, "InputManager::Update" );
+            if ( m_enableTextInput )
+            {
+                strcat( m_textInputBuffer, m_event.text.text );
+                Logger::Out( "Value received: \"" + std::string( m_textInputBuffer ) + "\"", "InputManager::Update" );
+            }
+            else if ( value == "w" )
+            {
+                Logger::Out( "Key w", "InputManager::Update" );
+                m_eventTriggered [ MOVE_UP ].down = true;
+            }
+            else if ( value == "s" )
+            {
+                Logger::Out( "Key s", "InputManager::Update" );
+                m_eventTriggered [ MOVE_DOWN ].down = true;
+            }
+            else if ( value == "a" )
+            {
+                Logger::Out( "Key a", "InputManager::Update" );
+                m_eventTriggered [ MOVE_LEFT ].down = true;
+            }
+            else if ( value == "d" )
+            {
+                Logger::Out( "Key d", "InputManager::Update" );
+                m_eventTriggered [ MOVE_RIGHT ].down = true;
+            }
         }
 
         else if ( m_event.type == SDL_TEXTEDITING )
@@ -83,19 +114,19 @@ void InputManager::Update()
 
     // Check keyboard state
     const Uint8* keyStates = SDL_GetKeyboardState( NULL );
-    if ( keyStates[ SDL_SCANCODE_UP ] )
+    if ( keyStates[ SDL_SCANCODE_UP ] || keyStates[ SDLK_w ] )
     {
         m_eventTriggered [ MOVE_UP ].down = true;
     }
-    if ( keyStates[ SDL_SCANCODE_DOWN ] )
+    if ( keyStates[ SDL_SCANCODE_DOWN ] || keyStates[ SDLK_s ] )
     {
         m_eventTriggered [ MOVE_DOWN ].down = true;
     }
-    if ( keyStates[ SDL_SCANCODE_LEFT ] )
+    if ( keyStates[ SDL_SCANCODE_LEFT ] || keyStates[ SDLK_w ] )
     {
         m_eventTriggered [ MOVE_LEFT ].down = true;
     }
-    if ( keyStates[ SDL_SCANCODE_RIGHT ] )
+    if ( keyStates[ SDL_SCANCODE_RIGHT ] || keyStates[ SDLK_d ] )
     {
         m_eventTriggered [ MOVE_RIGHT ].down = true;
     }

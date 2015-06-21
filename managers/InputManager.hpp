@@ -35,6 +35,7 @@ class InputManager
 
     static std::map<CommandButton, TriggerInfo> GetTriggerInfo();
     static std::string GetTextInputBuffer();
+    static void SetTextBufferActive( bool val );
 
     protected:
     static void ResetTriggers();
@@ -43,6 +44,8 @@ class InputManager
     static std::map<CommandButton, TriggerInfo> m_eventTriggered;
 
     static char m_textInputBuffer[256];
+
+    static bool m_enableTextInput;
 };
 
 }
