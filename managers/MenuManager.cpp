@@ -460,7 +460,7 @@ bool MenuManager::IsButtonClicked( const std::string& key, float mouseX, float m
     {
         if ( iter->second->GetId() == key )
         {
-            SDL_Rect btn = iter->second->GetPosition();
+            SDL_Rect btn = iter->second->GetPosition().ToSDLRect();
 
             bool isHit = ( adjX >= btn.x && adjX <= btn.x + btn.w &&
                      adjY >= btn.y && adjY <= btn.y + btn.h );
@@ -480,7 +480,7 @@ void MenuManager::CheckTextboxClick( float mouseX, float mouseY )
     for ( std::map< std::string, UITextBox* >::iterator iter = m_textboxes.begin();
             iter != m_textboxes.end(); ++iter )
     {
-        SDL_Rect widget = iter->second->GetPosition();
+        SDL_Rect widget = iter->second->GetPosition().ToSDLRect();
         bool isHit = ( mouseX >= widget.x && mouseX <= widget.x + widget.w &&
                  mouseY >= widget.y && mouseY <= widget.y + widget.h );
 

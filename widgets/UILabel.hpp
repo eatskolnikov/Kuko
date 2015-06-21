@@ -23,6 +23,7 @@ class UILabel : public IWidget
     void SetShadowColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a );
     virtual void Draw();
     void ChangeText( const std::string& text );
+    void RegenerateTexture();
 
     protected:
     // std::string m_id;

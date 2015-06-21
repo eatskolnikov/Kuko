@@ -58,6 +58,11 @@ void UILabel::SetShadowColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a )
     m_shadowColor.a = a;
 }
 
+void UILabel::RegenerateTexture()
+{
+    GenerateTexture();
+}
+
 void UILabel::GenerateTexture()
 {
     Logger::Out( "Generate label texture, text: \"" + m_label + "\"", "UILabel::GenerateTexture" );

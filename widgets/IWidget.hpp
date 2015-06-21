@@ -22,9 +22,27 @@ class IWidget
         if ( m_effectTimer < 0 ) { m_effectTimer = m_effectMax; }
     }
 
-    SDL_Rect GetPosition()
+    PositionRect GetPosition()
     {
-        return m_position.ToSDLRect();
+        return m_position;
+    }
+
+    void SetPosition( float x, float y, float w, float h )
+    {
+        m_position.x = x;
+        m_position.y = y;
+        m_position.w = w;
+        m_position.h = h;
+    }
+
+    void SetPosition( SDL_Rect pos )
+    {
+        m_position.Set( pos );
+    }
+
+    void SetPosition( PositionRect pos )
+    {
+        m_position = pos;
     }
 
     std::string GetId() { return m_id; }
