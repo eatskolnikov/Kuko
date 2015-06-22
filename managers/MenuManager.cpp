@@ -441,6 +441,21 @@ void MenuManager::Draw()
     }
 }
 
+
+void MenuManager::AddTextBox( const std::string& id, int x, int y, int width, int height,
+    SDL_Color bgColor, SDL_Color selectedColor, SDL_Color textColor, TTF_Font* font, int maxLength )
+{
+    SDL_Rect pos;
+    pos.x = x;
+    pos.y = y;
+    pos.w = width;
+    pos.h = height;
+
+    UITextBox* textbox = new UITextBox;
+    textbox->Setup( id, pos, bgColor, selectedColor, textColor, font, maxLength );
+    m_textboxes.insert( std::pair<std::string, UITextBox*>( id, textbox ) );
+}
+
 void MenuManager::ResetMouse()
 {
     m_mouseDown = false;

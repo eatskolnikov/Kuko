@@ -43,6 +43,8 @@ class MenuManager
     void AddImage( const std::string& id, UIImage* image );
     void AddImage( const std::string& id, SDL_Texture* ptrTexture, int x, int y, int width, int height, bool centered, const std::string& effectName = "", int effectMax = 0 );
 
+    void AddTextBox( const std::string& id, int x, int y, int width, int height, SDL_Color bgColor, SDL_Color selectedColor, SDL_Color textColor, TTF_Font* font, int maxLength );
+
     int GetCurrentPage();
     void SetCurrentPage( int val );
     void NextPage();
