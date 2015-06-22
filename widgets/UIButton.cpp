@@ -12,6 +12,16 @@ UIButton::UIButton() : IWidget()
     m_useText = false;
 }
 
+void UIButton::Setup( const std::string& id, int x, int y, int w, int h, bool centered, SDL_Texture* ptrTexture, SDL_Color buttonColor )
+{
+    SDL_Rect pos;
+    pos.x = x;
+    pos.y = y;
+    pos.w = w;
+    pos.h = h;
+    Setup( id, pos, centered, ptrTexture, buttonColor );
+}
+
 void UIButton::Setup( const std::string& id, SDL_Rect position, bool centered, SDL_Texture* ptrTexture, SDL_Color buttonColor )
 {
     if ( centered )
@@ -38,6 +48,12 @@ void UIButton::SetupAnimateEffect( const std::string& effectType, SDL_Texture* f
     m_effectMax = effectMax;
     m_effect = effectType;
     m_background[1].Setup( m_id + "-alt-img", rect, frame2 );
+}
+
+void UIButton::SetFrame( SDL_Rect fr )
+{
+    m_background[0].SetFrame( fr );
+    m_background[1].SetFrame( fr );
 }
 
 void UIButton::Setup( const std::string& id, const std::string& text, SDL_Rect position, bool centered,

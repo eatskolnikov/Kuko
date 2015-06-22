@@ -31,6 +31,11 @@ void Sprite::SetPosition( kuko::PositionRect pos )
     position.h = int(pos.h);
 }
 
+void Sprite::SetFrame( SDL_Rect fr )
+{
+    frame = fr;
+}
+
 void Sprite::SetTexture( SDL_Texture* ptrTexture )
 {
     texture = ptrTexture;//LoadFile( path );

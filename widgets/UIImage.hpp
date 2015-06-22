@@ -18,6 +18,7 @@ class UIImage : public IWidget
     void SetColor( SDL_Color color );
     virtual void Draw();
     virtual void Update();
+    void SetFrame( SDL_Rect fr );
 
     protected:
     // std::string m_id;

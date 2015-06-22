@@ -34,6 +34,11 @@ void UIImage::SetColor( SDL_Color color )
     m_color = color;
 }
 
+void UIImage::SetFrame( SDL_Rect fr )
+{
+    m_background.SetFrame( fr );
+}
+
 void UIImage::Update()
 {
     float amountX = 0.05;
