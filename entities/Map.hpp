@@ -21,11 +21,11 @@ class Map
     int GetWidth();
     int GetHeight();
 
-    bool IsCollision( const PositionRect& entity );
+    bool IsCollision( const FloatRect& entity );
 
     private:
     std::vector<BaseEntity> m_lstTiles;
-    kuko::PositionRect m_offset;
+    kuko::FloatRect m_offset;
     int m_tileWH;
 };
 

@@ -11,18 +11,19 @@ UITextBox::UITextBox()
     m_label = "";
 }
 
-void UITextBox::Setup( const std::string& id, SDL_Rect position, SDL_Color bgColor, SDL_Color selectedColor, SDL_Color textColor, TTF_Font* font, int maxChars )
+void UITextBox::Setup( const std::string& id, FloatRect position, SDL_Color bgColor, SDL_Color selectedColor, SDL_Color textColor, TTF_Font* font, int maxChars )
 {
     Logger::Out( "Setup " + id, "UITextBox::Setup" );
     m_id = id;
-    m_position.Set( position );
+    m_position = position;
     m_textColor = textColor;
     m_bgColor = bgColor;
     m_defaultBgColor = bgColor;
     m_selectedBgColor = selectedColor;
     m_font = font;
     GenerateTexture();
-    SDL_SetTextInputRect( &position );
+    SDL_Rect inputRect = position.ToSDLRect();
+    SDL_SetTextInputRect( &inputRect );
     m_maxChars = maxChars;
 }
 

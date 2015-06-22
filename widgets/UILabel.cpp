@@ -15,9 +15,9 @@ UILabel::UILabel() : IWidget()
     m_useShadow = false;
 }
 
-void UILabel::Setup( const std::string& id, const std::string& label, SDL_Rect position, bool centered, SDL_Color textColor, TTF_Font* font, const std::string& effect, int effectMax )
+void UILabel::Setup( const std::string& id, const std::string& label, FloatRect position, bool centered, SDL_Color textColor, TTF_Font* font, const std::string& effect, int effectMax )
 {
-    m_position.Set( position );
+    m_position = position;
     m_color = textColor;
     m_font = font;
     m_label = label;
@@ -27,7 +27,7 @@ void UILabel::Setup( const std::string& id, const std::string& label, SDL_Rect p
     GenerateTexture();
 }
 
-void UILabel::Setup( const std::string& id, const std::string& label, SDL_Rect position, bool centered, SDL_Color textColor, TTF_Font* font, const std::string& effect, int effectMax, bool useShadow, SDL_Color shadowColor, int shadowOffsetX, int shadowOffsetY )
+void UILabel::Setup( const std::string& id, const std::string& label, FloatRect position, bool centered, SDL_Color textColor, TTF_Font* font, const std::string& effect, int effectMax, bool useShadow, SDL_Color shadowColor, int shadowOffsetX, int shadowOffsetY )
 {
     m_shadowColor = shadowColor;
     m_useShadow = useShadow;

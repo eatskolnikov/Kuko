@@ -14,11 +14,11 @@ class UIImage : public IWidget
     public:
     UIImage();
     virtual ~UIImage() { ; }
-    void Setup( const std::string& id, SDL_Rect position, SDL_Texture* ptrTexture );
+    void Setup( const std::string& id, FloatRect position, SDL_Texture* ptrTexture );
     void SetColor( SDL_Color color );
     virtual void Draw();
     virtual void Update();
-    void SetFrame( SDL_Rect fr );
+    void SetFrame( IntRect fr );
 
     protected:
     // std::string m_id;

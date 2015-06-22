@@ -82,11 +82,10 @@ void MenuManager::SetupMenu( const std::string& path )
             std::string id = LuaManager::Menu_GetElementString( index, "id" );
             std::string textureId = LuaManager::Menu_GetElementString( index, "texture_id" );
 
-            SDL_Rect pos;
-            pos.x = LuaManager::Menu_GetElementInt( index, "x" );
-            pos.y = LuaManager::Menu_GetElementInt( index, "y" );
-            pos.w = LuaManager::Menu_GetElementInt( index, "width" );
-            pos.h = LuaManager::Menu_GetElementInt( index, "height" );
+            IntRect pos( LuaManager::Menu_GetElementInt( index, "x" ),
+                LuaManager::Menu_GetElementInt( index, "y" ),
+                LuaManager::Menu_GetElementInt( index, "width" ),
+                LuaManager::Menu_GetElementInt( index, "height" ) );
 
             // Visible page is 0 = all pages, 1 = page 1 (lua), page 0 (c++)
             int page = LuaManager::Menu_GetElementInt( index, "page" );
@@ -117,22 +116,23 @@ void MenuManager::SetupMenu( const std::string& path )
 
             bool centered = ( LuaManager::Menu_GetElementInt( index, "centered_text" ) == 1 );
 
-            SDL_Rect pos;
-            pos.x = LuaManager::Menu_GetElementInt( index, "x" );
-            pos.y = LuaManager::Menu_GetElementInt( index, "y" );
-            pos.w = LuaManager::Menu_GetElementInt( index, "width" );
-            pos.h = LuaManager::Menu_GetElementInt( index, "height" );
+            IntRect pos( LuaManager::Menu_GetElementInt( index, "x" ),
+                LuaManager::Menu_GetElementInt( index, "y" ),
+                LuaManager::Menu_GetElementInt( index, "width" ),
+                LuaManager::Menu_GetElementInt( index, "height" )
+                );
 
             int page = LuaManager::Menu_GetElementInt( index, "page" );
 
             UIButton* button = new UIButton;
             if ( textId != "" )
             {
-                SDL_Rect pad;
-                pad.x = LuaManager::Menu_GetElementInt( index, "pad_x1" );
-                pad.y = LuaManager::Menu_GetElementInt( index, "pad_y1" );
-                pad.w = LuaManager::Menu_GetElementInt( index, "pad_x2" );
-                pad.h = LuaManager::Menu_GetElementInt( index, "pad_y2" );
+                IntRect pad(
+                    LuaManager::Menu_GetElementInt( index, "pad_x1" ),
+                    LuaManager::Menu_GetElementInt( index, "pad_y1" ),
+                    LuaManager::Menu_GetElementInt( index, "pad_x2" ),
+                    LuaManager::Menu_GetElementInt( index, "pad_y2" )
+                    );
 
                 SDL_Color color;
                 color.r = LuaManager::Menu_GetElementInt( index, "font_r" );
@@ -201,11 +201,12 @@ void MenuManager::SetupMenu( const std::string& path )
                 offsetY = LuaManager::Menu_GetElementInt( index, "shadow_offset_y" );
             }
 
-            SDL_Rect pos;
-            pos.x = LuaManager::Menu_GetElementInt( index, "x" );
-            pos.y = LuaManager::Menu_GetElementInt( index, "y" );
-            pos.w = LuaManager::Menu_GetElementInt( index, "width" );
-            pos.h = LuaManager::Menu_GetElementInt( index, "height" );
+            IntRect pos(
+                LuaManager::Menu_GetElementInt( index, "x" ),
+                LuaManager::Menu_GetElementInt( index, "y" ),
+                LuaManager::Menu_GetElementInt( index, "width" ),
+                LuaManager::Menu_GetElementInt( index, "height" )
+                );
 
             bool centered = ( LuaManager::Menu_GetElementInt( index, "centered_text" ) == 1 );
 
@@ -256,11 +257,12 @@ void MenuManager::SetupMenu( const std::string& path )
 
             int page = LuaManager::Menu_GetElementInt( index, "page" );
 
-            SDL_Rect pos;
-            pos.x = LuaManager::Menu_GetElementInt( index, "x" );
-            pos.y = LuaManager::Menu_GetElementInt( index, "y" );
-            pos.w = LuaManager::Menu_GetElementInt( index, "width" );
-            pos.h = LuaManager::Menu_GetElementInt( index, "height" );
+            IntRect pos(
+                LuaManager::Menu_GetElementInt( index, "x" ),
+                LuaManager::Menu_GetElementInt( index, "y" ),
+                LuaManager::Menu_GetElementInt( index, "width" ),
+                LuaManager::Menu_GetElementInt( index, "height" )
+                );
 
             UITextBox* textbox = new UITextBox;
             textbox->Setup( id, pos, bgColor, selectedBgColor, textColor, kuko::FontManager::GetFont( fontId ), maxLength );
@@ -283,8 +285,7 @@ void MenuManager::AddLabel( const std::string& id, UILabel* label )
 void MenuManager::AddLabel( const std::string& id, const std::string& lbl, int x, int y, int width, int height, bool centered, SDL_Color textColor, TTF_Font* font )
 {
     UILabel* label = new UILabel;
-    SDL_Rect pos; pos.x = x; pos.y = y; pos.w = width; pos.h = height;
-    label->Setup( id, lbl, pos, centered, textColor, font );
+    label->Setup( id, lbl, FloatRect ( x, y, width, height ), centered, textColor, font );
     AddLabel( id, label );
 }
 
@@ -297,8 +298,7 @@ void MenuManager::AddButton( const std::string& id,SDL_Texture* ptrTexture,  int
     SDL_Color buttonColor )
 {
     UIButton* button = new UIButton;
-    SDL_Rect pos; pos.x = x; pos.y = y; pos.w = width; pos.h = height;
-    button->Setup( id, pos, centered, ptrTexture, buttonColor );
+    button->Setup( id, FloatRect ( x, y, width, height ), centered, ptrTexture, buttonColor );
     AddButton( id, button );
 }
 
@@ -311,8 +311,11 @@ void MenuManager::AddImage( const std::string& id, SDL_Texture* ptrTexture, int 
     const std::string& effectName, int effectMax )
 {
     UIImage* image = new UIImage;
-    SDL_Rect pos; pos.x = x; pos.y = y; pos.w = width; pos.h = height;
-    pos.x = kuko::Application::GetDefaultWidth() / 2 - width / 2;
+    FloatRect pos( x, y, width, height );
+    if ( centered )
+    {
+        pos.x = kuko::Application::GetDefaultWidth() / 2 - width / 2;
+    }
     image->Setup( id, pos, ptrTexture );
     if ( effectName != "" )
     {
@@ -445,14 +448,8 @@ void MenuManager::Draw()
 void MenuManager::AddTextBox( const std::string& id, int x, int y, int width, int height,
     SDL_Color bgColor, SDL_Color selectedColor, SDL_Color textColor, TTF_Font* font, int maxLength )
 {
-    SDL_Rect pos;
-    pos.x = x;
-    pos.y = y;
-    pos.w = width;
-    pos.h = height;
-
     UITextBox* textbox = new UITextBox;
-    textbox->Setup( id, pos, bgColor, selectedColor, textColor, font, maxLength );
+    textbox->Setup( id, FloatRect ( x, y, width, height ), bgColor, selectedColor, textColor, font, maxLength );
     m_textboxes.insert( std::pair<std::string, UITextBox*>( id, textbox ) );
 }
 
@@ -475,7 +472,7 @@ bool MenuManager::IsButtonClicked( const std::string& key, float mouseX, float m
     {
         if ( iter->second->GetId() == key )
         {
-            SDL_Rect btn = iter->second->GetPosition().ToSDLRect();
+            FloatRect btn = iter->second->GetPosition();
 
             bool isHit = ( adjX >= btn.x && adjX <= btn.x + btn.w &&
                      adjY >= btn.y && adjY <= btn.y + btn.h );
@@ -495,7 +492,7 @@ void MenuManager::CheckTextboxClick( float mouseX, float mouseY )
     for ( std::map< std::string, UITextBox* >::iterator iter = m_textboxes.begin();
             iter != m_textboxes.end(); ++iter )
     {
-        SDL_Rect widget = iter->second->GetPosition().ToSDLRect();
+        FloatRect widget = iter->second->GetPosition();
         bool isHit = ( mouseX >= widget.x && mouseX <= widget.x + widget.w &&
                  mouseY >= widget.y && mouseY <= widget.y + widget.h );
 

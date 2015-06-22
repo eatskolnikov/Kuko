@@ -66,11 +66,12 @@ void ImageManager::Draw( const Sprite& sprite )
     SDL_RendererFlip flip = ( sprite.isFlipped ) ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
 
     SDL_Rect rect = sprite.position.ToSDLRect();
+    SDL_Rect frame = sprite.frame.ToSDLRect();
 
     SDL_RenderCopyEx(
         kuko::Application::GetRenderer(),
         sprite.texture,
-        &sprite.frame,
+        &frame,
         &rect,
         sprite.angle,
         NULL,

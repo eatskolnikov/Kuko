@@ -22,7 +22,7 @@ class IWidget
         if ( m_effectTimer < 0 ) { m_effectTimer = m_effectMax; }
     }
 
-    PositionRect GetPosition()
+    FloatRect GetPosition()
     {
         return m_position;
     }
@@ -35,12 +35,15 @@ class IWidget
         m_position.h = h;
     }
 
-    void SetPosition( SDL_Rect pos )
+    void SetPosition( IntRect pos )
     {
-        m_position.Set( pos );
+        m_position.x = pos.x;
+        m_position.y = pos.y;
+        m_position.w = pos.w;
+        m_position.h = pos.h;
     }
 
-    void SetPosition( PositionRect pos )
+    void SetPosition( FloatRect pos )
     {
         m_position = pos;
     }
@@ -53,7 +56,7 @@ class IWidget
 
     protected:
     std::string m_id;
-    PositionRect m_position;
+    FloatRect m_position;
     int m_visiblePage;
 
     std::string m_effect;

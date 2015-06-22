@@ -61,7 +61,7 @@ void Map::Draw()
     }
 }
 
-bool Map::IsCollision( const PositionRect& entity )
+bool Map::IsCollision( const FloatRect& entity )
 {
     bool collision = false;
     for ( unsigned int i = 0; i < m_lstTiles.size(); i++ )

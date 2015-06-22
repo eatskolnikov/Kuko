@@ -12,9 +12,9 @@ UIImage::UIImage() : IWidget()
 {
 }
 
-void UIImage::Setup( const std::string& id, SDL_Rect position, SDL_Texture* ptrTexture )
+void UIImage::Setup( const std::string& id, FloatRect position, SDL_Texture* ptrTexture )
 {
-    m_position.Set( position );
+    m_position = position;
 
     if ( ptrTexture == NULL )
     {
@@ -24,7 +24,7 @@ void UIImage::Setup( const std::string& id, SDL_Rect position, SDL_Texture* ptrT
     else
     {
         m_background.SetTexture( ptrTexture );
-        m_background.position.Set( position );
+        m_background.position = position;
         m_primitiveBackground = false;
     }
 }
@@ -34,7 +34,7 @@ void UIImage::SetColor( SDL_Color color )
     m_color = color;
 }
 
-void UIImage::SetFrame( SDL_Rect fr )
+void UIImage::SetFrame( IntRect fr )
 {
     m_background.SetFrame( fr );
 }

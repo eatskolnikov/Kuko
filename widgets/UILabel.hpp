@@ -17,8 +17,8 @@ class UILabel : public IWidget
     public:
     UILabel();
     virtual ~UILabel() { ; }
-    void Setup( const std::string& id, const std::string& label, SDL_Rect position, bool centered, SDL_Color textColor, TTF_Font* font, const std::string& effect = "", int effectMax = 0 );
-    void Setup( const std::string& id, const std::string& label, SDL_Rect position, bool centered, SDL_Color textColor, TTF_Font* font, const std::string& effect, int effectMax, bool useShadow, SDL_Color shadowColor, int shadowOffsetX, int shadowOffsetY );
+    void Setup( const std::string& id, const std::string& label, FloatRect position, bool centered, SDL_Color textColor, TTF_Font* font, const std::string& effect = "", int effectMax = 0 );
+    void Setup( const std::string& id, const std::string& label, FloatRect position, bool centered, SDL_Color textColor, TTF_Font* font, const std::string& effect, int effectMax, bool useShadow, SDL_Color shadowColor, int shadowOffsetX, int shadowOffsetY );
     void SetColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a );
     void SetShadowColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a );
     virtual void Draw();

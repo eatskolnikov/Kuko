@@ -8,7 +8,7 @@
 namespace kuko
 {
 
-void BaseEntity::Setup( const std::string& name, SDL_Texture* texture, PositionRect pos )
+void BaseEntity::Setup( const std::string& name, SDL_Texture* texture, FloatRect pos )
 {
     m_id = name;
     m_sprite.SetTexture( texture );
@@ -25,7 +25,7 @@ void BaseEntity::Cleanup()
 {
 }
 
-void BaseEntity::SetFrame( SDL_Rect frame )
+void BaseEntity::SetFrame( IntRect frame )
 {
     m_sprite.frame = frame;
     UpdateSprite();
@@ -39,7 +39,7 @@ void BaseEntity::SetPosition( int x, int y )
     UpdateSprite();
 }
 
-PositionRect BaseEntity::GetPosition() const
+FloatRect BaseEntity::GetPosition() const
 {
     return m_position;
 }
@@ -60,7 +60,7 @@ bool BaseEntity::IsCollision( const BaseEntity& other )
 }
 
 
-bool BaseEntity::IsCollision( const PositionRect& otherRect )
+bool BaseEntity::IsCollision( const FloatRect& otherRect )
 {
 
     bool col = ( m_isSolid &&

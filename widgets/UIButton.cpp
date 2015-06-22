@@ -14,15 +14,10 @@ UIButton::UIButton() : IWidget()
 
 void UIButton::Setup( const std::string& id, int x, int y, int w, int h, bool centered, SDL_Texture* ptrTexture, SDL_Color buttonColor )
 {
-    SDL_Rect pos;
-    pos.x = x;
-    pos.y = y;
-    pos.w = w;
-    pos.h = h;
-    Setup( id, pos, centered, ptrTexture, buttonColor );
+    Setup( id, FloatRect( x, y, w, h ), centered, ptrTexture, buttonColor );
 }
 
-void UIButton::Setup( const std::string& id, SDL_Rect position, bool centered, SDL_Texture* ptrTexture, SDL_Color buttonColor )
+void UIButton::Setup( const std::string& id, FloatRect position, bool centered, SDL_Texture* ptrTexture, SDL_Color buttonColor )
 {
     if ( centered )
     {
@@ -30,40 +25,35 @@ void UIButton::Setup( const std::string& id, SDL_Rect position, bool centered, S
         Logger::Out( "Screen width: " + StringUtil::IntToString( kuko::Application::GetScreenWidth() ) );
     }
 
-    m_position.Set( position );
+    m_position = position;
     m_id = id;
     m_background[0].Setup( id + "-img", position, ptrTexture );
     m_background[0].SetColor( buttonColor );
 }
 
-void UIButton::Setup( const std::string& id, const std::string& text, SDL_Rect position, bool centered,
+void UIButton::Setup( const std::string& id, const std::string& text, FloatRect position, bool centered,
     SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, int padding /* = 0 */ )
 {
-    Setup( id, text, position, centered, ptrTexture, buttonColor, textColor, font, { padding, padding, padding, padding } );
+    Setup( id, text, position, centered, ptrTexture, buttonColor, textColor, font, FloatRect( padding, padding, padding, padding ) );
 }
 
 void UIButton::SetupAnimateEffect( const std::string& effectType, SDL_Texture* frame2, int effectMax )
 {
-    SDL_Rect rect = m_position.ToSDLRect();
     m_effectMax = effectMax;
     m_effect = effectType;
-    m_background[1].Setup( m_id + "-alt-img", rect, frame2 );
+    m_background[1].Setup( m_id + "-alt-img", m_position, frame2 );
 }
 
-void UIButton::SetFrame( SDL_Rect fr )
+void UIButton::SetFrame( IntRect fr )
 {
     m_background[0].SetFrame( fr );
     m_background[1].SetFrame( fr );
 }
 
-void UIButton::Setup( const std::string& id, const std::string& text, SDL_Rect position, bool centered,
-    SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, SDL_Rect padding )
+void UIButton::Setup( const std::string& id, const std::string& text, FloatRect position, bool centered,
+    SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, FloatRect padding )
 {
-    SDL_Rect textPos = position;
-    textPos.x += padding.x;
-    textPos.y += padding.y;
-    textPos.w -= (padding.w * 2);
-    textPos.h -= (padding.h * 2);
+    FloatRect textPos( position.x + padding.x, position.y + padding.y, position.w - ( padding.w * 2 ), position.h - ( padding.h * 2 ) );
     m_text.Setup( id + "-lbl", text, textPos, centered, textColor, font );
     m_useText = true;
     Setup( id, position, centered, ptrTexture, buttonColor );

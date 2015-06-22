@@ -17,7 +17,7 @@ class UITextBox : public IWidget
     public:
     UITextBox();
     virtual ~UITextBox() { ; }
-    void Setup( const std::string& id, SDL_Rect position, SDL_Color bgColor, SDL_Color selectedColor, SDL_Color textColor, TTF_Font* font, int maxChars );
+    void Setup( const std::string& id, FloatRect position, SDL_Color bgColor, SDL_Color selectedColor, SDL_Color textColor, TTF_Font* font, int maxChars );
     void SetTextColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a );
     void SetBackgroundColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a );
     virtual void Draw();
