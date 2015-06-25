@@ -61,6 +61,14 @@ void ImageManager::Cleanup()
     }
 }
 
+void ImageManager::DrawWithOffset( const Sprite& sprite, float offset )
+{
+    Sprite offsetSprite = sprite;
+    offsetSprite.position.x += offset;
+
+    Draw( offsetSprite );
+}
+
 void ImageManager::Draw( const Sprite& sprite )
 {
     SDL_RendererFlip flip = ( sprite.isFlipped ) ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
