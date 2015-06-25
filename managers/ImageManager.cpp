@@ -61,10 +61,11 @@ void ImageManager::Cleanup()
     }
 }
 
-void ImageManager::DrawWithOffset( const Sprite& sprite, float offset )
+void ImageManager::DrawWithOffset( const Sprite& sprite, float offsetX, float offsetY )
 {
     Sprite offsetSprite = sprite;
-    offsetSprite.position.x += offset;
+    offsetSprite.position.x += offsetX;
+    offsetSprite.position.y += offsetY;
 
     Draw( offsetSprite );
 }
