@@ -556,6 +556,40 @@ void MenuManager::AppendToActiveTextBox( const std::string& text )
     m_activeTextbox->AppendText( text );
 }
 
+void MenuManager::OutputElementNames()
+{
+    Logger::Out( "MENU MANAGER ELEMENTS" );
+
+    Logger::Out( "UIImage" );
+    for (   std::map<std::string, UIImage*>::iterator it = m_images.begin();
+            it != m_images.end();
+            ++it )
+    {
+        Logger::Out( "\t * \"" + it->second->GetId() + "\"" );
+    }
+    Logger::Out( "UIButton" );
+    for (   std::map<std::string, UIButton*>::iterator it = m_buttons.begin();
+            it != m_buttons.end();
+            ++it )
+    {
+        Logger::Out( "\t * \"" + it->second->GetId() + "\"" );
+    }
+    Logger::Out( "UILabel" );
+    for (   std::map<std::string, UILabel*>::iterator it = m_labels.begin();
+            it != m_labels.end();
+            ++it )
+    {
+        Logger::Out( "\t * \"" + it->second->GetId() + "\"" );
+    }
+    Logger::Out( "UITextBox" );
+    for (   std::map<std::string, UITextBox*>::iterator it = m_textboxes.begin();
+            it != m_textboxes.end();
+            ++it )
+    {
+        Logger::Out( "\t * \"" + it->second->GetId() + "\"" );
+    }
+}
+
 void MenuManager::RemoveLastCharacterOfActiveTextBox()
 {
     if ( m_activeTextbox == NULL )

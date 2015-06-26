@@ -49,6 +49,8 @@ class MenuManager
     void SetCurrentPage( int val );
     void NextPage();
 
+    void OutputElementNames(); // debug
+
     protected:
     std::map<std::string, UIImage*> m_images;
     std::map<std::string, UILabel*> m_labels;

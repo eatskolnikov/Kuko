@@ -2,6 +2,7 @@
 #include "InputManager.hpp"
 
 #include "../utilities/Logger.hpp"
+#include "../utilities/StringUtil.hpp"
 
 namespace kuko
 {
@@ -25,6 +26,7 @@ std::map<CommandButton, TriggerInfo> InputManager::GetTriggerInfo()
 
 void InputManager::SetTextBufferActive( bool val )
 {
+    if ( val ) { Logger::Out( "Enable text input", "InputManager::SetTextBufferActive" ); } else { Logger::Out( "Disable text input", "InputManager::SetTextBufferActive" ); }
     m_enableTextInput = val;
 }
 
