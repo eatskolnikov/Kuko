@@ -7,11 +7,13 @@
 #include <map>
 #include <string>
 
+#include "../base/PositionRect.hpp"
+
 namespace kuko
 {
 
 // TODO: Add "registration" of keys for commands.
-enum CommandButton { TAP, SECONDARY_TAP, MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, BACKSPACE, WINDOW_CLOSE };
+enum CommandButton { TAP, SECONDARY_TAP, MOUSE_DOWN, MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, BACKSPACE, WINDOW_CLOSE };
 
 class TriggerInfo
 {
@@ -36,6 +38,8 @@ class InputManager
     static std::map<CommandButton, TriggerInfo> GetTriggerInfo();
     static std::string GetTextInputBuffer();
     static void SetTextBufferActive( bool val );
+
+    static IntRect GetMousePosition();
 
     protected:
     static void ResetTriggers();

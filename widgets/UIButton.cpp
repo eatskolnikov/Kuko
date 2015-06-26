@@ -12,11 +12,6 @@ UIButton::UIButton() : IWidget()
     m_useText = false;
 }
 
-void UIButton::Setup( const std::string& id, int x, int y, int w, int h, bool centered, SDL_Texture* ptrTexture, SDL_Color buttonColor )
-{
-    Setup( id, FloatRect( x, y, w, h ), centered, ptrTexture, buttonColor );
-}
-
 void UIButton::Setup( const std::string& id, FloatRect position, bool centered, SDL_Texture* ptrTexture, SDL_Color buttonColor )
 {
     if ( centered )

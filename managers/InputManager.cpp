@@ -33,6 +33,13 @@ std::string InputManager::GetTextInputBuffer()
     return m_textInputBuffer;
 }
 
+IntRect InputManager::GetMousePosition()
+{
+    IntRect pos( 0, 0, 0, 0 );
+    SDL_GetMouseState( &pos.x, &pos.y );
+    return pos;
+}
+
 void InputManager::Update()
 {
     ResetTriggers();
@@ -42,6 +49,7 @@ void InputManager::Update()
         // Clicking around in-game?
         if ( m_event.type == SDL_MOUSEBUTTONDOWN )
         {
+            m_eventTriggered[ MOUSE_DOWN ].down = true;
         }
 
         // Window Events
@@ -153,6 +161,7 @@ void InputManager::ResetTriggers()
     m_eventTriggered[ MOVE_RIGHT ].down = false;
     m_eventTriggered[ WINDOW_CLOSE ].down = false;
     m_eventTriggered[ BACKSPACE ].down = false;
+    m_eventTriggered[ MOUSE_DOWN ].down = false;
     m_textInputBuffer[0] = '\0';
 }
 

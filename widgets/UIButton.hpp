@@ -17,9 +17,8 @@ class UIButton : public IWidget
     public:
     UIButton();
     virtual ~UIButton() { ; }
-    void Setup( const std::string& id, FloatRect position, bool centered, SDL_Texture* ptrTexture, SDL_Color buttonColor );
 
-    void Setup( const std::string& id, int x, int y, int w, int h, bool centered, SDL_Texture* ptrTexture, SDL_Color buttonColor );
+    void Setup( const std::string& id, FloatRect position, bool centered, SDL_Texture* ptrTexture, SDL_Color buttonColor );
 
     void Setup( const std::string& id, const std::string& text, FloatRect position, bool centered,
         SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, int padding = 0 );
