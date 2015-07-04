@@ -61,6 +61,26 @@ void MenuManager::SetupMenu( const std::string& path )
     Logger::Error( "Error: Lualess Kuko does not currently support creating menus from external files.", "MenuManager::SetupMenu" );
 }
 
+void MenuManager::LoadButton()
+{
+    Logger::Error( "Error: Lualess Kuko does not support this function.", "MenuManager::LoadButton" );
+}
+
+void MenuManager::LoadImage()
+{
+    Logger::Error( "Error: Lualess Kuko does not support this function.", "MenuManager::LoadImage" );
+}
+
+void MenuManager::LoadLabel()
+{
+    Logger::Error( "Error: Lualess Kuko does not support this function.", "MenuManager::LoadLabel" );
+}
+
+void MenuManager::LoadTextbox()
+{
+    Logger::Error( "Error: Lualess Kuko does not support this function.", "MenuManager::LoadTextbox" );
+}
+
 #else
 void MenuManager::SetupMenu( const std::string& path )
 {
@@ -80,201 +100,239 @@ void MenuManager::SetupMenu( const std::string& path )
 
         if ( type == "image" )
         {
-            std::string id = LuaManager::Menu_GetElementString( index, "id" );
-            std::string textureId = LuaManager::Menu_GetElementString( index, "texture_id" );
-
-            IntRect pos( LuaManager::Menu_GetElementInt( index, "x" ),
-                LuaManager::Menu_GetElementInt( index, "y" ),
-                LuaManager::Menu_GetElementInt( index, "width" ),
-                LuaManager::Menu_GetElementInt( index, "height" ) );
-
-            // Visible page is 0 = all pages, 1 = page 1 (lua), page 0 (c++)
-            int page = LuaManager::Menu_GetElementInt( index, "page" );
-
-            UIImage* image = new UIImage;
-            image->Setup( id, pos, kuko::ImageManager::GetTexture( textureId ) );
-            if ( page != 0 ) { image->SetVisiblePage( page ); }
-
-            AddImage( id, image );
+            LoadImage( index );
         }
         else if ( type == "button" )
         {
-            std::string id = LuaManager::Menu_GetElementString( index, "id" );
-            std::string textureId = LuaManager::Menu_GetElementString( index, "texture_id" );
-            std::string languageId = LuaManager::Menu_GetElementString( index, "language_id" );
-            std::string fontId = LuaManager::Menu_GetElementString( index, "font_id" );
-            std::string textId = LuaManager::Menu_GetElementString( index, "text_id" );
-            std::string effect = LuaManager::Menu_GetElementString( index, "effect" );
-            std::string text;
-            if ( languageId == "" )
-            {
-                text = LanguageManager::Text( textId );
-            }
-            else
-            {
-                text = LanguageManager::Text( languageId, textId );
-            }
-
-            bool centered = ( LuaManager::Menu_GetElementInt( index, "centered_text" ) == 1 );
-
-            IntRect pos( LuaManager::Menu_GetElementInt( index, "x" ),
-                LuaManager::Menu_GetElementInt( index, "y" ),
-                LuaManager::Menu_GetElementInt( index, "width" ),
-                LuaManager::Menu_GetElementInt( index, "height" )
-                );
-
-            int page = LuaManager::Menu_GetElementInt( index, "page" );
-
-            UIButton* button = new UIButton;
-            if ( textId != "" )
-            {
-                IntRect pad(
-                    LuaManager::Menu_GetElementInt( index, "pad_x1" ),
-                    LuaManager::Menu_GetElementInt( index, "pad_y1" ),
-                    LuaManager::Menu_GetElementInt( index, "pad_x2" ),
-                    LuaManager::Menu_GetElementInt( index, "pad_y2" )
-                    );
-
-                SDL_Color color;
-                color.r = LuaManager::Menu_GetElementInt( index, "font_r" );
-                color.g = LuaManager::Menu_GetElementInt( index, "font_g" );
-                color.b = LuaManager::Menu_GetElementInt( index, "font_b" );
-                color.a = LuaManager::Menu_GetElementInt( index, "font_a" );
-
-                button->Setup( id, text, pos, centered,
-                    kuko::ImageManager::GetTexture( textureId ),
-                    { 0xFF, 0xFF, 0xFF, 0xFF }, color,
-                    kuko::FontManager::GetFont( fontId ), pad );
-            }
-            else
-            {
-                button->Setup( id, pos, centered,
-                    kuko::ImageManager::GetTexture( textureId ),
-                    { 0xFF, 0xFF, 0xFF, 0xFF } );
-            }
-            if ( effect != "" )
-            {
-                int speed = LuaManager::Menu_GetElementInt( index, "effect_speed" );
-                std::string subTexture = LuaManager::Menu_GetElementString( index, "texture_id_2" );
-
-                button->SetupAnimateEffect( effect, kuko::ImageManager::GetTexture( subTexture ), speed );
-            }
-            if ( page != 0 ) { button->SetVisiblePage( page ); }
-
-            AddButton( id, button );
+            LoadButton( index );
         }
         else if ( type == "label" )
         {
-            std::string id = LuaManager::Menu_GetElementString( index, "id" );
-            std::string fontId = LuaManager::Menu_GetElementString( index, "font_id" );
-            std::string textId = LuaManager::Menu_GetElementString( index, "text_id" );
-            std::string effect = LuaManager::Menu_GetElementString( index, "effect" );
-            int effectSpeed = LuaManager::Menu_GetElementInt( index, "effect_speed" );
-            std::string languageId = LuaManager::Menu_GetElementString( index, "language_id" );
-            std::string text;
-            if ( languageId == "" )
-            {
-                text = LanguageManager::Text( textId );
-            }
-            else
-            {
-                text = LanguageManager::Text( languageId, textId );
-            }
-
-            SDL_Color color;
-            color.r = LuaManager::Menu_GetElementInt( index, "font_r" );
-            color.g = LuaManager::Menu_GetElementInt( index, "font_g" );
-            color.b = LuaManager::Menu_GetElementInt( index, "font_b" );
-            color.a = LuaManager::Menu_GetElementInt( index, "font_a" );
-
-            int page = LuaManager::Menu_GetElementInt( index, "page" );
-
-            bool useShadow = LuaManager::Menu_GetElementInt( index, "use_shadow" );
-            SDL_Color shadowColor;
-            int offsetX, offsetY;
-            if ( useShadow )
-            {
-                shadowColor.r = LuaManager::Menu_GetElementInt( index, "shadow_r" );
-                shadowColor.g = LuaManager::Menu_GetElementInt( index, "shadow_g" );
-                shadowColor.b = LuaManager::Menu_GetElementInt( index, "shadow_b" );
-                shadowColor.a = LuaManager::Menu_GetElementInt( index, "shadow_a" );
-                offsetX = LuaManager::Menu_GetElementInt( index, "shadow_offset_x" );
-                offsetY = LuaManager::Menu_GetElementInt( index, "shadow_offset_y" );
-            }
-
-            IntRect pos(
-                LuaManager::Menu_GetElementInt( index, "x" ),
-                LuaManager::Menu_GetElementInt( index, "y" ),
-                LuaManager::Menu_GetElementInt( index, "width" ),
-                LuaManager::Menu_GetElementInt( index, "height" )
-                );
-
-            bool centered = ( LuaManager::Menu_GetElementInt( index, "centered_text" ) == 1 );
-
-            UILabel* label = new UILabel;
-            label->Setup( id, text,
-                pos, centered, color,
-                kuko::FontManager::GetFont( fontId ), effect, effectSpeed, useShadow, shadowColor, offsetX, offsetY );
-
-            if ( page != 0 ) { label->SetVisiblePage( page ); }
-
-            AddLabel( id, label );
+            LoadLabel( index );
         }
         else if ( type == "textbox" )
         {
-            std::string id = LuaManager::Menu_GetElementString( index, "id" );
-            std::string fontId = LuaManager::Menu_GetElementString( index, "font_id" );
-            std::string textId = LuaManager::Menu_GetElementString( index, "text_id" );
-            std::string languageId = LuaManager::Menu_GetElementString( index, "language_id" );
-            std::string text;
-            int maxLength = LuaManager::Menu_GetElementInt( index, "max_length" );
-
-            if ( languageId == "" )
-            {
-                text = LanguageManager::Text( textId );
-            }
-            else
-            {
-                text = LanguageManager::Text( languageId, textId );
-            }
-
-            SDL_Color bgColor;
-            bgColor.r = LuaManager::Menu_GetElementInt( index, "background_r" );
-            bgColor.g = LuaManager::Menu_GetElementInt( index, "background_g" );
-            bgColor.b = LuaManager::Menu_GetElementInt( index, "background_b" );
-            bgColor.a = LuaManager::Menu_GetElementInt( index, "background_a" );
-
-            SDL_Color selectedBgColor;
-            selectedBgColor.r = LuaManager::Menu_GetElementInt( index, "selected_r" );
-            selectedBgColor.g = LuaManager::Menu_GetElementInt( index, "selected_g" );
-            selectedBgColor.b = LuaManager::Menu_GetElementInt( index, "selected_b" );
-            selectedBgColor.a = LuaManager::Menu_GetElementInt( index, "selected_a" );
-
-            SDL_Color textColor;
-            textColor.r = LuaManager::Menu_GetElementInt( index, "font_r" );
-            textColor.g = LuaManager::Menu_GetElementInt( index, "font_g" );
-            textColor.b = LuaManager::Menu_GetElementInt( index, "font_b" );
-            textColor.a = LuaManager::Menu_GetElementInt( index, "font_a" );
-
-            int page = LuaManager::Menu_GetElementInt( index, "page" );
-
-            IntRect pos(
-                LuaManager::Menu_GetElementInt( index, "x" ),
-                LuaManager::Menu_GetElementInt( index, "y" ),
-                LuaManager::Menu_GetElementInt( index, "width" ),
-                LuaManager::Menu_GetElementInt( index, "height" )
-                );
-
-            UITextBox* textbox = new UITextBox;
-            textbox->Setup( id, pos, bgColor, selectedBgColor, textColor, kuko::FontManager::GetFont( fontId ), maxLength );
-
-            if ( page != 0 ) { textbox->SetVisiblePage( page ); }
-            m_textboxes.insert( std::pair<std::string, UITextBox*>( id, textbox ) );
+            LoadTextbox( index );
         }
     }
 
     int uiElements = m_images.size() + m_labels.size() + m_buttons.size();
     Logger::Out( "Menu has " + StringUtil::IntToString( uiElements ) + " elements", "MenuManager::SetupMenu" );
+}
+
+void MenuManager::LoadButton( int index )
+{
+    std::string id = LuaManager::Menu_GetElementString( index, "id" );
+    std::string textureId = LuaManager::Menu_GetElementString( index, "texture_id" );
+    std::string languageId = LuaManager::Menu_GetElementString( index, "language_id" );
+    std::string fontId = LuaManager::Menu_GetElementString( index, "font_id" );
+    std::string textId = LuaManager::Menu_GetElementString( index, "text_id" );
+    std::string effect = LuaManager::Menu_GetElementString( index, "effect" );
+    std::string text;
+
+    if ( languageId == "" )
+    {
+        text = LanguageManager::Text( textId );
+    }
+    else
+    {
+        text = LanguageManager::Text( languageId, textId );
+    }
+
+    bool centered = ( LuaManager::Menu_GetElementInt( index, "centered_text" ) == 1 );
+
+    FloatRect pos( LuaManager::Menu_GetElementInt( index, "x" ),
+        LuaManager::Menu_GetElementInt( index, "y" ),
+        LuaManager::Menu_GetElementInt( index, "width" ),
+        LuaManager::Menu_GetElementInt( index, "height" ));
+
+    IntRect frame(LuaManager::Menu_GetElementInt( index, "frame_w" ),
+        LuaManager::Menu_GetElementInt( index, "frame_y" ),
+        LuaManager::Menu_GetElementInt( index, "frame_width" ),
+        LuaManager::Menu_GetElementInt( index, "frame_height" ));
+
+    int page = LuaManager::Menu_GetElementInt( index, "page" );
+
+    UIButton* button = new UIButton;
+    if ( textId != "" )
+    {
+        IntRect pad(
+            LuaManager::Menu_GetElementInt( index, "pad_x1" ),
+            LuaManager::Menu_GetElementInt( index, "pad_y1" ),
+            LuaManager::Menu_GetElementInt( index, "pad_x2" ),
+            LuaManager::Menu_GetElementInt( index, "pad_y2" )
+            );
+
+        SDL_Color color;
+        color.r = LuaManager::Menu_GetElementInt( index, "font_r" );
+        color.g = LuaManager::Menu_GetElementInt( index, "font_g" );
+        color.b = LuaManager::Menu_GetElementInt( index, "font_b" );
+        color.a = LuaManager::Menu_GetElementInt( index, "font_a" );
+
+        button->Setup(
+            id,
+            text,
+            pos,
+            centered,
+            kuko::ImageManager::GetTexture( textureId ),
+            { 0xFF, 0xFF, 0xFF, 0xFF },
+            color,
+            kuko::FontManager::GetFont( fontId ),
+            pad );
+    }
+    else
+    {
+        button->Setup( id, pos, centered,
+            kuko::ImageManager::GetTexture( textureId ),
+            { 0xFF, 0xFF, 0xFF, 0xFF } );
+    }
+
+    if ( effect != "" )
+    {
+        int speed = LuaManager::Menu_GetElementInt( index, "effect_speed" );
+        std::string subTexture = LuaManager::Menu_GetElementString( index, "texture_id_2" );
+
+        button->SetupAnimateEffect( effect, kuko::ImageManager::GetTexture( subTexture ), speed );
+    }
+
+    if ( page != 0 ) { button->SetVisiblePage( page ); }
+
+    if ( frame.w != 0 && frame.h != 0 )
+    {
+        button->SetFrame( frame );
+    }
+
+    AddButton( id, button );
+}
+
+void MenuManager::LoadImage( int index )
+{
+    std::string id = LuaManager::Menu_GetElementString( index, "id" );
+    std::string textureId = LuaManager::Menu_GetElementString( index, "texture_id" );
+
+    FloatRect pos( LuaManager::Menu_GetElementInt( index, "x" ),
+        LuaManager::Menu_GetElementInt( index, "y" ),
+        LuaManager::Menu_GetElementInt( index, "width" ),
+        LuaManager::Menu_GetElementInt( index, "height" ) );
+
+    // Visible page is 0 = all pages, 1 = page 1 (lua), page 0 (c++)
+    int page = LuaManager::Menu_GetElementInt( index, "page" );
+
+    UIImage* image = new UIImage;
+    image->Setup( id, pos, kuko::ImageManager::GetTexture( textureId ) );
+    if ( page != 0 ) { image->SetVisiblePage( page ); }
+
+    AddImage( id, image );
+}
+
+void MenuManager::LoadLabel( int index )
+{
+    std::string id = LuaManager::Menu_GetElementString( index, "id" );
+    std::string fontId = LuaManager::Menu_GetElementString( index, "font_id" );
+    std::string textId = LuaManager::Menu_GetElementString( index, "text_id" );
+    std::string effect = LuaManager::Menu_GetElementString( index, "effect" );
+    int effectSpeed = LuaManager::Menu_GetElementInt( index, "effect_speed" );
+    std::string languageId = LuaManager::Menu_GetElementString( index, "language_id" );
+    std::string text;
+    if ( languageId == "" )
+    {
+        text = LanguageManager::Text( textId );
+    }
+    else
+    {
+        text = LanguageManager::Text( languageId, textId );
+    }
+
+    SDL_Color color;
+    color.r = LuaManager::Menu_GetElementInt( index, "font_r" );
+    color.g = LuaManager::Menu_GetElementInt( index, "font_g" );
+    color.b = LuaManager::Menu_GetElementInt( index, "font_b" );
+    color.a = LuaManager::Menu_GetElementInt( index, "font_a" );
+
+    int page = LuaManager::Menu_GetElementInt( index, "page" );
+
+    bool useShadow = LuaManager::Menu_GetElementInt( index, "use_shadow" );
+    SDL_Color shadowColor;
+    int offsetX, offsetY;
+    if ( useShadow )
+    {
+        shadowColor.r = LuaManager::Menu_GetElementInt( index, "shadow_r" );
+        shadowColor.g = LuaManager::Menu_GetElementInt( index, "shadow_g" );
+        shadowColor.b = LuaManager::Menu_GetElementInt( index, "shadow_b" );
+        shadowColor.a = LuaManager::Menu_GetElementInt( index, "shadow_a" );
+        offsetX = LuaManager::Menu_GetElementInt( index, "shadow_offset_x" );
+        offsetY = LuaManager::Menu_GetElementInt( index, "shadow_offset_y" );
+    }
+
+    FloatRect pos(
+        LuaManager::Menu_GetElementInt( index, "x" ),
+        LuaManager::Menu_GetElementInt( index, "y" ),
+        LuaManager::Menu_GetElementInt( index, "width" ),
+        LuaManager::Menu_GetElementInt( index, "height" )
+        );
+
+    bool centered = ( LuaManager::Menu_GetElementInt( index, "centered_text" ) == 1 );
+
+    UILabel* label = new UILabel;
+    label->Setup( id, text,
+        pos, centered, color,
+        kuko::FontManager::GetFont( fontId ), effect, effectSpeed, useShadow, shadowColor, offsetX, offsetY );
+
+    if ( page != 0 ) { label->SetVisiblePage( page ); }
+
+    AddLabel( id, label );
+}
+
+void MenuManager::LoadTextbox( int index )
+{
+    std::string id = LuaManager::Menu_GetElementString( index, "id" );
+    std::string fontId = LuaManager::Menu_GetElementString( index, "font_id" );
+    std::string textId = LuaManager::Menu_GetElementString( index, "text_id" );
+    std::string languageId = LuaManager::Menu_GetElementString( index, "language_id" );
+    std::string text;
+    int maxLength = LuaManager::Menu_GetElementInt( index, "max_length" );
+
+    if ( languageId == "" )
+    {
+        text = LanguageManager::Text( textId );
+    }
+    else
+    {
+        text = LanguageManager::Text( languageId, textId );
+    }
+
+    SDL_Color bgColor;
+    bgColor.r = LuaManager::Menu_GetElementInt( index, "background_r" );
+    bgColor.g = LuaManager::Menu_GetElementInt( index, "background_g" );
+    bgColor.b = LuaManager::Menu_GetElementInt( index, "background_b" );
+    bgColor.a = LuaManager::Menu_GetElementInt( index, "background_a" );
+
+    SDL_Color selectedBgColor;
+    selectedBgColor.r = LuaManager::Menu_GetElementInt( index, "selected_r" );
+    selectedBgColor.g = LuaManager::Menu_GetElementInt( index, "selected_g" );
+    selectedBgColor.b = LuaManager::Menu_GetElementInt( index, "selected_b" );
+    selectedBgColor.a = LuaManager::Menu_GetElementInt( index, "selected_a" );
+
+    SDL_Color textColor;
+    textColor.r = LuaManager::Menu_GetElementInt( index, "font_r" );
+    textColor.g = LuaManager::Menu_GetElementInt( index, "font_g" );
+    textColor.b = LuaManager::Menu_GetElementInt( index, "font_b" );
+    textColor.a = LuaManager::Menu_GetElementInt( index, "font_a" );
+
+    int page = LuaManager::Menu_GetElementInt( index, "page" );
+
+    FloatRect pos(
+        LuaManager::Menu_GetElementInt( index, "x" ),
+        LuaManager::Menu_GetElementInt( index, "y" ),
+        LuaManager::Menu_GetElementInt( index, "width" ),
+        LuaManager::Menu_GetElementInt( index, "height" )
+        );
+
+    UITextBox* textbox = new UITextBox;
+    textbox->Setup( id, pos, bgColor, selectedBgColor, textColor, kuko::FontManager::GetFont( fontId ), maxLength );
+
+    if ( page != 0 ) { textbox->SetVisiblePage( page ); }
+    m_textboxes.insert( std::pair<std::string, UITextBox*>( id, textbox ) );
 }
 #endif
 

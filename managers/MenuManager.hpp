@@ -54,6 +54,11 @@ class MenuManager
     void OutputElementNames(); // debug
 
     protected:
+    void LoadButton( int index );
+    void LoadImage( int index );
+    void LoadLabel( int index );
+    void LoadTextbox( int index );
+
     std::map<std::string, UIImage*> m_images;
     std::map<std::string, UILabel*> m_labels;
     std::map<std::string, UIButton*> m_buttons;

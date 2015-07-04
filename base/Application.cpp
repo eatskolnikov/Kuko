@@ -61,7 +61,12 @@ void Application::SetDefaultResolution( int width, int height )
 
 bool Application::Start( const std::string& winTitle, int screenWidth /* = 480 */, int screenHeight /* = 480 */, int defaultWidth, int defaultHeight )
 {
-    Logger::Out( "Begin", "Application::Start" );
+    Logger::Out( "Title \"" + winTitle + "\", Screen: "
+        + StringUtil::IntToString( screenWidth ) + "x" + StringUtil::IntToString( screenHeight )
+        + ", Actual Resolution: "
+        + StringUtil::IntToString( defaultWidth ) + "x" + StringUtil::IntToString( defaultHeight ),
+        "Application::Start" );
+
     // Screen scaling is based on the default width/height
     SetDefaultResolution( defaultWidth, defaultHeight );
 

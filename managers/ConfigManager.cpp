@@ -20,8 +20,10 @@ void ConfigManager::Setup()
 {
     m_config = NULL;
     #ifdef NOLUA
+        Logger::Out( "Setup LualessConfig", "ConfigManager::Setup" );
         m_config = new LualessConfig;
     #else
+        Logger::Out( "Setup LuaConfig", "ConfigManager::Setup" );
         m_config = new LuaConfig;
     #endif
 }

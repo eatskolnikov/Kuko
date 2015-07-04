@@ -14,8 +14,10 @@ void LanguageManager::Setup()
 {
     m_language = NULL;
     #ifdef NOLUA
+        Logger::Out( "Setup LualessLanguage", "LanguageManager::Setup" );
         m_language = new LualessLanguage;
     #else
+        Logger::Out( "Setup LuaLanguage", "LanguageManager::Setup" );
         m_language = new LuaLanguage;
     #endif
 }
