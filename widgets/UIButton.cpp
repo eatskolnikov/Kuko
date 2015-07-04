@@ -12,6 +12,11 @@ UIButton::UIButton() : IWidget()
     m_useText = false;
 }
 
+void UIButton::SetCallback( void (*Callback)() )
+{
+//    HandlerFunction = Callback;
+}
+
 void UIButton::Setup( const std::string& id, FloatRect position, bool centered, SDL_Texture* ptrTexture, SDL_Color buttonColor )
 {
     if ( centered )

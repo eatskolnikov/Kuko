@@ -28,6 +28,8 @@ class MenuManager
     bool IsButtonClicked( const std::string& key, float mouseX, float mouseY );
     void CheckTextboxClick( float mouseX, float mouseY );
     void ResetMouse();
+    void HandleUIInput();
+
     void SetTextEditing( bool turnOn );
     void AppendToActiveTextBox( const std::string& text );
     void RemoveLastCharacterOfActiveTextBox();
@@ -38,7 +40,7 @@ class MenuManager
     void AddLabel( const std::string& id, const std::string& lbl, int x, int y, int width, int height, bool centered, SDL_Color textColor, TTF_Font* font );
 
     void AddButton( const std::string& id, UIButton* button );
-    void AddButton( const std::string& id,SDL_Texture* ptrTexture,  int x, int y, int width, int height, bool centered, SDL_Color buttonColor );
+    void AddButton( const std::string& id,SDL_Texture* ptrTexture,  int x, int y, int width, int height, bool centered, SDL_Color buttonColor, void (*Callback)(void) );
 
     void AddImage( const std::string& id, UIImage* image );
     void AddImage( const std::string& id, SDL_Texture* ptrTexture, int x, int y, int width, int height, bool centered, const std::string& effectName = "", int effectMax = 0 );

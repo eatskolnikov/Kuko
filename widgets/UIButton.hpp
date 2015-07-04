@@ -4,6 +4,8 @@
 
 #include "SDL_ttf.h"
 
+#include <functional>
+
 #include "IWidget.hpp"
 #include "UIImage.hpp"
 #include "UILabel.hpp"
@@ -11,14 +13,16 @@
 namespace kuko
 {
 
-// Button = Image + Label, label relatively positioned based on widget origin?
+class IState;
+
 class UIButton : public IWidget
 {
     public:
     UIButton();
     virtual ~UIButton() { ; }
 
-    void Setup( const std::string& id, FloatRect position, bool centered, SDL_Texture* ptrTexture, SDL_Color buttonColor );
+    void Setup( const std::string& id, FloatRect position, bool centered,
+        SDL_Texture* ptrTexture, SDL_Color buttonColor );
 
     void Setup( const std::string& id, const std::string& text, FloatRect position, bool centered,
         SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, int padding = 0 );
@@ -31,7 +35,10 @@ class UIButton : public IWidget
     void Update();
     bool IsTriggered( int actionX, int actionY );
     void SetFrame( IntRect fr );
-    // SDL_Rect GetPosition();
+
+    void SetCallback( void (*Callback)() );
+
+    std::function< void() > HandlerFunction;
 
     protected:
     UIImage m_background[2];
@@ -40,9 +47,6 @@ class UIButton : public IWidget
     std::string m_effect;
     int m_effectTimer;
     int m_effectMax;
-    // Label
-    // std::string m_id;
-    // SDL_Rect m_position;
 };
 
 }

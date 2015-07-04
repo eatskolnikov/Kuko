@@ -6,6 +6,7 @@
 #include "LanguageManager.hpp"
 #include "../utilities/Logger.hpp"
 #include "../utilities/StringUtil.hpp"
+#include "InputManager.hpp"
 
 #include <fstream>
 
@@ -300,9 +301,17 @@ void MenuManager::AddButton( const std::string& id, UIButton* button )
 }
 
 void MenuManager::AddButton( const std::string& id,SDL_Texture* ptrTexture,  int x, int y, int width, int height, bool centered,
-    SDL_Color buttonColor )
+    SDL_Color buttonColor, void (*Callback)(void) )
 {
     Logger::Out( "Add button \"" + id + "\" from properties", "MenuManager::AddButton" );
+    if ( Callback == NULL )
+    {
+        Logger::Out( "Callback is NULL", "MenuManager::AddButton" );
+    }
+    else
+    {
+        Logger::Out( "Callback is assigned", "MenuManager::AddButton" );
+    }
     UIButton* button = new UIButton;
     button->Setup( id, FloatRect ( x, y, width, height ), centered, ptrTexture, buttonColor );
     AddButton( id, button );
@@ -479,7 +488,6 @@ bool MenuManager::IsButtonClicked( const std::string& key, float mouseX, float m
             iter != m_buttons.end(); ++iter )
     {
         FloatRect pos = iter->second->GetPosition();
-        Logger::Out( "BUTTON " + StringUtil::FloatToString( pos.x ) + "," + StringUtil::FloatToString( pos.y ) + " " + StringUtil::FloatToString( pos.w ) + "x" + StringUtil::FloatToString( pos.h ) );
 
         if ( iter->second->GetId() == key )
         {
@@ -489,6 +497,12 @@ bool MenuManager::IsButtonClicked( const std::string& key, float mouseX, float m
                      adjY >= btn.y && adjY <= btn.y + btn.h );
 
             m_mouseDown = isHit;
+
+            if ( iter->second->HandlerFunction != NULL )
+            {
+                iter->second->HandlerFunction();
+            }
+
             return isHit;
         }
     }
@@ -517,6 +531,36 @@ void MenuManager::CheckTextboxClick( float mouseX, float mouseY )
             m_activeTextbox = iter->second;
             m_activeTextbox->SetActive( true );
         }
+    }
+}
+
+void MenuManager::HandleUIInput()
+{
+    std::map<kuko::CommandButton, kuko::TriggerInfo> input = kuko::InputManager::GetTriggerInfo();
+
+    bool clickAction = false;
+    if ( input[ kuko::TAP ].down )
+    {
+        // Was a button pressed?
+        int x = input[ kuko::TAP ].actionX, y = input[ kuko::TAP ].actionY;
+
+        for ( std::map< std::string, UIButton* >::iterator iter = m_buttons.begin();
+                iter != m_buttons.end(); ++iter )
+        {
+            if ( IsButtonClicked( iter->second->GetId(), x, y ) )
+            {
+                clickAction = true;
+                Logger::Out( "Clicked button \"" + iter->second->GetId() + "\"", "MenuManager::HandleUIInput" );
+            }
+        }
+
+        // Also check textbox
+        CheckTextboxClick( x, y );
+    }
+
+    if ( !clickAction )
+    {
+        ResetMouse();
     }
 }
 
