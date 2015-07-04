@@ -8,6 +8,10 @@ namespace kuko
 
 std::map<std::string, TTF_Font*> FontManager::m_fonts;
 
+void FontManager::Setup()
+{
+}
+
 void FontManager::Cleanup()
 {
     Logger::Out( "FontManager::Cleanup" );

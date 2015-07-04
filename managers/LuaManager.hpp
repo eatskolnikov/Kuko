@@ -58,6 +58,7 @@ namespace kuko
         static void Lua_RunVoidFunction();
 
         friend class LanguageManager;
+        friend class LuaLanguage;
         friend class MapManager;
         friend class MenuManager;
         friend class LuaConfig;

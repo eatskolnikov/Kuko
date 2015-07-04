@@ -11,7 +11,6 @@ namespace kuko
 
 LualessLanguage::LualessLanguage()
 {
-    Logger::Out( "LualessLanguage Constructor" );
 }
 
 bool LualessLanguage::AddLanguage( const std::string& id, const std::string& path )

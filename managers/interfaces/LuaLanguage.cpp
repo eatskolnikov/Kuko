@@ -2,14 +2,18 @@
 
 #ifndef NOLUA
 
-#include "LuaManager.hpp"
+#include "../LuaManager.hpp"
+#include "../../utilities/Logger.hpp"
 
 namespace kuko
 {
 
 LuaLanguage::LuaLanguage()
 {
-    Logger::Out( "LuaLanguage Constructor" );
+}
+
+LuaLanguage::~LuaLanguage()
+{
 }
 
 bool LuaLanguage::AddLanguage( const std::string& id, const std::string& path )

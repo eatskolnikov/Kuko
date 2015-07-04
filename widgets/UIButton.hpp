@@ -28,7 +28,7 @@ class UIButton : public IWidget
         SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, int padding = 0 );
 
     void Setup( const std::string& id, const std::string& text, FloatRect position, bool centered,
-        SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, FloatRect padding );
+        SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, IntRect padding );
 
     void SetupAnimateEffect( const std::string& effectType, SDL_Texture* frame2, int effectMax );
     void Draw();

@@ -32,9 +32,9 @@ void UIButton::Setup( const std::string& id, FloatRect position, bool centered, 
 }
 
 void UIButton::Setup( const std::string& id, const std::string& text, FloatRect position, bool centered,
-    SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, int padding /* = 0 */ )
+        SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, int padding /* = 0 */ )
 {
-    Setup( id, text, position, centered, ptrTexture, buttonColor, textColor, font, FloatRect( padding, padding, padding, padding ) );
+    Setup( id, text, position, centered, ptrTexture, buttonColor, textColor, font, IntRect( padding, padding, padding, padding ) );
 }
 
 void UIButton::SetupAnimateEffect( const std::string& effectType, SDL_Texture* frame2, int effectMax )
@@ -51,7 +51,7 @@ void UIButton::SetFrame( IntRect fr )
 }
 
 void UIButton::Setup( const std::string& id, const std::string& text, FloatRect position, bool centered,
-    SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, FloatRect padding )
+        SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, IntRect padding )
 {
     FloatRect textPos( position.x + padding.x, position.y + padding.y, position.w - ( padding.w * 2 ), position.h - ( padding.h * 2 ) );
     m_text.Setup( id + "-lbl", text, textPos, centered, textColor, font );

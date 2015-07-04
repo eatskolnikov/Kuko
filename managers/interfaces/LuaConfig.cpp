@@ -2,16 +2,15 @@
 
 #ifndef NOLUA
 
-#include "LuaManager.hpp"
-#include "../utilities/StringUtil.hpp"
-#include "../utilities/Logger.hpp"
+#include "../LuaManager.hpp"
+#include "../../utilities/StringUtil.hpp"
+#include "../../utilities/Logger.hpp"
 
 namespace kuko
 {
 
 LuaConfig::LuaConfig()
 {
-    Logger::Out( "LuaConfig Constructor" );
 }
 
 bool LuaConfig::LoadConfig( const std::vector<std::string>& settings )

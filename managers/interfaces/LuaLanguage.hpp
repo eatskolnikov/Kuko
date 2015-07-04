@@ -5,6 +5,8 @@
 
 #include "ILanguage.hpp"
 
+#include <string>
+
 namespace kuko
 {
 
@@ -27,8 +29,8 @@ class LuaLanguage : public ILanguage
     virtual int SpecialFieldCount( const std::string& langType, const std::string& field );
 
     protected:
-    virtual std::string m_currentLanguage;
-}
+    std::string m_currentLanguage;
+};
 
 }
 
