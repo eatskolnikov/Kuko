@@ -1,12 +1,13 @@
 // Kuko Framework - https://github.com/Rejcx/Kuko - Rachel J. Morris - MIT License
 #include "Logger.hpp"
-#include <ctime>
+#include <iomanip>
 
 std::ofstream Logger::m_file;
 time_t Logger::m_startTime;
 time_t Logger::m_lastTimestamp;
 int Logger::m_logLevel;
 std::string Logger::m_categoryFilter;
+int Logger::m_rowCount;
 
 /*
     m_logLevel:
@@ -15,11 +16,37 @@ std::string Logger::m_categoryFilter;
 
 void Logger::Setup()
 {
+    m_rowCount = 0;
     m_logLevel = 0;
-    m_file.open( "log.txt" );
-    m_startTime = time( 0 );
+    m_file.open( "log.html" );
+    m_startTime = GetTimestamp();
     m_lastTimestamp = m_startTime;
-    m_file << "Program begin at " << __DATE__ << " " << __TIME__ << std::endl << std::endl;
+
+    m_file << "<html><head><title>LOG " << __DATE__ << "</title></head><body>" << std::endl;
+    m_file << "<style>" << std::endl;
+    m_file << "table { font-family: sans-serif; }" << std::endl;
+    m_file << "td { border-bottom: solid 1px #CCCCCC; } " << std::endl;
+    m_file << "table .time { padding-right: 25px; }" << std::endl;
+    m_file << "table .location { padding-right: 25px; }" << std::endl;
+    m_file << "table td.time { font-size: 14px; }" << std::endl;
+    m_file << "table td.location { font-size: 14px; }" << std::endl;
+    m_file << "table td.message { font-size: 14px; }" << std::endl;
+    m_file << "table .odd { background: #DDDDDD; }" << std::endl;
+    m_file << "</style>" << std::endl;
+    m_file << "<table>" << std::endl;
+    m_file << "<tr>"
+        << "<td class='time'><strong>TIME</strong></td>"
+        << "<td class='location'><strong>LOCATION</strong></td>"
+        << "<td class='message'><strong>MESSAGE</strong></td>"
+        << "</tr>" << std::endl;
+    Out( "Logging Begins", "" );
+}
+
+void Logger::Setup( int logLevel, const std::string& filter )
+{
+    Setup();
+    SetLogLevel( logLevel );
+    SetFilterWord( filter );
 }
 
 void Logger::SetLogLevel( int val )
@@ -35,7 +62,9 @@ void Logger::SetFilterWord( const std::string& filter )
 
 void Logger::Cleanup()
 {
-    m_file << std::endl << "Program end, elapsed time: " << GetTimestamp() << " second(s)" << std::endl;
+    Out( "Logging Ends", "" );
+    m_file << "</table>" << std::endl;
+    m_file << "</body></html>" << std::endl;
     m_file.close();
 }
 
@@ -57,23 +86,25 @@ void Logger::Out( const std::string& message, const std::string& location /* = "
         return;
     }
 
-    time_t timestamp = GetTimestamp();
-    if ( m_lastTimestamp != timestamp )
-    {
-        std::cout << std::endl;
-        m_file << std::endl;
-        m_lastTimestamp = timestamp;
-    }
-
     if ( condition )
     {
-        std::cout   << GetTimestamp() << "\t" << message;
-        if ( location != "" ) { std::cout << " @ " << location; }
-        std::cout << std::endl;
 
-        m_file      << GetTimestamp() << "\t" << message;
-        if ( location != "" ) { m_file << " @ " << location; }
-        m_file << std::endl;
+        std::cout << GetFormattedTimestamp();
+        if ( location != "" ) { std::cout << " @ " << location; }
+        std::cout << std::endl << "  " << message << std::endl << std::endl;
+
+        std::string loc = location;
+        if ( loc == "" ) { loc = "-"; }
+
+        std::string rowClass = ( m_rowCount % 2 == 0 ) ? "" : "odd";
+
+        m_file << "<tr class='" + rowClass + "'>"
+            << "<td class='time'>" << GetFormattedTimestamp() << "</td>"
+            << "<td class='location'>" << loc << "</td>"
+            << "<td class='message'>" << message << "</td>"
+            << "</tr>" << std::endl;
+
+        m_rowCount++;
     }
 }
 
@@ -90,11 +121,23 @@ void Logger::Error( const std::string& message, const std::string& location /* =
     m_file << std::endl;
 }
 
+std::string Logger::GetFormattedTimestamp()
+{
+    time_t timestamp = GetTimestamp();
+    struct tm* timeinfo;
+    char buffer[80];
+    time( &timestamp );
+    timeinfo = localtime ( &timestamp );
+    strftime( buffer, 80, "%H:%M:%S", timeinfo );
+
+    std::string str( buffer );
+    return str;
+}
+
 double Logger::GetTimestamp()
 {
-    time_t now = time( 0 );
-    double appTime = difftime( now, m_startTime );
-    return appTime;
+    std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
+    return std::chrono::system_clock::to_time_t( now );
 }
 
 

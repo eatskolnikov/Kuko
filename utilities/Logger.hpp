@@ -2,6 +2,7 @@
 #ifndef _KUKO_LOGGER
 #define _KUKO_LOGGER
 
+#include <chrono>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -10,6 +11,7 @@ class Logger
 {
     public:
     static void Setup();
+    static void Setup( int logLevel, const std::string& filter );
     static void Cleanup();
     static void SetLogLevel( int val );
     static void SetFilterWord( const std::string& filter );
@@ -18,6 +20,7 @@ class Logger
     static void Error( const std::string& message, const std::string& location = "" );
 
     static double GetTimestamp();
+    static std::string GetFormattedTimestamp();
 
     private:
     static std::ofstream m_file;
@@ -25,6 +28,7 @@ class Logger
     static time_t m_lastTimestamp;
     static int m_logLevel;
     static std::string m_categoryFilter;
+    static int m_rowCount;
 };
 
 // Shortcut expressions for logger
