@@ -4,6 +4,7 @@
 
 #include "../LuaManager.hpp"
 #include "../../utilities/Logger.hpp"
+#include "../../utilities/StringUtil.hpp"
 
 namespace kuko
 {
@@ -30,12 +31,25 @@ std::string LuaLanguage::CurrentLanguage()
 std::string LuaLanguage::Text( const std::string& key )
 {
     std::string value = kuko::LuaManager::Language_GetText( key );
+
+    if ( value == "NOTFOUND" )
+    {
+        Logger::Error( "Value for key \"" + key + "\" not found in Lua script for language \"" + m_currentLanguage + "\"", "LuaLanguage::Text" );
+    }
+
     return ( value == "NOTFOUND" ) ? key + " NOT FOUND" : value;
 }
 
 std::string LuaLanguage::Text( const std::string& langType, const std::string& key )
 {
     std::string value = kuko::LuaManager::Language_GetText( langType, key );
+
+    if ( value == "NOTFOUND" )
+    {
+        Logger::Error( "Value for key \"" + key + "\", langType \"" + langType + "\" not found in Lua script for language \"" + m_currentLanguage + "\"", "LuaLanguage::Text" );
+    }
+
+
     return ( value == "NOTFOUND" ) ? key + " NOT FOUND" : value;
 }
 
@@ -49,12 +63,24 @@ std::string LuaLanguage::GetSuggestedFont()
 std::string LuaLanguage::SpecialField( const std::string& langType, const std::string& field, const std::string& key )
 {
     std::string value = kuko::LuaManager::Language_GetSpecialField( langType, field, key );
+
+    if ( value == "NOTFOUND" )
+    {
+        Logger::Error( "Value for key \"" + key + "\", field \"" + field + "\", langType \"" + langType + "\" not found in Lua script for language \"" + m_currentLanguage + "\"", "LuaLanguage::SpecialField" );
+    }
+
     return ( value == "NOTFOUND" ) ? key + " NOT FOUND" : value;
 }
 
 std::string LuaLanguage::SpecialField( const std::string& langType, const std::string& field, int key )
 {
     std::string value = kuko::LuaManager::Language_GetSpecialField( langType, field, key );
+
+    if ( value == "NOTFOUND" )
+    {
+        Logger::Error( "Value for key \"" + StringUtil::IntToString( key ) + "\", field \"" + field + "\", langType \"" + langType + "\" not found in Lua script for language \"" + m_currentLanguage + "\"", "LuaLanguage::SpecialField" );
+    }
+
     return ( value == "NOTFOUND" ) ? key + " NOT FOUND" : value;
 }
 

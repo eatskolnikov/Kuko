@@ -44,14 +44,12 @@ std::string LanguageManager::CurrentLanguage()
 
 std::string LanguageManager::Text( const std::string& key )
 {
-    Logger::Out( "Get text " + key );
     return m_language->Text( key );
 }
 
 std::string LanguageManager::Text( const std::string& langType, const std::string& key )
 {
     std::string value = m_language->Text( langType, key );
-    Logger::Out( "Get text " + key + " for language " + langType + ": " + value );
     return m_language->Text( langType, key );
 }
 

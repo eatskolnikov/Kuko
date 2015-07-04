@@ -24,7 +24,7 @@ void Logger::Setup()
 
     m_file << "<html><head><title>LOG " << __DATE__ << "</title></head><body>" << std::endl;
     m_file << "<style>" << std::endl;
-    m_file << "table { font-family: sans-serif; }" << std::endl;
+    m_file << "table { font-family: sans-serif; width: 100%; }" << std::endl;
     m_file << "td { border-bottom: solid 1px #CCCCCC; } " << std::endl;
     m_file << "table .time { padding-right: 25px; }" << std::endl;
     m_file << "table .location { padding-right: 25px; }" << std::endl;
@@ -32,6 +32,7 @@ void Logger::Setup()
     m_file << "table td.location { font-size: 14px; }" << std::endl;
     m_file << "table td.message { font-size: 14px; }" << std::endl;
     m_file << "table .odd { background: #DDDDDD; }" << std::endl;
+    m_file << "table .error { background: #FFA5A5; }" << std::endl;
     m_file << "</style>" << std::endl;
     m_file << "<table>" << std::endl;
     m_file << "<tr>"
@@ -39,7 +40,7 @@ void Logger::Setup()
         << "<td class='location'><strong>LOCATION</strong></td>"
         << "<td class='message'><strong>MESSAGE</strong></td>"
         << "</tr>" << std::endl;
-    Out( "Logging Begins", "" );
+    Out( "Logging Begins", "Logger::Setup" );
 }
 
 void Logger::Setup( int logLevel, const std::string& filter )
@@ -62,7 +63,7 @@ void Logger::SetFilterWord( const std::string& filter )
 
 void Logger::Cleanup()
 {
-    Out( "Logging Ends", "" );
+    Out( "Logging Ends", "Logger::Cleanup" );
     m_file << "</table>" << std::endl;
     m_file << "</body></html>" << std::endl;
     m_file.close();
@@ -115,10 +116,14 @@ void Logger::Error( const std::string& message, const std::string& location /* =
     std::cerr << "\t LINE " << __LINE__ << " FILE " << __FILE__ ;
     std::cerr << std::endl;
 
-    m_file      << "** " << GetTimestamp() << "\t" << message;
-    if ( location != "" ) { m_file << " @ " << location; }
-    m_file << "\t LINE " << __LINE__ << " FILE " << __FILE__ ;
-    m_file << std::endl;
+    std::string loc = location;
+    if ( loc == "" ) { loc = "-"; }
+
+    m_file << "<tr class='error'>"
+        << "<td class='time'>" << GetFormattedTimestamp() << "</td>"
+        << "<td class='location'>" << loc << "</td>"
+        << "<td class='message'>" << message << "</td>"
+        << "</tr>" << std::endl;
 }
 
 std::string Logger::GetFormattedTimestamp()
@@ -128,6 +133,7 @@ std::string Logger::GetFormattedTimestamp()
     char buffer[80];
     time( &timestamp );
     timeinfo = localtime ( &timestamp );
+    // http://www.cplusplus.com/reference/ctime/strftime/
     strftime( buffer, 80, "%H:%M:%S", timeinfo );
 
     std::string str( buffer );

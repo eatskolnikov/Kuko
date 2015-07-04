@@ -15,8 +15,10 @@ LuaConfig::LuaConfig()
 
 bool LuaConfig::LoadConfig( const std::vector<std::string>& settings )
 {
+    Logger::Out( "Load config file", "LuaConfig::LoadConfig" );
     if ( !LuaManager::LoadScript( "config.lua" ) )
     {
+        Logger::Out( "Config file not found, create a new one", "LuaConfig::LoadConfig" );
         CreateNewConfig();
         return false;
     }
