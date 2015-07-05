@@ -10,11 +10,11 @@ namespace kuko
 UIButton::UIButton() : IWidget()
 {
     m_useText = false;
+    HandlerFunction = NULL;
 }
 
-void UIButton::SetCallback( void (*Callback)() )
+UIButton::~UIButton()
 {
-//    HandlerFunction = Callback;
 }
 
 void UIButton::Setup( const std::string& id, FloatRect position, bool centered, SDL_Texture* ptrTexture, SDL_Color buttonColor )

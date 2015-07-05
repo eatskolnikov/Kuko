@@ -19,7 +19,7 @@ class UIButton : public IWidget
 {
     public:
     UIButton();
-    virtual ~UIButton() { ; }
+    virtual ~UIButton();
 
     void Setup( const std::string& id, FloatRect position, bool centered,
         SDL_Texture* ptrTexture, SDL_Color buttonColor );
@@ -35,8 +35,6 @@ class UIButton : public IWidget
     void Update();
     bool IsTriggered( int actionX, int actionY );
     void SetFrame( IntRect fr );
-
-    void SetCallback( void (*Callback)() );
 
     std::function< void() > HandlerFunction;
 

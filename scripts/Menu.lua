@@ -27,3 +27,32 @@ function Menu_GetOptionProperty( property )
 	end
 	return menu_options[ property ]
 end
+
+function Menu_GetAssetCount()
+	if ( assets == nil ) then return 0 end
+	return #assets
+end
+
+function Menu_GetAssetTitle( index )
+	if ( assets == nil ) then 
+		print( "assets not found" )
+		return "NOTFOUND" 
+	end
+	
+	if ( assets[ index ] == nil ) then 
+		print( "assets[ " .. index .. " ] not found" )
+		return "NOTFOUND" 
+	end
+	
+	if ( assets[ index ][ "name" ] == nil ) then 
+		print( "assets[ " .. index .. " ][ name ] not found" )
+		return "NOTFOUND" 
+	end
+	
+	return assets[ index ][ "name" ]
+end
+
+function Menu_GetAssetPath( index )
+	if ( assets == nil or assets[ index ] == nil or assets[ index ][ "path" ] == nil ) then return "NOTFOUND" end
+	return assets[ index ][ "path" ]
+end

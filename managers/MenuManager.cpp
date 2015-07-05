@@ -82,13 +82,33 @@ void MenuManager::LoadTextbox()
 }
 
 #else
-void MenuManager::SetupMenu( const std::string& path )
+int MenuManager::AssetListSize()
 {
-    Logger::Out( "Setup Menu " + path, "MenuManager::SetupMenu" );
+    return LuaManager::Menu_GetAssetCount();
+}
+
+std::string MenuManager::AssetTitle( int index )
+{
+    return LuaManager::Menu_GetAssetTitle( index + 1 );
+}
+
+std::string MenuManager::AssetPath( int index )
+{
+    return LuaManager::Menu_GetAssetPath( index + 1 );
+}
+
+
+void MenuManager::LoadMenuScript( const std::string& path )
+{
+    Logger::Out( "Load Menu \"" + path + "\"", "MenuManager::LoadMenuScript" );
     ClearMenu();
     m_currentMenu = path;
-
     LuaManager::LoadScript( path );
+}
+
+void MenuManager::BuildMenu()
+{
+    Logger::Out( "Build menu \"" + m_currentMenu + "\"", "MenuManager::BuildMenu" );
     int ct = LuaManager::Menu_GetElementCount();
     m_mouseDown = false;
     m_maxPages = LuaManager::Menu_GetOptionInt( "total_pages" );
@@ -97,6 +117,7 @@ void MenuManager::SetupMenu( const std::string& path )
     {
         int index = i+1; // account for Lua starting at 1
         std::string type = LuaManager::Menu_GetElementString( index, "ui_type" );
+        Logger::Out( "Element " + StringUtil::IntToString( i ) + " is a " + type, "MenuManager::BuildMenu" );
 
         if ( type == "image" )
         {
@@ -117,7 +138,13 @@ void MenuManager::SetupMenu( const std::string& path )
     }
 
     int uiElements = m_images.size() + m_labels.size() + m_buttons.size();
-    Logger::Out( "Menu has " + StringUtil::IntToString( uiElements ) + " elements", "MenuManager::SetupMenu" );
+    Logger::Out( "Menu has " + StringUtil::IntToString( uiElements ) + " elements", "MenuManager::BuildMenu" );
+}
+
+void MenuManager::SetupMenu( const std::string& path )
+{
+    LoadMenuScript( path );
+    BuildMenu();
 }
 
 void MenuManager::LoadButton( int index )
@@ -130,11 +157,11 @@ void MenuManager::LoadButton( int index )
     std::string effect = LuaManager::Menu_GetElementString( index, "effect" );
     std::string text;
 
-    if ( languageId == "" )
+    if ( languageId == "" && textId != "" )
     {
         text = LanguageManager::Text( textId );
     }
-    else
+    else if ( languageId != "" && textId != "" )
     {
         text = LanguageManager::Text( languageId, textId );
     }
@@ -209,17 +236,26 @@ void MenuManager::LoadImage( int index )
 {
     std::string id = LuaManager::Menu_GetElementString( index, "id" );
     std::string textureId = LuaManager::Menu_GetElementString( index, "texture_id" );
+    std::string effect = LuaManager::Menu_GetElementString( index, "effect" );
+    int effectSpeed = LuaManager::Menu_GetElementInt( index, "effect_speed" );
+    bool centered = LuaManager::Menu_GetElementInt( index, "centered" );
 
     FloatRect pos( LuaManager::Menu_GetElementInt( index, "x" ),
         LuaManager::Menu_GetElementInt( index, "y" ),
         LuaManager::Menu_GetElementInt( index, "width" ),
         LuaManager::Menu_GetElementInt( index, "height" ) );
 
+    if ( centered )
+    {
+        pos.x = Application::GetDefaultWidth() / 2 - pos.w / 2;
+    }
+
     // Visible page is 0 = all pages, 1 = page 1 (lua), page 0 (c++)
     int page = LuaManager::Menu_GetElementInt( index, "page" );
 
     UIImage* image = new UIImage;
     image->Setup( id, pos, kuko::ImageManager::GetTexture( textureId ) );
+    if ( effect != "" ) { image->SetEffect( effect, effectSpeed ); }
     if ( page != 0 ) { image->SetVisiblePage( page ); }
 
     AddImage( id, image );
@@ -358,21 +394,17 @@ void MenuManager::AddButton( const std::string& id, UIButton* button )
     m_buttons.insert( std::pair<std::string, UIButton*>( id, button ) );
 }
 
-void MenuManager::AddButton( const std::string& id,SDL_Texture* ptrTexture,  int x, int y, int width, int height, bool centered,
-    SDL_Color buttonColor, void (*Callback)(void) )
+void MenuManager::AddButton( const std::string& id,SDL_Texture* ptrTexture,  int x, int y, int width, int height, bool centered, SDL_Color buttonColor )
 {
     Logger::Out( "Add button \"" + id + "\" from properties", "MenuManager::AddButton" );
-    if ( Callback == NULL )
-    {
-        Logger::Out( "Callback is NULL", "MenuManager::AddButton" );
-    }
-    else
-    {
-        Logger::Out( "Callback is assigned", "MenuManager::AddButton" );
-    }
     UIButton* button = new UIButton;
     button->Setup( id, FloatRect ( x, y, width, height ), centered, ptrTexture, buttonColor );
     AddButton( id, button );
+}
+
+UIButton* MenuManager::GetButton( const std::string& name )
+{
+    return m_buttons[ name ];
 }
 
 void MenuManager::AddImage( const std::string& id, UIImage* image )
@@ -545,7 +577,7 @@ bool MenuManager::IsButtonClicked( const std::string& key, float mouseX, float m
     for ( std::map< std::string, UIButton* >::iterator iter = m_buttons.begin();
             iter != m_buttons.end(); ++iter )
     {
-        FloatRect pos = iter->second->GetPosition();
+        //FloatRect pos = iter->second->GetPosition();
 
         if ( iter->second->GetId() == key )
         {
@@ -555,11 +587,6 @@ bool MenuManager::IsButtonClicked( const std::string& key, float mouseX, float m
                      adjY >= btn.y && adjY <= btn.y + btn.h );
 
             m_mouseDown = isHit;
-
-            if ( iter->second->HandlerFunction != NULL )
-            {
-                iter->second->HandlerFunction();
-            }
 
             return isHit;
         }
@@ -589,6 +616,36 @@ void MenuManager::CheckTextboxClick( float mouseX, float mouseY )
             m_activeTextbox = iter->second;
             m_activeTextbox->SetActive( true );
         }
+    }
+}
+
+
+void MenuManager::CheckButtonClick( float mouseX, float mouseY )
+{
+    Logger::Out( "Check callbacks for " + StringUtil::IntToString( m_buttons.size() ) + " elements", "MenuManager::CheckButtonClick" );
+    std::map< std::string, UIButton* >::iterator iter = m_buttons.begin();
+
+    int elementCount = 0;
+    while ( iter != m_buttons.end() )
+    {
+        Logger::Out( "Check button click for item #" + StringUtil::IntToString( elementCount ) + ": " + iter->second->GetId(), "MenuManager::CheckButtonClick" );
+
+        FloatRect widget = iter->second->GetPosition();
+        bool isHit = ( mouseX >= widget.x && mouseX <= widget.x + widget.w &&
+                 mouseY >= widget.y && mouseY <= widget.y + widget.h );
+
+        Logger::Out( "Is Item " + iter->second->GetId() + " hit? " + StringUtil::IntToString( isHit ), "MenuManager::CheckButtonClick" );
+
+        if ( isHit && iter->second->HandlerFunction != NULL )
+        {
+            Logger::Out( "Call handler function", "MenuManager::CheckButtonClick" );
+            iter->second->HandlerFunction();
+            Logger::Out( "Done calling handler function", "MenuManager::CheckButtonClick" );
+        }
+
+        Logger::Out( "Next item", "MenuManager::CheckButtonClick" );
+        elementCount++;
+        ++iter;
     }
 }
 
@@ -652,6 +709,7 @@ void MenuManager::AppendToActiveTextBox( const std::string& text )
     Logger::Out( "Append \"" + text + "\" to active text box.", "MenuManager::AppendToActiveTextBox" );
     if ( m_activeTextbox == NULL )
     {
+        Logger::Out( "There is no current active textbox.", "MenuManager::AppendToActiveTextBox" );
         return;
     }
 

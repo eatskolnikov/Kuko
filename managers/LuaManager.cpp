@@ -165,6 +165,30 @@ int LuaManager::Menu_GetOptionInt( const std::string& property )
     return result;
 }
 
+int LuaManager::Menu_GetAssetCount()
+{
+    Lua_ChooseFunction( "Menu_GetAssetCount" );
+    int result = Lua_GetIntResult();
+    return result;
+}
+
+std::string LuaManager::Menu_GetAssetTitle( int index )
+{
+    Lua_ChooseFunction( "Menu_GetAssetTitle" );
+    Lua_PushInt( index );
+    std::string result = Lua_GetStringResult();
+    return result;
+}
+
+std::string LuaManager::Menu_GetAssetPath( int index )
+{
+    Lua_ChooseFunction( "Menu_GetAssetPath" );
+    Lua_PushInt( index );
+    std::string result = Lua_GetStringResult();
+    return result;
+}
+
+
 int LuaManager::Map_GetWidth()
 {
     Lua_ChooseFunction( "Map_GetWidth" );

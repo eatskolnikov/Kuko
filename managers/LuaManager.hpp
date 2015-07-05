@@ -32,6 +32,9 @@ namespace kuko
         static std::string Menu_GetElementString( int index, const std::string& property );
         static int Menu_GetElementInt( int index, const std::string& property );
         static int Menu_GetOptionInt( const std::string& property );
+        static int Menu_GetAssetCount();
+        static std::string Menu_GetAssetTitle( int index );
+        static std::string Menu_GetAssetPath( int index );
 
         // Map Functions
         static int Map_GetWidth();

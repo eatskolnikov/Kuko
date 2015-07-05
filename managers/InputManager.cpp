@@ -83,7 +83,8 @@ void InputManager::Update()
             // type, timestamp, windowID, text
             // https://wiki.libsdl.org/SDL_TextInputEvent
             std::string value = m_event.text.text;
-            Logger::Out( "Received SDL_TEXTINPUT event: " + value, "InputManager::Update" );
+            Logger::Out( "Received SDL_TEXTINPUT event: " + value
+                + ", Text input enabled? " + StringUtil::IntToString( m_enableTextInput ), "InputManager::Update" );
             if ( m_enableTextInput )
             {
                 strcat( m_textInputBuffer, m_event.text.text );

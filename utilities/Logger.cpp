@@ -25,6 +25,7 @@ void Logger::Setup()
     m_file << "<html><head><title>LOG " << __DATE__ << "</title></head><body>" << std::endl;
     m_file << "<style>" << std::endl;
     m_file << "table { font-family: sans-serif; width: 100%; }" << std::endl;
+    m_file << "tr.highlight { background: #FFFF00; } " << std::endl;
     m_file << "td { border-bottom: solid 1px #CCCCCC; } " << std::endl;
     m_file << "table .time { padding-right: 25px; }" << std::endl;
     m_file << "table .location { padding-right: 25px; }" << std::endl;
@@ -69,6 +70,24 @@ void Logger::Cleanup()
     m_file.close();
 }
 
+void Logger::OutHighlight( const std::string& message, const std::string& location )
+{
+    std::cout << GetFormattedTimestamp();
+    if ( location != "" ) { std::cout << " @ " << location; }
+    std::cout << std::endl << "  " << message << std::endl << std::endl;
+
+    std::string loc = location;
+    if ( loc == "" ) { loc = "-"; }
+
+    m_file << "<tr class='highlight'>"
+        << "<td class='time'>" << GetFormattedTimestamp() << "</td>"
+        << "<td class='location'>" << loc << "</td>"
+        << "<td class='message'>" << message << "</td>"
+        << "</tr>" << std::endl;
+
+    m_rowCount++;
+}
+
 void Logger::Out( const std::string& message, const std::string& location /* = "" */, const std::string& category /* = "" */, bool condition /* = true */, int level /* = 0 */ )
 {
     if ( m_categoryFilter.size() > 0 )
@@ -89,7 +108,6 @@ void Logger::Out( const std::string& message, const std::string& location /* = "
 
     if ( condition )
     {
-
         std::cout << GetFormattedTimestamp();
         if ( location != "" ) { std::cout << " @ " << location; }
         std::cout << std::endl << "  " << message << std::endl << std::endl;

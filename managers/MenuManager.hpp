@@ -11,6 +11,7 @@
 #include <map>
 #include <string>
 #include <set>
+#include <functional>
 
 namespace kuko
 {
@@ -20,13 +21,24 @@ class MenuManager
     public:
     MenuManager();
     ~MenuManager();
+
+    void LoadMenuScript( const std::string& path );
     void SetupMenu( const std::string& path );
+    void BuildMenu();
+
+    int AssetListSize();
+    std::string AssetTitle( int index );
+    std::string AssetPath( int index );
+
     void ClearMenu();
     void Draw();
     void Update();
     void Reload();
+
     bool IsButtonClicked( const std::string& key, float mouseX, float mouseY );
     void CheckTextboxClick( float mouseX, float mouseY );
+    void CheckButtonClick( float mouseX, float mouseY );
+
     void ResetMouse();
     void HandleUIInput();
 
@@ -40,7 +52,8 @@ class MenuManager
     void AddLabel( const std::string& id, const std::string& lbl, int x, int y, int width, int height, bool centered, SDL_Color textColor, TTF_Font* font );
 
     void AddButton( const std::string& id, UIButton* button );
-    void AddButton( const std::string& id,SDL_Texture* ptrTexture,  int x, int y, int width, int height, bool centered, SDL_Color buttonColor, void (*Callback)(void) );
+    void AddButton( const std::string& id,SDL_Texture* ptrTexture,  int x, int y, int width, int height, bool centered, SDL_Color buttonColor );
+    UIButton* GetButton( const std::string& name );
 
     void AddImage( const std::string& id, UIImage* image );
     void AddImage( const std::string& id, SDL_Texture* ptrTexture, int x, int y, int width, int height, bool centered, const std::string& effectName = "", int effectMax = 0 );

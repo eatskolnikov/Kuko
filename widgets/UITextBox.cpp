@@ -2,6 +2,7 @@
 
 #include "../base/Application.hpp"
 #include "../managers/ImageManager.hpp"
+#include "../utilities/StringUtil.hpp"
 
 namespace kuko
 {
@@ -72,7 +73,6 @@ void UITextBox::Update()
 {
 }
 
-
 void UITextBox::SetText( const std::string& text )
 {
     m_label = text;
@@ -86,6 +86,7 @@ std::string UITextBox::GetText()
 
 void UITextBox::AppendText( const std::string& text )
 {
+    Logger::Out( "Append \"" + text + "\" to existing label \"" + m_label + "\"", "UITextBox::ValidateText" );
     m_label += text;
     GenerateTexture();
 }
@@ -100,6 +101,7 @@ void UITextBox::ValidateText()
 {
     if ( m_label.size() > m_maxChars )
     {
+        Logger::Out( "Textbox string is too long! Max length is " + StringUtil::IntToString( m_maxChars ), "UITextBox::ValidateText" );
         m_label = m_label.substr( 0, m_maxChars );
     }
 }
