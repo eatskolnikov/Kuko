@@ -623,22 +623,15 @@ void MenuManager::CheckButtonClick( float mouseX, float mouseY )
     int elementCount = 0;
     while ( iter != m_buttons.end() )
     {
-        Logger::Out( "Check button click for item #" + StringUtil::IntToString( elementCount ) + ": " + iter->second->GetId(), "MenuManager::CheckButtonClick" );
-
         FloatRect widget = iter->second->GetPosition();
         bool isHit = ( mouseX >= widget.x && mouseX <= widget.x + widget.w &&
                  mouseY >= widget.y && mouseY <= widget.y + widget.h );
 
-        Logger::Out( "Is Item " + iter->second->GetId() + " hit? " + StringUtil::IntToString( isHit ), "MenuManager::CheckButtonClick" );
-
         if ( isHit && iter->second->HandlerFunction != NULL )
         {
-            Logger::Out( "Call handler function", "MenuManager::CheckButtonClick" );
             iter->second->HandlerFunction( "" );
-            Logger::Out( "Done calling handler function", "MenuManager::CheckButtonClick" );
         }
 
-        Logger::Out( "Next item", "MenuManager::CheckButtonClick" );
         elementCount++;
         ++iter;
     }
