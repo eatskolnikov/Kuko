@@ -110,7 +110,6 @@ void MenuManager::BuildMenu()
 {
     Logger::Out( "Build menu \"" + m_currentMenu + "\"", "MenuManager::BuildMenu" );
     int ct = LuaManager::Menu_GetElementCount();
-    m_mouseDown = false;
     m_maxPages = LuaManager::Menu_GetOptionInt( "total_pages" );
 
     for ( int i = 0; i < ct; i++ )
@@ -569,20 +568,11 @@ void MenuManager::AddTextBox( const std::string& id, int x, int y, int width, in
     m_textboxes.insert( std::pair<std::string, UITextBox*>( id, textbox ) );
 }
 
-void MenuManager::ResetMouse()
-{
-    m_mouseDown = false;
-}
-
 bool MenuManager::IsButtonClicked( const std::string& key, float mouseX, float mouseY )
 {
     float adjX = mouseX / kuko::Application::GetWidthRatio();
     float adjY = mouseY / kuko::Application::GetHeightRatio();
 
-    if ( m_mouseDown )
-    {
-        return false;
-    }
     for ( std::map< std::string, UIButton* >::iterator iter = m_buttons.begin();
             iter != m_buttons.end(); ++iter )
     {
@@ -595,13 +585,10 @@ bool MenuManager::IsButtonClicked( const std::string& key, float mouseX, float m
             bool isHit = ( adjX >= btn.x && adjX <= btn.x + btn.w &&
                      adjY >= btn.y && adjY <= btn.y + btn.h );
 
-            m_mouseDown = isHit;
-
             return isHit;
         }
     }
 
-    m_mouseDown = false;
     return false;
 }
 
@@ -679,11 +666,6 @@ void MenuManager::HandleUIInput()
 
         // Also check textbox
         CheckTextboxClick( x, y );
-    }
-
-    if ( !clickAction )
-    {
-        ResetMouse();
     }
 }
 

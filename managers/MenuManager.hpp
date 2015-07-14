@@ -39,7 +39,6 @@ class MenuManager
     void CheckTextboxClick( float mouseX, float mouseY );
     void CheckButtonClick( float mouseX, float mouseY );
 
-    void ResetMouse();
     void HandleUIInput();
 
     void SetTextEditing( bool turnOn );
@@ -65,6 +64,9 @@ class MenuManager
     void SetCurrentPage( int val );
     void NextPage();
 
+    void ToggleMouse( bool active );
+    bool IsMouseActive();
+
     void OutputElementNames(); // debug
 
     protected:
@@ -78,7 +80,6 @@ class MenuManager
     std::map<std::string, UIButton*> m_buttons;
     std::map<std::string, UITextBox*> m_textboxes;
     std::string m_currentMenu;
-    bool m_mouseDown;
     int m_currentPage;
     int m_maxPages;
     UITextBox* m_activeTextbox;
