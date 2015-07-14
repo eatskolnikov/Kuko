@@ -173,7 +173,7 @@ void MenuManager::LoadButton( int index )
         LuaManager::Menu_GetElementInt( index, "width" ),
         LuaManager::Menu_GetElementInt( index, "height" ));
 
-    IntRect frame(LuaManager::Menu_GetElementInt( index, "frame_w" ),
+    IntRect frame(LuaManager::Menu_GetElementInt( index, "frame_x" ),
         LuaManager::Menu_GetElementInt( index, "frame_y" ),
         LuaManager::Menu_GetElementInt( index, "frame_width" ),
         LuaManager::Menu_GetElementInt( index, "frame_height" ));
@@ -226,6 +226,11 @@ void MenuManager::LoadButton( int index )
 
     if ( frame.w != 0 && frame.h != 0 )
     {
+        Logger::OutHighlight( "Set frame "
+            + StringUtil::IntToString( frame.x ) + ", "
+            + StringUtil::IntToString( frame.y ) + " "
+            + StringUtil::IntToString( frame.w ) + " x "
+            + StringUtil::IntToString( frame.h ) );
         button->SetFrame( frame );
     }
 
@@ -407,6 +412,11 @@ UIButton* MenuManager::GetButton( const std::string& name )
     return m_buttons[ name ];
 }
 
+std::map<std::string, UIButton*>& MenuManager::GetButtons()
+{
+    return m_buttons;
+}
+
 void MenuManager::AddImage( const std::string& id, UIImage* image )
 {
     Logger::Out( "Add image \"" + id + "\" from UIImage", "MenuManager::AddImage" );
@@ -551,7 +561,6 @@ void MenuManager::Draw()
     }
 }
 
-
 void MenuManager::AddTextBox( const std::string& id, int x, int y, int width, int height,
     SDL_Color bgColor, SDL_Color selectedColor, SDL_Color textColor, TTF_Font* font, int maxLength )
 {
@@ -619,7 +628,6 @@ void MenuManager::CheckTextboxClick( float mouseX, float mouseY )
     }
 }
 
-
 void MenuManager::CheckButtonClick( float mouseX, float mouseY )
 {
     Logger::Out( "Check callbacks for " + StringUtil::IntToString( m_buttons.size() ) + " elements", "MenuManager::CheckButtonClick" );
@@ -639,7 +647,7 @@ void MenuManager::CheckButtonClick( float mouseX, float mouseY )
         if ( isHit && iter->second->HandlerFunction != NULL )
         {
             Logger::Out( "Call handler function", "MenuManager::CheckButtonClick" );
-            iter->second->HandlerFunction();
+            iter->second->HandlerFunction( "" );
             Logger::Out( "Done calling handler function", "MenuManager::CheckButtonClick" );
         }
 

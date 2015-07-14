@@ -36,7 +36,7 @@ class UIButton : public IWidget
     bool IsTriggered( int actionX, int actionY );
     void SetFrame( IntRect fr );
 
-    std::function< void() > HandlerFunction;
+    std::function< void( std::string ) > HandlerFunction;
 
     protected:
     UIImage m_background[2];

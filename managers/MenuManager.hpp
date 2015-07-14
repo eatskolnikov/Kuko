@@ -54,6 +54,7 @@ class MenuManager
     void AddButton( const std::string& id, UIButton* button );
     void AddButton( const std::string& id,SDL_Texture* ptrTexture,  int x, int y, int width, int height, bool centered, SDL_Color buttonColor );
     UIButton* GetButton( const std::string& name );
+    std::map<std::string, UIButton*>& GetButtons();
 
     void AddImage( const std::string& id, UIImage* image );
     void AddImage( const std::string& id, SDL_Texture* ptrTexture, int x, int y, int width, int height, bool centered, const std::string& effectName = "", int effectMax = 0 );
