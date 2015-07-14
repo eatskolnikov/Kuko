@@ -19,6 +19,7 @@ class UIImage : public IWidget
     virtual void Draw();
     virtual void Update();
     void SetFrame( IntRect fr );
+    IntRect GetFrame();
 
     protected:
     // std::string m_id;

@@ -31,9 +31,19 @@ void Sprite::SetPosition( kuko::FloatRect pos )
     position.h = int(pos.h);
 }
 
+FloatRect Sprite::GetPosition()
+{
+    return position;
+}
+
 void Sprite::SetFrame( IntRect fr )
 {
     frame = fr;
+}
+
+IntRect Sprite::GetFrame()
+{
+    return frame;
 }
 
 void Sprite::SetTexture( SDL_Texture* ptrTexture )

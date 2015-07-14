@@ -50,6 +50,11 @@ void UIButton::SetFrame( IntRect fr )
     m_background[1].SetFrame( fr );
 }
 
+IntRect UIButton::GetFrame()
+{
+    return m_background[0].GetFrame();
+}
+
 void UIButton::Setup( const std::string& id, const std::string& text, FloatRect position, bool centered,
         SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, IntRect padding )
 {

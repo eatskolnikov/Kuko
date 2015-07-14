@@ -39,6 +39,11 @@ void UIImage::SetFrame( IntRect fr )
     m_background.SetFrame( fr );
 }
 
+IntRect UIImage::GetFrame()
+{
+    return m_background.GetFrame();
+}
+
 void UIImage::Update()
 {
     float amountX = 0.05;

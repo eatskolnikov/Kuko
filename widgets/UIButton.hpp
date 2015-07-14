@@ -35,6 +35,7 @@ class UIButton : public IWidget
     void Update();
     bool IsTriggered( int actionX, int actionY );
     void SetFrame( IntRect fr );
+    IntRect GetFrame();
 
     std::function< void( std::string ) > HandlerFunction;
 

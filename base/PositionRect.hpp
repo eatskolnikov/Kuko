@@ -1,6 +1,8 @@
 #ifndef _KUKO_POSITIONRECT
 #define _KUKO_POSITIONRECT
 
+#include <SDL.h>
+
 namespace kuko
 {
 
@@ -34,7 +36,10 @@ class IntRect
         w = rect.w;
         h = rect.h;
     }
+    friend bool operator==( IntRect& a, IntRect& b );
+    friend bool operator!=( IntRect& a, IntRect& b );
 };
+
 
 class FloatRect
 {
@@ -66,7 +71,10 @@ class FloatRect
         w = rect.w;
         h = rect.h;
     }
+    friend bool operator==( FloatRect& a, FloatRect& b );
+    friend bool operator!=( FloatRect& a, FloatRect& b );
 };
+
 
 }
 
