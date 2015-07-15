@@ -54,7 +54,6 @@ void FontManager::ClearFonts()
 
 TTF_Font* FontManager::GetFont( const std::string& key )
 {
-    Logger::Out( "Get font \"" + key + "\"", "FontManager::GetFont", "fonts" );
     if ( m_fonts.find( key ) == m_fonts.end() )
     {
         Logger::Error( "Error finding font \"" + key + "\"", "FontManager::GetFont" );

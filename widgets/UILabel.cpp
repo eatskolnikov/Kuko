@@ -65,7 +65,6 @@ void UILabel::RegenerateTexture()
 
 void UILabel::GenerateTexture()
 {
-    Logger::Out( "Generate label texture, text: \"" + m_label + "\"", "UILabel::GenerateTexture" );
     SDL_Surface* textSurface = TTF_RenderUTF8_Solid( m_font, m_label.c_str(), m_color );
     m_sprite.SetTexture ( SDL_CreateTextureFromSurface( kuko::Application::GetRenderer(), textSurface ) );
     SDL_FreeSurface( textSurface );

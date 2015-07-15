@@ -2,6 +2,7 @@
 #include "Sprite.hpp"
 
 #include "../base/Application.hpp"
+#include "../utilities/StringUtil.hpp"
 
 namespace kuko
 {

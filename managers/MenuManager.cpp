@@ -116,7 +116,6 @@ void MenuManager::BuildMenu()
     {
         int index = i+1; // account for Lua starting at 1
         std::string type = LuaManager::Menu_GetElementString( index, "ui_type" );
-        Logger::Out( "Element " + StringUtil::IntToString( i ) + " is a " + type, "MenuManager::BuildMenu" );
 
         if ( type == "image" )
         {
@@ -137,7 +136,6 @@ void MenuManager::BuildMenu()
     }
 
     int uiElements = m_images.size() + m_labels.size() + m_buttons.size();
-    Logger::Out( "Menu has " + StringUtil::IntToString( uiElements ) + " elements", "MenuManager::BuildMenu" );
 }
 
 void MenuManager::SetupMenu( const std::string& path )
@@ -225,11 +223,6 @@ void MenuManager::LoadButton( int index )
 
     if ( frame.w != 0 && frame.h != 0 )
     {
-        Logger::OutHighlight( "Set frame "
-            + StringUtil::IntToString( frame.x ) + ", "
-            + StringUtil::IntToString( frame.y ) + " "
-            + StringUtil::IntToString( frame.w ) + " x "
-            + StringUtil::IntToString( frame.h ) );
         button->SetFrame( frame );
     }
 
@@ -378,13 +371,11 @@ void MenuManager::LoadTextbox( int index )
 
 void MenuManager::AddLabel( const std::string& id, UILabel* label )
 {
-    Logger::Out( "Add label \"" + id + "\" from UILabel", "MenuManager::AddLabel" );
     m_labels.insert( std::pair<std::string, UILabel*>( id, label ) );
 }
 
 void MenuManager::AddLabel( const std::string& id, const std::string& lbl, int x, int y, int width, int height, bool centered, SDL_Color textColor, TTF_Font* font )
 {
-    Logger::Out( "Add label \"" + id + "\" from properties", "MenuManager::AddLabel" );
     UILabel* label = new UILabel;
     label->Setup( id, lbl, FloatRect ( x, y, width, height ), centered, textColor, font );
     AddLabel( id, label );
@@ -392,15 +383,12 @@ void MenuManager::AddLabel( const std::string& id, const std::string& lbl, int x
 
 void MenuManager::AddButton( const std::string& id, UIButton* button )
 {
-    Logger::Out( "Add button \"" + id + "\" from UIButton", "MenuManager::AddButton" );
     FloatRect pos = button->GetPosition();
-    Logger::Out( StringUtil::FloatToString( pos.x ) + "," + StringUtil::FloatToString( pos.y ) + " " + StringUtil::FloatToString( pos.w ) + "x" + StringUtil::FloatToString( pos.h ) );
     m_buttons.insert( std::pair<std::string, UIButton*>( id, button ) );
 }
 
 void MenuManager::AddButton( const std::string& id,SDL_Texture* ptrTexture,  int x, int y, int width, int height, bool centered, SDL_Color buttonColor )
 {
-    Logger::Out( "Add button \"" + id + "\" from properties", "MenuManager::AddButton" );
     UIButton* button = new UIButton;
     button->Setup( id, FloatRect ( x, y, width, height ), centered, ptrTexture, buttonColor );
     AddButton( id, button );
@@ -418,14 +406,12 @@ std::map<std::string, UIButton*>& MenuManager::GetButtons()
 
 void MenuManager::AddImage( const std::string& id, UIImage* image )
 {
-    Logger::Out( "Add image \"" + id + "\" from UIImage", "MenuManager::AddImage" );
     m_images.insert( std::pair<std::string, UIImage*>( id, image ) );
 }
 
 void MenuManager::AddImage( const std::string& id, SDL_Texture* ptrTexture, int x, int y, int width, int height, bool centered,
     const std::string& effectName, int effectMax )
 {
-    Logger::Out( "Add image \"" + id + "\" from properties", "MenuManager::AddImage" );
     UIImage* image = new UIImage;
     FloatRect pos( x, y, width, height );
     if ( centered )
@@ -617,7 +603,6 @@ void MenuManager::CheckTextboxClick( float mouseX, float mouseY )
 
 void MenuManager::CheckButtonClick( float mouseX, float mouseY )
 {
-    Logger::Out( "Check callbacks for " + StringUtil::IntToString( m_buttons.size() ) + " elements", "MenuManager::CheckButtonClick" );
     std::map< std::string, UIButton* >::iterator iter = m_buttons.begin();
 
     int elementCount = 0;
@@ -689,7 +674,6 @@ void MenuManager::SetTextEditing( bool turnOn )
 
 void MenuManager::AppendToActiveTextBox( const std::string& text )
 {
-    Logger::Out( "Append \"" + text + "\" to active text box.", "MenuManager::AppendToActiveTextBox" );
     if ( m_activeTextbox == NULL )
     {
         Logger::Out( "There is no current active textbox.", "MenuManager::AppendToActiveTextBox" );

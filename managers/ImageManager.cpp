@@ -10,7 +10,6 @@ std::map<std::string, SDL_Texture*> ImageManager::m_textures;
 
 void ImageManager::AddTexture( const std::string& id, const std::string& path )
 {
-    Logger::Out( "Add image " + id + " from path " + path, "ImageManager::AddTexture" );
     m_textures.insert( std::pair<std::string, SDL_Texture*>( id, LoadFile( path ) ) );
 }
 
@@ -21,7 +20,6 @@ void ImageManager::ClearTextures()
 
 SDL_Texture* ImageManager::LoadFile( const std::string& path )
 {
-    Logger::Out( "Load image \"" + path + "\"", "ImageManager::LoadFile" );
     SDL_Surface* loaded = IMG_Load( path.c_str() );
     if ( loaded == NULL )
     {
