@@ -31,11 +31,16 @@ void BaseEntity::SetFrame( IntRect frame )
     UpdateSprite();
 }
 
-void BaseEntity::SetPosition( int x, int y )
+void BaseEntity::SetPosition( float x, float y )
 {
-    Logger::Out( StringUtil::IntToString( x ) + "," + StringUtil::IntToString( y ) );
     m_position.x = x;
     m_position.y = y;
+    UpdateSprite();
+}
+
+void BaseEntity::SetPosition( const FloatRect& pos )
+{
+    m_position = pos;
     UpdateSprite();
 }
 
@@ -52,6 +57,11 @@ void BaseEntity::Update()
 void BaseEntity::Draw()
 {
     ImageManager::Draw( m_sprite );
+}
+
+void BaseEntity::DrawWithOffset( float offsetX, float offsetY )
+{
+    ImageManager::DrawWithOffset( m_sprite, offsetX, offsetY );
 }
 
 bool BaseEntity::IsCollision( const BaseEntity& other )

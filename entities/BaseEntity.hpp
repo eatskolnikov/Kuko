@@ -19,9 +19,11 @@ class BaseEntity
 
     virtual void Update();
     virtual void Draw();
+    virtual void DrawWithOffset( float offsetX, float offsetY );
 
     virtual kuko::FloatRect GetPosition() const;
-    void SetPosition( int x, int y );
+    void SetPosition( float x, float y );
+    void SetPosition( const FloatRect& pos );
 
     bool IsCollision( const BaseEntity& other );
     bool IsCollision( const FloatRect& otherRect );
