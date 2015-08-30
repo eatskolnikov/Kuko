@@ -131,7 +131,6 @@ void Logger::Error( const std::string& message, const std::string& location /* =
 {
     std::cerr   << "** " << GetTimestamp() << "\t" << message;
     if ( location != "" ) { std::cerr << " @ " << location; }
-    std::cerr << "\t LINE " << __LINE__ << " FILE " << __FILE__ ;
     std::cerr << std::endl;
 
     std::string loc = location;
