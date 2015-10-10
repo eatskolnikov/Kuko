@@ -9,6 +9,8 @@ namespace kuko
 std::string MapManager::m_currentMap;
 std::map<int, bool> MapManager::m_solidTiles;
 
+#ifndef NOLUA
+
 void MapManager::LoadMap( const std::string& id, const std::string& path )
 {
     LuaManager::LoadScript( path );
@@ -58,5 +60,55 @@ void MapManager::LoadSolidTileTypes()
         m_solidTiles.insert( std::pair< int, bool >( index, isSolid ) );
     }
 }
+
+#else
+
+void MapManager::LoadMap( const std::string& id, const std::string& path )
+{
+    Logger::Error( "Error: Lualess Kuko does not currently support Maps", "MapManager::LoadMap" );
+}
+
+int MapManager::GetMapWidth()
+{
+    Logger::Error( "Error: Lualess Kuko does not currently support Maps", "MapManager::GetMapWidth" );
+    return -1;
+}
+
+int MapManager::GetMapHeight()
+{
+    Logger::Error( "Error: Lualess Kuko does not currently support Maps", "MapManager::GetMapHeight" );
+    return -1;
+}
+
+int MapManager::GetTileWidth()
+{
+    Logger::Error( "Error: Lualess Kuko does not currently support Maps", "MapManager::GetTileWidth" );
+    return -1;
+}
+
+int MapManager::GetTilesetWidth()
+{
+    Logger::Error( "Error: Lualess Kuko does not currently support Maps", "MapManager::GetTilesetWidth" );
+    return -1;
+}
+
+int MapManager::GetTileFrame( int index )
+{
+    Logger::Error( "Error: Lualess Kuko does not currently support Maps", "MapManager::GetTileFrame" );
+    return -1;
+}
+
+bool MapManager::GetTileSolidity( int frameIndex )
+{
+    Logger::Error( "Error: Lualess Kuko does not currently support Maps", "MapManager::GetTileSolidity" );
+    return -1;
+}
+
+void MapManager::LoadSolidTileTypes()
+{
+    Logger::Error( "Error: Lualess Kuko does not currently support Maps", "MapManager::LoadSolidTileTypes" );
+}
+
+#endif
 
 }

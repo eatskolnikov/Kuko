@@ -2,7 +2,6 @@
 #include "LanguageManager.hpp"
 
 #include "interfaces/LuaLanguage.hpp"
-#include "interfaces/LualessLanguage.hpp"
 #include "../utilities/Logger.hpp"
 
 namespace kuko
@@ -14,8 +13,8 @@ void LanguageManager::Setup()
 {
     m_language = NULL;
     #ifdef NOLUA
-        Logger::Out( "Setup LualessLanguage", "LanguageManager::Setup" );
-        m_language = new LualessLanguage;
+        // No config
+        Logger::Error( "Language not yet supported without Lua", "LanguageManager::Setup" );
     #else
         Logger::Out( "Setup LuaLanguage", "LanguageManager::Setup" );
         m_language = new LuaLanguage;

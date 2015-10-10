@@ -3,6 +3,8 @@
 #include "LuaManager.hpp"
 #include "../utilities/Logger.hpp"
 
+#ifndef NOLUA
+
 namespace kuko
 {
 
@@ -267,3 +269,5 @@ std::string LuaManager::Savegame_GetData( const std::string& key )
 }
 
 }
+
+#endif

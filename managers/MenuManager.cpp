@@ -61,22 +61,22 @@ void MenuManager::SetupMenu( const std::string& path )
     Logger::Error( "Error: Lualess Kuko does not currently support creating menus from external files.", "MenuManager::SetupMenu" );
 }
 
-void MenuManager::LoadButton()
+void MenuManager::LoadButton( int index )
 {
     Logger::Error( "Error: Lualess Kuko does not support this function.", "MenuManager::LoadButton" );
 }
 
-void MenuManager::LoadImage()
+void MenuManager::LoadImage( int index )
 {
     Logger::Error( "Error: Lualess Kuko does not support this function.", "MenuManager::LoadImage" );
 }
 
-void MenuManager::LoadLabel()
+void MenuManager::LoadLabel( int index )
 {
     Logger::Error( "Error: Lualess Kuko does not support this function.", "MenuManager::LoadLabel" );
 }
 
-void MenuManager::LoadTextbox()
+void MenuManager::LoadTextbox( int index )
 {
     Logger::Error( "Error: Lualess Kuko does not support this function.", "MenuManager::LoadTextbox" );
 }

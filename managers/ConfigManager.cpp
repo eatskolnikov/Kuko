@@ -9,7 +9,6 @@
 #include "../utilities/StringUtil.hpp"
 
 #include "interfaces/LuaConfig.hpp"
-#include "interfaces/LualessConfig.hpp"
 
 namespace kuko
 {
@@ -20,8 +19,8 @@ void ConfigManager::Setup()
 {
     m_config = NULL;
     #ifdef NOLUA
-        Logger::Out( "Setup LualessConfig", "ConfigManager::Setup" );
-        m_config = new LualessConfig;
+        // No config
+        Logger::Error( "Config not yet supported without Lua", "ConfigManager::Setup" );
     #else
         Logger::Out( "Setup LuaConfig", "ConfigManager::Setup" );
         m_config = new LuaConfig;
