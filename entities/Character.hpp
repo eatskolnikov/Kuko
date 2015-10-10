@@ -10,21 +10,28 @@ namespace kuko
 //    Character class is for entities that have stuff like
 //    Animation, movement, derivates for player and npc would have
 //    User input / AI decision making
+enum CardinalDirection { N, S, E, W, NE, NW, SE, SW };
+
 class Character : public BaseEntity
 {
     public:
     Character();
-    //virtual void Setup( const std::string& name, SDL_Texture* texture );
-    //virtual void Cleanup();
-
-    //virtual void Update();
-    //virtual void Draw();
+    float GetSpeed();
+    void SetSpeed( float val );
+    void Move( CardinalDirection direction );
+    void Move( int horizontal, int vertical );
+    void SetupAnimation( float maxFrame, float animateSpeed );
+    void UpdateFrame();
+    void SetDirection( int direction );
 
     protected:
-    //std::string m_id;
-    //SDL_Rect m_position;
-    //Sprite m_sprite;
-    //void UpdateSprite();
+    void UpdateSprite();
+
+    float m_speed;
+    float m_frame;
+    float m_maxFrame;
+    float m_animateSpeed;
+    int m_direction;
 };
 
 }

@@ -14,6 +14,7 @@ namespace kuko
 
 // TODO: Add "registration" of keys for commands.
 enum CommandButton { TAP, SECONDARY_TAP, MOUSE_DOWN, MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, BACKSPACE, WINDOW_CLOSE };
+enum MouseButton { NONE = 0, LEFT = SDL_BUTTON_LEFT, MIDDLE = SDL_BUTTON_MIDDLE, RIGHT = SDL_BUTTON_RIGHT };
 
 class TriggerInfo
 {
@@ -40,6 +41,7 @@ class InputManager
     static void SetTextBufferActive( bool val );
 
     static IntRect GetMousePosition();
+    static MouseButton GetMouseButtonStates();
 
     protected:
     static void ResetTriggers();

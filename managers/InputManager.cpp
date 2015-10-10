@@ -42,6 +42,28 @@ IntRect InputManager::GetMousePosition()
     return pos;
 }
 
+MouseButton InputManager::GetMouseButtonStates()
+{
+    // https://wiki.libsdl.org/SDL_GetMouseState
+    Uint32 state = SDL_GetMouseState( NULL, NULL );
+    if ( state & SDL_BUTTON( SDL_BUTTON_LEFT ) )
+    {
+        return LEFT;
+    }
+    else if ( state & SDL_BUTTON( SDL_BUTTON_MIDDLE ) )
+    {
+        return MIDDLE;
+    }
+    else if ( state & SDL_BUTTON( SDL_BUTTON_RIGHT ) )
+    {
+        return RIGHT;
+    }
+    else
+    {
+        return NONE;
+    }
+}
+
 void InputManager::Update()
 {
     ResetTriggers();
