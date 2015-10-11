@@ -59,11 +59,11 @@ void ImageManager::Cleanup()
     }
 }
 
-void ImageManager::DrawWithOffset( const Sprite& sprite, float offsetX, float offsetY )
+void ImageManager::DrawWithOffset( const Sprite& sprite, const kuko::FloatRect& camera )
 {
     Sprite offsetSprite = sprite;
-    offsetSprite.position.x += offsetX;
-    offsetSprite.position.y += offsetY;
+    offsetSprite.position.x -= camera.x;
+    offsetSprite.position.y -= camera.y;
 
     Draw( offsetSprite );
 }

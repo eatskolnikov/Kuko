@@ -19,11 +19,13 @@ class BaseEntity
 
     virtual void Update();
     virtual void Draw();
-    virtual void DrawWithOffset( float offsetX, float offsetY );
+    virtual void DrawWithOffset( const kuko::FloatRect& camera );
 
     virtual kuko::FloatRect GetPosition() const;
     void SetPosition( float x, float y );
     void SetPosition( const FloatRect& pos );
+    void SetLayer( int val );
+    int GetLayer() const;
 
     bool IsCollision( const BaseEntity& other );
     bool IsCollision( const FloatRect& otherRect );
@@ -36,6 +38,7 @@ class BaseEntity
     kuko::FloatRect m_position;
     Sprite m_sprite;
     bool m_isSolid;
+    int m_layer;
 
     void UpdateSprite();
 };

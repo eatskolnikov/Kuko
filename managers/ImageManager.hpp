@@ -25,7 +25,7 @@ class ImageManager
 
     static void Draw( const Sprite& sprite );
     static void Draw( SDL_Texture* ptrTexture, int x, int y );
-    static void DrawWithOffset( const Sprite& sprite, float offsetX, float offsetY );
+    static void DrawWithOffset( const Sprite& sprite, const kuko::FloatRect& camera );
 
     protected:
     static std::map<std::string, SDL_Texture*> m_textures;

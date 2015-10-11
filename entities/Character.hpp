@@ -20,6 +20,7 @@ class Character : public BaseEntity
     void SetSpeed( float val );
     void Move( CardinalDirection direction );
     void Move( int horizontal, int vertical );
+    FloatRect PositionWhenMoved( int horizontal, int vertical );
     void SetupAnimation( float maxFrame, float animateSpeed );
     void UpdateFrame();
     void SetDirection( int direction );

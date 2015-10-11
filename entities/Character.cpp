@@ -49,6 +49,15 @@ namespace kuko
         UpdateSprite();
     }
 
+    FloatRect Character::PositionWhenMoved( int horizontal, int vertical )
+    {
+        FloatRect pos = m_position;
+        pos.x += horizontal * m_speed;
+        pos.y += vertical * m_speed;
+        return pos;
+    }
+
+
     void Character::SetupAnimation( float maxFrame, float animateSpeed )
     {
         m_maxFrame = maxFrame;

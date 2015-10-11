@@ -49,6 +49,16 @@ FloatRect BaseEntity::GetPosition() const
     return m_position;
 }
 
+void BaseEntity::SetLayer( int val )
+{
+    m_layer = val;
+}
+
+int BaseEntity::GetLayer() const
+{
+    return m_layer;
+}
+
 void BaseEntity::Update()
 {
     m_sprite.SetPosition( m_position );
@@ -59,9 +69,9 @@ void BaseEntity::Draw()
     ImageManager::Draw( m_sprite );
 }
 
-void BaseEntity::DrawWithOffset( float offsetX, float offsetY )
+void BaseEntity::DrawWithOffset( const kuko::FloatRect& camera)
 {
-    ImageManager::DrawWithOffset( m_sprite, offsetX, offsetY );
+    ImageManager::DrawWithOffset( m_sprite, camera );
 }
 
 bool BaseEntity::IsCollision( const BaseEntity& other )
