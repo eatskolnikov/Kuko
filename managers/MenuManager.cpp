@@ -612,7 +612,9 @@ void MenuManager::CheckButtonClick( float mouseX, float mouseY )
         bool isHit = ( mouseX >= widget.x && mouseX <= widget.x + widget.w &&
                  mouseY >= widget.y && mouseY <= widget.y + widget.h );
 
-        if ( isHit && iter->second->HandlerFunction != NULL )
+        // Only trigger if on the correct page
+        if ( isHit && iter->second->HandlerFunction != NULL &&
+            ( iter->second->GetVisiblePage() == m_currentPage || iter->second->GetVisiblePage() == 0 ))
         {
             iter->second->HandlerFunction( "" );
         }
