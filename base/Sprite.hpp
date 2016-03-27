@@ -26,13 +26,15 @@ class Sprite
     FloatRect GetPosition();
     void SetFrame( IntRect fr );
     IntRect GetFrame();
+    void SetRotation( float angle );
+    float GetRotation();
     bool IsClicked( int x, int y );
 
     SDL_Texture*        texture;
     IntRect             frame;
+    float               angle;
     FloatRect           position;
     bool                isFlipped;
-    float               angle;
 };
 
 }

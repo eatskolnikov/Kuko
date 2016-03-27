@@ -47,6 +47,16 @@ IntRect Sprite::GetFrame()
     return frame;
 }
 
+void Sprite::SetRotation( float angle )
+{
+    this->angle = angle;
+}
+
+float Sprite::GetRotation()
+{
+    return angle;
+}
+
 void Sprite::SetTexture( SDL_Texture* ptrTexture )
 {
     texture = ptrTexture;//LoadFile( path );

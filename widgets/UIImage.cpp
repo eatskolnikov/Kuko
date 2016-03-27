@@ -76,6 +76,21 @@ void UIImage::Update()
 
         m_background.position = m_position;
     }
+    else if ( m_effect == "rotate" )
+    {
+        float angle = m_background.GetRotation();
+
+        if ( m_effectTimer > m_effectMax/2 )
+        {
+            angle += 0.05;
+        }
+        else
+        {
+            angle -= 0.05;
+        }
+
+        m_background.SetRotation( angle );
+    }
 }
 
 void UIImage::Draw()
