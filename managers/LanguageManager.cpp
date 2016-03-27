@@ -1,8 +1,11 @@
 // Kuko Framework - https://github.com/Rejcx/Kuko - Rachel J. Morris - MIT License
 #include "LanguageManager.hpp"
 
-#include "interfaces/LuaLanguage.hpp"
+#ifdef NOLUA
 #include "interfaces/LualessLanguage.hpp"
+#else
+#include "interfaces/LuaLanguage.hpp"
+#endif
 #include "../utilities/Logger.hpp"
 
 namespace kuko

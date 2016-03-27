@@ -8,8 +8,11 @@
 #include "../utilities/Logger.hpp"
 #include "../utilities/StringUtil.hpp"
 
-#include "interfaces/LuaConfig.hpp"
+#ifdef NOLUA
 #include "interfaces/LualessConfig.hpp"
+#else
+#include "interfaces/LuaConfig.hpp"
+#endif
 
 namespace kuko
 {
