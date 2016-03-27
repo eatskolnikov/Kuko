@@ -31,7 +31,7 @@ void FontManager::Cleanup()
 void FontManager::AddFont( const std::string& id, const std::string& path, int size )
 {
     Logger::Out( "Add font \"" + id + "\" from path " + path, "FontManager::AddFont", "fonts" );
-    m_fonts.insert( std::pair<std::string, TTF_Font*>( id, LoadFile( path ) ) );
+    m_fonts.insert( std::pair<std::string, TTF_Font*>( id, LoadFile( path, size ) ) );
 }
 
 void FontManager::ReplaceFont( const std::string& id, const std::string& path, int size )
@@ -43,7 +43,7 @@ void FontManager::ReplaceFont( const std::string& id, const std::string& path, i
         Logger::Out( "Remove font at ID" );
         TTF_CloseFont( m_fonts[ id ] );
         Logger::Out( "Insert new" );
-        m_fonts[ id ] = LoadFile( path );
+        m_fonts[ id ] = LoadFile( path, size );
     }
 }
 
@@ -63,10 +63,10 @@ TTF_Font* FontManager::GetFont( const std::string& key )
     return m_fonts[ key ];
 }
 
-TTF_Font* FontManager::LoadFile( const std::string& path )
+TTF_Font* FontManager::LoadFile( const std::string& path, int size )
 {
     Logger::Out( "Load font \"" + path + "\"", "FontManager::LoadFile", "fonts" );
-    TTF_Font* font = TTF_OpenFont( path.c_str(), 28 );
+    TTF_Font* font = TTF_OpenFont( path.c_str(), size );
     return font;
 }
 

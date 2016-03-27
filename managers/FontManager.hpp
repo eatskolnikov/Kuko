@@ -24,7 +24,7 @@ class FontManager
 
     protected:
     static std::map<std::string, TTF_Font*> m_fonts;
-    static TTF_Font* LoadFile( const std::string& path );
+    static TTF_Font* LoadFile( const std::string& path, int size );
 };
 
 }
