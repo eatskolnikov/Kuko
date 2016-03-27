@@ -49,6 +49,11 @@ FloatRect BaseEntity::GetPosition() const
     return m_position;
 }
 
+IntRect BaseEntity::GetFrame()
+{
+    return m_sprite.GetFrame();
+}
+
 void BaseEntity::Update()
 {
     m_sprite.SetPosition( m_position );

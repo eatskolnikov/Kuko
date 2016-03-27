@@ -22,6 +22,7 @@ class BaseEntity
     virtual void DrawWithOffset( float offsetX, float offsetY );
 
     virtual kuko::FloatRect GetPosition() const;
+    virtual kuko::IntRect GetFrame();
     void SetPosition( float x, float y );
     void SetPosition( const FloatRect& pos );
 
