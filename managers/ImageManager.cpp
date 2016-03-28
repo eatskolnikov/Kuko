@@ -29,7 +29,7 @@ SDL_Texture* ImageManager::LoadFile( const std::string& path )
     SDL_Texture* texture = SDL_CreateTextureFromSurface( Application::GetRenderer(), loaded );
     if ( texture == NULL )
     {
-        Logger::Error( "Error optimizing image \"" + path + "\"" );
+        Logger::Error( "Error optimizing image \"" + path + "\"", "ImageManager::LoadFile" );
     }
 
     SDL_FreeSurface( loaded );
@@ -40,7 +40,7 @@ SDL_Texture* ImageManager::GetTexture( const std::string& key )
 {
     if ( m_textures[ key ] == NULL )
     {
-        Logger::Error( "Error - could not find image \"" + key + "\"" );
+        Logger::Error( "Error - could not find image \"" + key + "\"", "ImageManager::GetTexture" );
     }
     return m_textures[ key ];
 }

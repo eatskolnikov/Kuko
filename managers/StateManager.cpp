@@ -90,6 +90,7 @@ void StateManager::CleanCurrentState()
 {
     if ( m_ptrCurrentState != NULL )
     {
+        m_ptrCurrentState->Cleanup();
         m_ptrCurrentState = NULL;
     }
 }
