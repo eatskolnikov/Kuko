@@ -564,7 +564,7 @@ bool MenuManager::IsButtonClicked( const std::string& key, float mouseX, float m
     {
         //FloatRect pos = iter->second->GetPosition();
 
-        if ( iter->second->GetId() == key )
+        if ( iter->second->GetId() == key && iter->second->GetVisiblePage() == m_currentPage )
         {
             FloatRect btn = iter->second->GetPosition();
 
