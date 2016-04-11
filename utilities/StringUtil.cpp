@@ -23,3 +23,20 @@ int StringUtil::StringToInt( const std::string& text )
     buffer >> num;
     return num;
 }
+
+std::string StringUtil::RemoveWhitespace( const std::string& text, const std::string& replaceWith )
+{
+    std::string stripped = "";
+    for ( int i = 0; i < text.size(); i++ )
+    {
+        if ( text[i] == ' ' )
+        {
+            stripped += replaceWith;
+        }
+        else
+        {
+            stripped += text[i];
+        }
+    }
+    return stripped;
+}

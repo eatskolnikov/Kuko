@@ -13,6 +13,7 @@ UILabel::UILabel() : IWidget()
     m_position.x = m_position.y = 0;
     m_position.w = m_position.h = 10;
     m_useShadow = false;
+    m_font = NULL;
 }
 
 void UILabel::Setup( const std::string& id, const std::string& label, FloatRect position, bool centered, SDL_Color textColor, TTF_Font* font, const std::string& effect, int effectMax )
@@ -58,6 +59,16 @@ void UILabel::SetShadowColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a )
     m_shadowColor.a = a;
 }
 
+void UILabel::SetFont( TTF_Font* font )
+{
+    m_font = font;
+}
+
+void UILabel::SetCentered( bool value )
+{
+    m_centered = value;
+}
+
 void UILabel::RegenerateTexture()
 {
     GenerateTexture();
@@ -65,6 +76,12 @@ void UILabel::RegenerateTexture()
 
 void UILabel::GenerateTexture()
 {
+    if ( m_font == NULL )
+    {
+        Logger::Error( "Error: Font for UILabel " + m_id + " is NULL!", "UILabel::GenerateTexture" );
+        return;
+    }
+
     SDL_Surface* textSurface = TTF_RenderUTF8_Solid( m_font, m_label.c_str(), m_color );
     m_sprite.SetTexture ( SDL_CreateTextureFromSurface( kuko::Application::GetRenderer(), textSurface ) );
     SDL_FreeSurface( textSurface );

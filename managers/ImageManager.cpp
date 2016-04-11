@@ -7,15 +7,18 @@ namespace kuko
 {
 
 std::map<std::string, SDL_Texture*> ImageManager::m_textures;
+std::map<std::string, std::string> ImageManager::m_filenames;
 
 void ImageManager::AddTexture( const std::string& id, const std::string& path )
 {
+    m_filenames.insert( std::pair<std::string, std::string>( id, path ) );
     m_textures.insert( std::pair<std::string, SDL_Texture*>( id, LoadFile( path ) ) );
 }
 
 void ImageManager::ClearTextures()
 {
     m_textures.clear();
+    m_filenames.clear();
 }
 
 SDL_Texture* ImageManager::LoadFile( const std::string& path )
@@ -43,6 +46,15 @@ SDL_Texture* ImageManager::GetTexture( const std::string& key )
         Logger::Error( "Error - could not find image \"" + key + "\"", "ImageManager::GetTexture" );
     }
     return m_textures[ key ];
+}
+
+std::string ImageManager::GetTextureFile( const std::string& key )
+{
+    if ( m_filenames[ key ] == "" )
+    {
+        Logger::Error( "Error - could not find image \"" + key + "\"", "ImageManager::GetTextureFile" );
+    }
+    return m_filenames[ key ];
 }
 
 void ImageManager::Cleanup()
@@ -103,6 +115,13 @@ void ImageManager::Draw( SDL_Texture* ptrTexture, int x, int y )
         NULL,
         SDL_FLIP_NONE
     );
+}
+
+void ImageManager::DrawRectangle( kuko::FloatRect pos, int r, int g, int b )
+{
+    SDL_Rect rect = pos.ToSDLRect();
+    SDL_SetRenderDrawColor( Application::GetRenderer(), r, g, b, 255 );
+    SDL_RenderDrawRect( Application::GetRenderer(), &rect );
 }
 
 }

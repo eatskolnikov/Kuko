@@ -4,6 +4,7 @@
 
 #include "../managers/ImageManager.hpp"
 #include "../utilities/StringUtil.hpp"
+#include "../base/Application.hpp"
 
 namespace kuko
 {
@@ -14,6 +15,11 @@ void BaseEntity::Setup( const std::string& name, SDL_Texture* texture, FloatRect
     m_sprite.SetTexture( texture );
     m_position = pos;
     UpdateSprite();
+}
+
+void BaseEntity::SetTexture( SDL_Texture* texture )
+{
+    m_sprite.SetTexture( texture );
 }
 
 void BaseEntity::UpdateSprite()
@@ -62,6 +68,11 @@ void BaseEntity::Update()
 void BaseEntity::Draw()
 {
     ImageManager::Draw( m_sprite );
+
+    if ( m_debugFrame )
+    {
+        kuko::ImageManager::DrawRectangle( m_position, 0, 0, 255 );
+    }
 }
 
 void BaseEntity::DrawWithOffset( float offsetX, float offsetY )
@@ -102,6 +113,11 @@ bool BaseEntity::IsSolid()
 void BaseEntity::SetSolid( bool val )
 {
     m_isSolid = val;
+}
+
+void BaseEntity::SetDebugFrame( bool val )
+{
+    m_debugFrame = val;
 }
 
 }

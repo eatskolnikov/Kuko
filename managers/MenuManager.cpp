@@ -324,6 +324,7 @@ void MenuManager::LoadTextbox( int index )
     std::string languageId = LuaManager::Menu_GetElementString( index, "language_id" );
     std::string text;
     int maxLength = LuaManager::Menu_GetElementInt( index, "max_length" );
+    int textHeight = LuaManager::Menu_GetElementInt( index, "text_height" );
 
     if ( languageId == "" )
     {
@@ -363,6 +364,7 @@ void MenuManager::LoadTextbox( int index )
 
     UITextBox* textbox = new UITextBox;
     textbox->Setup( id, pos, bgColor, selectedBgColor, textColor, kuko::FontManager::GetFont( fontId ), maxLength );
+//    textbox->SetTextHeight( textHeight );
 
     if ( page != 0 ) { textbox->SetVisiblePage( page ); }
     m_textboxes.insert( std::pair<std::string, UITextBox*>( id, textbox ) );
@@ -379,6 +381,11 @@ void MenuManager::AddLabel( const std::string& id, const std::string& lbl, int x
     UILabel* label = new UILabel;
     label->Setup( id, lbl, FloatRect ( x, y, width, height ), centered, textColor, font );
     AddLabel( id, label );
+}
+
+UILabel* MenuManager::GetLabel( const std::string& name )
+{
+    return m_labels[ name ];
 }
 
 void MenuManager::AddButton( const std::string& id, UIButton* button )
@@ -563,8 +570,8 @@ bool MenuManager::IsButtonClicked( const std::string& key, float mouseX, float m
             iter != m_buttons.end(); ++iter )
     {
         //FloatRect pos = iter->second->GetPosition();
-
-        if ( iter->second->GetId() == key && iter->second->GetVisiblePage() == m_currentPage )
+        if ( iter->second->GetId() == key
+            && ( iter->second->GetVisiblePage() == m_currentPage || iter->second->GetVisiblePage() == 0 ) )
         {
             FloatRect btn = iter->second->GetPosition();
 
@@ -578,7 +585,32 @@ bool MenuManager::IsButtonClicked( const std::string& key, float mouseX, float m
     return false;
 }
 
-void MenuManager::CheckTextboxClick( float mouseX, float mouseY )
+std::string MenuManager::GetButtonClicked( float mouseX, float mouseY )
+{
+    float adjX = mouseX / kuko::Application::GetWidthRatio();
+    float adjY = mouseY / kuko::Application::GetHeightRatio();
+
+    for (   std::map<std::string, UIButton*>::iterator iter = m_buttons.begin();
+            iter != m_buttons.end();
+            ++iter )
+    {
+        FloatRect btn = iter->second->GetPosition();
+
+        bool isHit = ( adjX >= btn.x && adjX <= btn.x + btn.w &&
+                 adjY >= btn.y && adjY <= btn.y + btn.h );
+
+        if ( isHit &&
+            ( m_currentPage == iter->second->GetVisiblePage() ||
+            iter->second->GetVisiblePage() == 0 ) )
+        {
+            return iter->second->GetId();
+        }
+    }
+
+    return "";
+}
+
+bool MenuManager::CheckTextboxClick( float mouseX, float mouseY )
 {
     // If a textbox is clicked, make sure the widget visually represents that.
     for ( std::map< std::string, UITextBox* >::iterator iter = m_textboxes.begin();
@@ -597,7 +629,17 @@ void MenuManager::CheckTextboxClick( float mouseX, float mouseY )
             Logger::Out( "Set active text box to " + iter->second->GetId(), "MenuManager::CheckTextboxClick" );
             m_activeTextbox = iter->second;
             m_activeTextbox->SetActive( true );
+            return true;
         }
+    }
+    return false;
+}
+
+void MenuManager::DeactivateCurrentTextbox()
+{
+    if ( m_activeTextbox != NULL )
+    {
+        m_activeTextbox->SetActive( false );
     }
 }
 

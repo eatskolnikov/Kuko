@@ -36,6 +36,7 @@ class UIButton : public IWidget
     bool IsTriggered( int actionX, int actionY );
     void SetFrame( IntRect fr );
     IntRect GetFrame();
+    void SetTexture( SDL_Texture* ptrTexture );
 
     std::function< void( std::string ) > HandlerFunction;
 

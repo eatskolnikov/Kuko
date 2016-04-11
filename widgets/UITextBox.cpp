@@ -44,6 +44,10 @@ void UITextBox::SetBackgroundColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a )
     m_bgColor.a = a;
 }
 
+//void UITextBox::SetTextHeight( int height )
+//{
+//}
+
 void UITextBox::Draw()
 {
     SDL_Rect rect = m_position.ToSDLRect();

@@ -36,8 +36,10 @@ class MenuManager
     void Reload();
 
     bool IsButtonClicked( const std::string& key, float mouseX, float mouseY );
-    void CheckTextboxClick( float mouseX, float mouseY );
+    std::string GetButtonClicked( float mouseX, float mouseY );
+    bool CheckTextboxClick( float mouseX, float mouseY );
     void CheckButtonClick( float mouseX, float mouseY );
+    void DeactivateCurrentTextbox();
 
     void HandleUIInput();
 
@@ -49,6 +51,7 @@ class MenuManager
 
     void AddLabel( const std::string& id, UILabel* label );
     void AddLabel( const std::string& id, const std::string& lbl, int x, int y, int width, int height, bool centered, SDL_Color textColor, TTF_Font* font );
+    UILabel* GetLabel( const std::string& name );
 
     void AddButton( const std::string& id, UIButton* button );
     void AddButton( const std::string& id,SDL_Texture* ptrTexture,  int x, int y, int width, int height, bool centered, SDL_Color buttonColor );

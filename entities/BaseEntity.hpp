@@ -25,6 +25,7 @@ class BaseEntity
     virtual kuko::IntRect GetFrame();
     void SetPosition( float x, float y );
     void SetPosition( const FloatRect& pos );
+    virtual void SetTexture( SDL_Texture* texture );
 
     bool IsCollision( const BaseEntity& other );
     bool IsCollision( const FloatRect& otherRect );
@@ -32,11 +33,14 @@ class BaseEntity
     bool IsSolid();
     void SetSolid( bool val );
 
+    void SetDebugFrame( bool val );
+
     protected:
     std::string m_id;
     kuko::FloatRect m_position;
     Sprite m_sprite;
     bool m_isSolid;
+    bool m_debugFrame;
 
     void UpdateSprite();
 };

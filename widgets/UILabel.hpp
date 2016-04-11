@@ -24,6 +24,8 @@ class UILabel : public IWidget
     virtual void Draw();
     void ChangeText( const std::string& text );
     void RegenerateTexture();
+    void SetFont( TTF_Font* font );
+    void SetCentered( bool value );
 
     protected:
     // std::string m_id;

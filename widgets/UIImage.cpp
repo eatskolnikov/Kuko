@@ -29,6 +29,13 @@ void UIImage::Setup( const std::string& id, FloatRect position, SDL_Texture* ptr
     }
 }
 
+void UIImage::SetTexture( SDL_Texture* ptrTexture )
+{
+    FloatRect position = m_position;
+    m_background.SetTexture( ptrTexture );
+    m_background.position = position;
+}
+
 void UIImage::SetColor( SDL_Color color )
 {
     m_color = color;

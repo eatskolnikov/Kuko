@@ -18,7 +18,7 @@ enum CommandButton { TAP, SECONDARY_TAP, MOUSE_DOWN, MOVE_UP, MOVE_DOWN, MOVE_LE
 class TriggerInfo
 {
     public:
-    TriggerInfo() { timeout = 0; maxTimeout = 250; }
+    TriggerInfo() { timeout = 0; maxTimeout = 50; }
 
     bool down;
     int actionX, actionY;

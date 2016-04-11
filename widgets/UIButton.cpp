@@ -31,6 +31,11 @@ void UIButton::Setup( const std::string& id, FloatRect position, bool centered, 
     m_background[0].SetColor( buttonColor );
 }
 
+void UIButton::SetTexture( SDL_Texture* ptrTexture )
+{
+    m_background[0].SetTexture( ptrTexture );
+}
+
 void UIButton::Setup( const std::string& id, const std::string& text, FloatRect position, bool centered,
         SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, int padding /* = 0 */ )
 {

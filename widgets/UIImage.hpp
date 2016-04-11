@@ -20,6 +20,7 @@ class UIImage : public IWidget
     virtual void Update();
     void SetFrame( IntRect fr );
     IntRect GetFrame();
+    void SetTexture( SDL_Texture* ptrTexture );
 
     protected:
     // std::string m_id;
