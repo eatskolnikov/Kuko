@@ -14,6 +14,7 @@ void BaseEntity::Setup( const std::string& name, SDL_Texture* texture, FloatRect
     m_id = name;
     m_sprite.SetTexture( texture );
     m_position = pos;
+    m_collisionRegion = kuko::FloatRect( 0, 0, pos.w, pos.h );
     UpdateSprite();
 }
 
@@ -55,6 +56,24 @@ FloatRect BaseEntity::GetPosition() const
     return m_position;
 }
 
+void BaseEntity::SetCollisionRegion( const FloatRect& pos )
+{
+    m_collisionRegion = pos;
+}
+
+kuko::FloatRect BaseEntity::GetCollisionRegion()
+{
+    return m_collisionRegion;
+}
+
+kuko::FloatRect BaseEntity::GetCollisionRegionAtPosition() const
+{
+    kuko::FloatRect collision = m_collisionRegion;
+    collision.x += m_position.x;
+    collision.y += m_position.y;
+    return collision;
+}
+
 IntRect BaseEntity::GetFrame()
 {
     return m_sprite.GetFrame();
@@ -71,7 +90,7 @@ void BaseEntity::Draw()
 
     if ( m_debugFrame )
     {
-        kuko::ImageManager::DrawRectangle( m_position, 0, 0, 255 );
+        kuko::ImageManager::DrawRectangle( GetCollisionRegionAtPosition(), 0, 0, 255 );
     }
 }
 
@@ -82,18 +101,21 @@ void BaseEntity::DrawWithOffset( float offsetX, float offsetY )
 
 bool BaseEntity::IsCollision( const BaseEntity& other )
 {
-    return IsCollision( other.GetPosition() );
+    kuko::FloatRect rect = other.GetCollisionRegionAtPosition();
+
+    return IsCollision( rect );
 }
 
 
-bool BaseEntity::IsCollision( const FloatRect& otherRect )
+bool BaseEntity::IsCollision( const FloatRect& r2 )
 {
+    kuko::FloatRect r1 = GetCollisionRegionAtPosition();
 
     bool col = ( m_isSolid &&
-                m_position.x < otherRect.x + otherRect.w &&
-                m_position.x + m_position.w > otherRect.x &&
-                m_position.y < otherRect.y + otherRect.h &&
-                m_position.y + m_position.h > otherRect.y );
+                r1.x < r2.x + r2.w &&
+                r1.x + r1.w > r2.x &&
+                r1.y < r2.y + r2.h &&
+                r1.y + r1.h > r2.y );
     return col;
 }
 
