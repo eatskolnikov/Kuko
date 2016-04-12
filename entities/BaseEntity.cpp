@@ -79,6 +79,16 @@ IntRect BaseEntity::GetFrame()
     return m_sprite.GetFrame();
 }
 
+void BaseEntity::SetRotation( float angle )
+{
+    m_sprite.SetRotation( angle );
+}
+
+float BaseEntity::GetRotation()
+{
+    return m_sprite.GetRotation();
+}
+
 void BaseEntity::Update()
 {
     m_sprite.SetPosition( m_position );

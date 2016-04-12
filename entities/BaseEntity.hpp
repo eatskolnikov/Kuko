@@ -29,6 +29,8 @@ class BaseEntity
     kuko::FloatRect GetCollisionRegion();
     kuko::FloatRect GetCollisionRegionAtPosition() const;
     virtual void SetTexture( SDL_Texture* texture );
+    void SetRotation( float angle );
+    float GetRotation();
 
     bool IsCollision( const BaseEntity& other );
     bool IsCollision( const FloatRect& otherRect );
