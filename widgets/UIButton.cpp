@@ -101,4 +101,14 @@ bool UIButton::IsTriggered( int actionX, int actionY )
                 actionY <= m_position.y + m_position.h );
 }
 
+UILabel& UIButton::GetLabel()
+{
+    return m_text;
+}
+
+void UIButton::SetTextPosition( const kuko::FloatRect& pos )
+{
+    m_text.SetPosition( pos );
+}
+
 }

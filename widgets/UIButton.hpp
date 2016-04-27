@@ -30,6 +30,8 @@ class UIButton : public IWidget
     void Setup( const std::string& id, const std::string& text, FloatRect position, bool centered,
         SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, IntRect padding );
 
+    void SetTextPosition( const kuko::FloatRect& pos );
+
     void SetupAnimateEffect( const std::string& effectType, SDL_Texture* frame2, int effectMax );
     void Draw();
     void Update();
@@ -39,6 +41,8 @@ class UIButton : public IWidget
     void SetTexture( SDL_Texture* ptrTexture );
 
     std::function< void( std::string ) > HandlerFunction;
+
+    UILabel& GetLabel();
 
     protected:
     UIImage m_background[2];

@@ -13,17 +13,17 @@ namespace kuko
 class IState
 {
     public:
-    virtual ~IState() { ; }
-    IState() { m_isDone = false; m_isSetup = false; m_gotoState = ""; }
+    virtual ~IState();
+    IState();
 
-    virtual void Setup() { m_gotoState = ""; }
+    virtual void Setup() = 0;
     virtual void Cleanup() = 0;
 
     virtual void Update() = 0;
     virtual void Draw() = 0;
 
-    virtual std::string GetNextState() { return m_gotoState; }
-    virtual bool IsDone() { return m_gotoState != ""; }
+    virtual std::string GetNextState();
+    virtual bool IsDone();
 
     protected:
     bool m_isDone;
