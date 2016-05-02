@@ -151,10 +151,15 @@ void MenuManager::LoadButton( int index )
     std::string languageId = LuaManager::Menu_GetElementString( index, "language_id" );
     std::string fontId = LuaManager::Menu_GetElementString( index, "font_id" );
     std::string textId = LuaManager::Menu_GetElementString( index, "text_id" );
+    std::string textVal = LuaManager::Menu_GetElementString( index, "text" );
     std::string effect = LuaManager::Menu_GetElementString( index, "effect" );
     std::string text;
 
-    if ( languageId == "" && textId != "" )
+    if ( textVal != "" )
+    {
+        text = textVal;
+    }
+    else if ( languageId == "" && textId != "" )
     {
         text = LanguageManager::Text( textId );
     }
@@ -263,11 +268,17 @@ void MenuManager::LoadLabel( int index )
     std::string id = LuaManager::Menu_GetElementString( index, "id" );
     std::string fontId = LuaManager::Menu_GetElementString( index, "font_id" );
     std::string textId = LuaManager::Menu_GetElementString( index, "text_id" );
+    std::string textVal = LuaManager::Menu_GetElementString( index, "text" );
     std::string effect = LuaManager::Menu_GetElementString( index, "effect" );
     int effectSpeed = LuaManager::Menu_GetElementInt( index, "effect_speed" );
     std::string languageId = LuaManager::Menu_GetElementString( index, "language_id" );
     std::string text;
-    if ( languageId == "" )
+
+    if ( textVal != "" )
+    {
+        text = textVal;
+    }
+    else if ( languageId == "" )
     {
         text = LanguageManager::Text( textId );
     }
@@ -321,12 +332,17 @@ void MenuManager::LoadTextbox( int index )
     std::string id = LuaManager::Menu_GetElementString( index, "id" );
     std::string fontId = LuaManager::Menu_GetElementString( index, "font_id" );
     std::string textId = LuaManager::Menu_GetElementString( index, "text_id" );
+    std::string textVal = LuaManager::Menu_GetElementString( index, "text" );
     std::string languageId = LuaManager::Menu_GetElementString( index, "language_id" );
     std::string text;
     int maxLength = LuaManager::Menu_GetElementInt( index, "max_length" );
     int textHeight = LuaManager::Menu_GetElementInt( index, "text_height" );
 
-    if ( languageId == "" )
+    if ( textVal != "" )
+    {
+        text = textVal;
+    }
+    else if ( languageId == "" )
     {
         text = LanguageManager::Text( textId );
     }

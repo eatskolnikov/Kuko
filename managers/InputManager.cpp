@@ -11,6 +11,7 @@ SDL_Event InputManager::m_event;
 std::map<CommandButton, TriggerInfo> InputManager::m_eventTriggered;
 char InputManager::m_textInputBuffer[256];
 bool InputManager::m_enableTextInput;
+std::string InputManager::m_lastKeyHit;
 
 void InputManager::Setup()
 {
@@ -92,24 +93,22 @@ void InputManager::Update()
             }
             else if ( value == "w" )
             {
-                Logger::Out( "Key w", "InputManager::Update" );
                 m_eventTriggered [ MOVE_UP ].down = true;
             }
             else if ( value == "s" )
             {
-                Logger::Out( "Key s", "InputManager::Update" );
                 m_eventTriggered [ MOVE_DOWN ].down = true;
             }
             else if ( value == "a" )
             {
-                Logger::Out( "Key a", "InputManager::Update" );
                 m_eventTriggered [ MOVE_LEFT ].down = true;
             }
             else if ( value == "d" )
             {
-                Logger::Out( "Key d", "InputManager::Update" );
                 m_eventTriggered [ MOVE_RIGHT ].down = true;
             }
+
+            m_lastKeyHit = value;
         }
 
         else if ( m_event.type == SDL_TEXTEDITING )
@@ -154,6 +153,11 @@ void InputManager::Update()
     }
 }
 
+std::string InputManager::GetKeyHit()
+{
+    return m_lastKeyHit;
+}
+
 void InputManager::ResetTriggers()
 {
     m_eventTriggered[ TAP ].down = false;
@@ -165,6 +169,7 @@ void InputManager::ResetTriggers()
     m_eventTriggered[ WINDOW_CLOSE ].down = false;
     m_eventTriggered[ BACKSPACE ].down = false;
     m_eventTriggered[ MOUSE_DOWN ].down = false;
+    m_lastKeyHit = "";
     m_textInputBuffer[0] = '\0';
 }
 
