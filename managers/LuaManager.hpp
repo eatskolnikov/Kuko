@@ -5,8 +5,16 @@
 
 #ifndef NOLUA
 
-#include <lua.hpp>
+//#include <lua.hpp>
 #include <string>
+
+extern "C"
+{
+   #include "lua.h"
+   #include "lauxlib.h"
+   #include "lualib.h"
+}
+
 
 namespace kuko
 {
