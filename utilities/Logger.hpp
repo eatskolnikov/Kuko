@@ -19,6 +19,7 @@ class Logger
     static void Out( const std::string& message, const std::string& location = "", const std::string& category = "", bool condition = true, int level = 0 );
     static void OutHighlight( const std::string& message, const std::string& location = "");
     static void Error( const std::string& message, const std::string& location = "" );
+    static void Debug( const std::string& message, const std::string& location = "" );
 
     static double GetTimestamp();
     static std::string GetFormattedTimestamp();
