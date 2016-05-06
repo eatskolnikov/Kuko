@@ -4,6 +4,8 @@
 #include "../utilities/Logger.hpp"
 #include "../utilities/StringUtil.hpp"
 
+#include <cstring>
+
 namespace kuko
 {
 

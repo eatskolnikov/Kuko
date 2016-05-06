@@ -4,6 +4,11 @@
 
 #include <SDL.h>
 
+extern "C"
+{
+    #include "SDL.h"
+}
+
 #include <string>
 
 /*

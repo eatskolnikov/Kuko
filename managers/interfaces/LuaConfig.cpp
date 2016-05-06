@@ -29,7 +29,17 @@ bool LuaConfig::LoadConfig( const std::vector<std::string>& settings )
         SetOption( settings[i], LuaManager::Config_GetOption( settings[i] ) );
     }
 
-    int savegameCount = StringUtil::StringToInt( GetOption( "savegame_count" ) );
+    int savegameCount;
+
+    if ( GetOption( "savegame_count" ) != "" )
+    {
+        savegameCount = StringUtil::StringToInt( GetOption( "savegame_count" ) );
+    }
+    else
+    {
+        savegameCount = 0;
+    }
+
     for ( int i = 1; i <= savegameCount; i++ )
     {
         std::string opt = "savegame_" + StringUtil::IntToString( i );
