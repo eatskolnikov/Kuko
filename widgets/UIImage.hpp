@@ -21,6 +21,8 @@ class UIImage : public IWidget
     void SetFrame( IntRect fr );
     IntRect GetFrame();
     void SetTexture( SDL_Texture* ptrTexture );
+    void SetPosition( const IntRect& pos );
+    void SetPosition( float x, float y, float w, float h );
 
     protected:
     // std::string m_id;

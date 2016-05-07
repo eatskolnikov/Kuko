@@ -35,7 +35,7 @@ class IWidget
         m_position.h = h;
     }
 
-    void SetPosition( IntRect pos )
+    void SetPosition( const IntRect& pos )
     {
         m_position.x = pos.x;
         m_position.y = pos.y;

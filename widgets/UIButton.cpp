@@ -69,6 +69,22 @@ void UIButton::Setup( const std::string& id, const std::string& text, FloatRect 
     Setup( id, position, centered, ptrTexture, buttonColor );
 }
 
+void UIButton::SetPosition( const IntRect& pos )
+{
+    IWidget::SetPosition( pos );
+    m_background[0].SetPosition( pos );
+    m_background[1].SetPosition( pos );
+    m_text.SetPosition( pos );
+}
+
+void UIButton::SetPosition( float x, float y, float w, float h )
+{
+    IWidget::SetPosition( x, y, w, h );
+    m_background[0].SetPosition( x, y, w, h );
+    m_background[1].SetPosition( x, y, w, h );
+    m_text.SetPosition( x, y, w, h );
+}
+
 void UIButton::Update()
 {
     m_effectTimer--;

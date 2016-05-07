@@ -31,6 +31,8 @@ class UIButton : public IWidget
         SDL_Texture* ptrTexture, SDL_Color buttonColor, SDL_Color textColor, TTF_Font* font, IntRect padding );
 
     void SetTextPosition( const kuko::FloatRect& pos );
+    void SetPosition( const IntRect& pos );
+    void SetPosition( float x, float y, float w, float h );
 
     void SetupAnimateEffect( const std::string& effectType, SDL_Texture* frame2, int effectMax );
     void Draw();
