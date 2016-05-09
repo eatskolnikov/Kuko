@@ -544,7 +544,7 @@ void MenuManager::Draw()
             it != m_buttons.end();
             ++it )
     {
-        if ( it->second->GetVisiblePage() == m_currentPage || it->second->GetVisiblePage() == 0 )
+        if ( it->second != NULL && ( it->second->GetVisiblePage() == m_currentPage || it->second->GetVisiblePage() == 0 ) )
         {
             it->second->Draw();
         }

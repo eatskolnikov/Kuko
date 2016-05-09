@@ -104,9 +104,14 @@ void BaseEntity::Draw()
     }
 }
 
-void BaseEntity::DrawWithOffset( float offsetX, float offsetY )
+void BaseEntity::Draw( float offsetX, float offsetY )
 {
-    ImageManager::DrawWithOffset( m_sprite, offsetX, offsetY );
+    ImageManager::Draw( m_sprite, offsetX, offsetY );
+}
+
+void BaseEntity::Draw( float offsetX, float offsetY, float scale )
+{
+    ImageManager::Draw( m_sprite, offsetX, offsetY, scale );
 }
 
 bool BaseEntity::IsCollision( const BaseEntity& other )

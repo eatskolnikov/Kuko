@@ -3,6 +3,7 @@
 #include "../base/Application.hpp"
 #include "../utilities/Logger.hpp"
 #include "../utilities/StringUtil.hpp"
+#include "../managers/ImageManager.hpp"
 
 namespace kuko
 {
