@@ -180,4 +180,3 @@ double Logger::GetTimestamp()
     return std::chrono::system_clock::to_time_t( now );
 }
 
-

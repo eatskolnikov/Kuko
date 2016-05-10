@@ -29,7 +29,7 @@ class ImageManager
     static void Draw( const Sprite& sprite, float offsetX, float offsetY );
     static void Draw( const Sprite& sprite, float offsetX, float offsetY, float scale );
 
-    static void DrawRectangle( kuko::FloatRect pos, int r, int g, int b );
+    static void DrawRectangle( kuko::FloatRect pos, int r, int g, int b, int thickness = 1 );
 
     protected:
     static std::map<std::string, SDL_Texture*> m_textures;

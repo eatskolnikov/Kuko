@@ -128,11 +128,20 @@ void ImageManager::Draw( SDL_Texture* ptrTexture, int x, int y )
     );
 }
 
-void ImageManager::DrawRectangle( kuko::FloatRect pos, int r, int g, int b )
+void ImageManager::DrawRectangle( kuko::FloatRect pos, int r, int g, int b, int thickness )
 {
     SDL_Rect rect = pos.ToSDLRect();
     SDL_SetRenderDrawColor( Application::GetRenderer(), r, g, b, 255 );
     SDL_RenderDrawRect( Application::GetRenderer(), &rect );
+
+    for ( int i = 1; i < thickness; i++ )
+    {
+        rect.x -= 1;
+        rect.y -= 1;
+        rect.w += 2;
+        rect.h += 2;
+        SDL_RenderDrawRect( Application::GetRenderer(), &rect );
+    }
 }
 
 }
