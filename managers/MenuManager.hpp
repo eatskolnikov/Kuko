@@ -47,6 +47,7 @@ class MenuManager
     void AppendToActiveTextBox( const std::string& text );
     void RemoveLastCharacterOfActiveTextBox();
     std::string GetTextboxValue( const std::string& key );
+    void SetTextboxValue( const std::string& key, const std::string& value );
     void UpdateLabelText( const std::string& id, const std::string& text );
 
     void AddLabel( const std::string& id, UILabel* label );
@@ -71,6 +72,9 @@ class MenuManager
     bool IsMouseActive();
 
     void OutputElementNames(); // debug
+
+    void RemoveButton( const std::string& key );
+    void RemoveLabel( const std::string& key );
 
     protected:
     void LoadButton( int index );

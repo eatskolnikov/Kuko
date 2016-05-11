@@ -720,6 +720,18 @@ std::string MenuManager::GetTextboxValue( const std::string& key )
     return "";
 }
 
+void MenuManager::SetTextboxValue( const std::string& key, const std::string& value )
+{
+    for ( std::map< std::string, UITextBox* >::iterator iter = m_textboxes.begin();
+            iter != m_textboxes.end(); ++iter )
+    {
+        if ( iter->second->GetId() == key )
+        {
+            iter->second->SetText( value );
+        }
+    }
+}
+
 void MenuManager::SetTextEditing( bool turnOn )
 {
     if ( turnOn )
@@ -790,6 +802,16 @@ void MenuManager::RemoveLastCharacterOfActiveTextBox()
 void MenuManager::UpdateLabelText( const std::string& id, const std::string& text )
 {
     m_labels[ id ]->ChangeText( text );
+}
+
+void MenuManager::RemoveButton( const std::string& key )
+{
+    m_buttons.erase( key );
+}
+
+void MenuManager::RemoveLabel( const std::string& key )
+{
+    m_labels.erase( key );
 }
 
 }
