@@ -34,6 +34,7 @@ void Logger::Setup()
     m_file << "table td.message { font-size: 14px; }" << std::endl;
     m_file << "table .odd { background: #DDDDDD; }" << std::endl;
     m_file << "table .error { background: #FFA5A5; }" << std::endl;
+    m_file << "table .debug { background: #C3A5FF; }" << std::endl;
     m_file << "</style>" << std::endl;
     m_file << "<table>" << std::endl;
     m_file << "<tr>"
@@ -143,6 +144,22 @@ void Logger::Error( const std::string& message, const std::string& location /* =
         << "</tr>" << std::endl;
 }
 
+void Logger::Debug( const std::string& message, const std::string& location )
+{
+    std::cerr   << "** " << GetTimestamp() << "\t" << message;
+    if ( location != "" ) { std::cerr << " @ " << location; }
+    std::cerr << std::endl;
+
+    std::string loc = location;
+    if ( loc == "" ) { loc = "-"; }
+
+    m_file << "<tr class='debug'>"
+        << "<td class='time'>" << GetFormattedTimestamp() << "</td>"
+        << "<td class='location'>" << loc << "</td>"
+        << "<td class='message'>" << message << "</td>"
+        << "</tr>" << std::endl;
+}
+
 std::string Logger::GetFormattedTimestamp()
 {
     time_t timestamp = GetTimestamp();
@@ -162,5 +179,4 @@ double Logger::GetTimestamp()
     std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
     return std::chrono::system_clock::to_time_t( now );
 }
-
 

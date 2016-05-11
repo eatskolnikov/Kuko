@@ -14,7 +14,11 @@ namespace kuko
 class IWidget
 {
     public:
-    IWidget() { m_visiblePage = 0; /* all pages by default */ }
+    IWidget()
+    {
+        m_visiblePage = 0; /* all pages by default */
+    }
+
     virtual void Draw() = 0;
     virtual void Update()
     {
@@ -35,7 +39,7 @@ class IWidget
         m_position.h = h;
     }
 
-    void SetPosition( IntRect pos )
+    void SetPosition( const IntRect& pos )
     {
         m_position.x = pos.x;
         m_position.y = pos.y;

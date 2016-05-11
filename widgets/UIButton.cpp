@@ -3,6 +3,7 @@
 #include "../base/Application.hpp"
 #include "../utilities/Logger.hpp"
 #include "../utilities/StringUtil.hpp"
+#include "../managers/ImageManager.hpp"
 
 namespace kuko
 {
@@ -67,6 +68,22 @@ void UIButton::Setup( const std::string& id, const std::string& text, FloatRect 
     m_text.Setup( id + "-lbl", text, textPos, centered, textColor, font );
     m_useText = true;
     Setup( id, position, centered, ptrTexture, buttonColor );
+}
+
+void UIButton::SetPosition( const IntRect& pos )
+{
+    IWidget::SetPosition( pos );
+    m_background[0].SetPosition( pos );
+    m_background[1].SetPosition( pos );
+    m_text.SetPosition( pos );
+}
+
+void UIButton::SetPosition( float x, float y, float w, float h )
+{
+    IWidget::SetPosition( x, y, w, h );
+    m_background[0].SetPosition( x, y, w, h );
+    m_background[1].SetPosition( x, y, w, h );
+    m_text.SetPosition( x, y, w, h );
 }
 
 void UIButton::Update()

@@ -51,6 +51,18 @@ IntRect UIImage::GetFrame()
     return m_background.GetFrame();
 }
 
+void UIImage::SetPosition( const IntRect& pos )
+{
+    IWidget::SetPosition( pos );
+    m_background.SetPosition( m_position );
+}
+
+void UIImage::SetPosition( float x, float y, float w, float h )
+{
+    IWidget::SetPosition( x, y, w, h );
+    m_background.SetPosition( m_position );
+}
+
 void UIImage::Update()
 {
     float amountX = 0.05;

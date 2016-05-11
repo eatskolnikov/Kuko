@@ -58,14 +58,22 @@ void SoundManager::ClearAudio()
 
 void SoundManager::PlayMusic( const std::string& key, bool loop )
 {
-    Logger::Out( "play music " + key );
-    Logger::Out( "Music Count " + StringUtil::IntToString( m_music.size() ) );
+    Logger::Out( "Play music ID: " + key, "SoundManager::PlayMusic" );
+
+    if ( Mix_PlayingMusic() != 0 )
+    {
+        Mix_HaltMusic();
+    }
 
     if ( m_music.find( key ) != m_music.end() )
     {
         // -1 = infinite, 0 = none, # = how many times to loop
         int loops = ( loop ) ? -1 : 1;
-        Mix_PlayMusic( m_music[ key ], loops );
+        Mix_FadeInMusicPos( m_music[ key ], loops, 2000, 0 );
+    }
+    else
+    {
+        Logger::Out( "Music \"" + key + "\" not found" );
     }
 }
 

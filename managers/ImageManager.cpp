@@ -71,11 +71,22 @@ void ImageManager::Cleanup()
     }
 }
 
-void ImageManager::DrawWithOffset( const Sprite& sprite, float offsetX, float offsetY )
+void ImageManager::Draw( const Sprite& sprite, float offsetX, float offsetY )
 {
     Sprite offsetSprite = sprite;
     offsetSprite.position.x += offsetX;
     offsetSprite.position.y += offsetY;
+
+    Draw( offsetSprite );
+}
+
+void ImageManager::Draw( const Sprite& sprite, float offsetX, float offsetY, float scale )
+{
+    Sprite offsetSprite = sprite;
+    offsetSprite.position.x += offsetX;
+    offsetSprite.position.y += offsetY;
+    offsetSprite.position.w = sprite.position.w * scale;
+    offsetSprite.position.h = sprite.position.h * scale;
 
     Draw( offsetSprite );
 }
@@ -117,11 +128,20 @@ void ImageManager::Draw( SDL_Texture* ptrTexture, int x, int y )
     );
 }
 
-void ImageManager::DrawRectangle( kuko::FloatRect pos, int r, int g, int b )
+void ImageManager::DrawRectangle( kuko::FloatRect pos, int r, int g, int b, int thickness )
 {
     SDL_Rect rect = pos.ToSDLRect();
     SDL_SetRenderDrawColor( Application::GetRenderer(), r, g, b, 255 );
     SDL_RenderDrawRect( Application::GetRenderer(), &rect );
+
+    for ( int i = 1; i < thickness; i++ )
+    {
+        rect.x -= 1;
+        rect.y -= 1;
+        rect.w += 2;
+        rect.h += 2;
+        SDL_RenderDrawRect( Application::GetRenderer(), &rect );
+    }
 }
 
 }
