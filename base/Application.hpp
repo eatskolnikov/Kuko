@@ -28,6 +28,7 @@ namespace kuko
         void Setup( int fps );
         void Start();
         void Update();
+        int GetTicks();
     };
 
     class Application
@@ -53,6 +54,7 @@ namespace kuko
 
         static void TimerStart();
         static void TimerUpdate();
+        static int GetTimerTicks();
 
         private:
         static int m_screenWidth;

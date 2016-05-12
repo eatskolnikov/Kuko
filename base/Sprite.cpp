@@ -26,10 +26,10 @@ bool Sprite::IsClicked( int x, int y )
 
 void Sprite::SetPosition( kuko::FloatRect pos )
 {
-    position.x = int(pos.x);
-    position.y = int(pos.y);
-    position.w = int(pos.w);
-    position.h = int(pos.h);
+    position.x = pos.x;
+    position.y = pos.y;
+    position.w = pos.w;
+    position.h = pos.h;
 }
 
 FloatRect Sprite::GetPosition()

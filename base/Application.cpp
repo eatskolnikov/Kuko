@@ -43,6 +43,11 @@ void Timer::Update()
     }
 }
 
+int Timer::GetTicks()
+{
+    return SDL_GetTicks();
+}
+
 void Application::TimerStart()
 {
     m_timer.Start();
@@ -203,6 +208,11 @@ void Application::BeginDraw()
 void Application::EndDraw()
 {
     SDL_RenderPresent( m_renderer );
+}
+
+int Application::GetTimerTicks()
+{
+    return m_timer.GetTicks();
 }
 
 }
