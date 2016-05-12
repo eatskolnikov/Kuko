@@ -24,9 +24,7 @@ Timer Application::m_timer;
 
 void Timer::Setup( int fps )
 {
-    this->fps = fps;
-    this->startTicks = 0;
-    this->ticksPerFrame = 1000 / this->fps;
+    countedFrames = 0;
 }
 
 void Timer::Start()
@@ -36,16 +34,13 @@ void Timer::Start()
 
 void Timer::Update()
 {
-    int frameTicks = SDL_GetTicks();
-    if ( frameTicks < ticksPerFrame )
+    float averageFps = countedFrames / ( SDL_GetTicks() / 1000.0f );
+    if ( countedFrames % 10000 == 0 )
     {
-        SDL_Delay( ticksPerFrame - frameTicks );
+        Logger::Out( "Average FPS: " + StringUtil::FloatToString( averageFps ) );
     }
-}
 
-int Timer::GetTicks()
-{
-    return SDL_GetTicks();
+    ++countedFrames;
 }
 
 void Application::TimerStart()
@@ -103,7 +98,7 @@ bool Application::Start( const std::string& winTitle, int screenWidth /* = 480 *
         return false;
     }
 
-    m_renderer = SDL_CreateRenderer( m_window, -1, SDL_RENDERER_ACCELERATED );
+    m_renderer = SDL_CreateRenderer( m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
     if ( m_renderer == NULL )
     {
         std::string error( SDL_GetError() );
@@ -208,11 +203,6 @@ void Application::BeginDraw()
 void Application::EndDraw()
 {
     SDL_RenderPresent( m_renderer );
-}
-
-int Application::GetTimerTicks()
-{
-    return m_timer.GetTicks();
 }
 
 }
