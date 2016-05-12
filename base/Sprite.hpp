@@ -29,6 +29,8 @@ class Sprite
     void SetRotation( float angle );
     float GetRotation();
     bool IsClicked( int x, int y );
+    void SetAlpha( Uint8 value );
+    Uint8 GetAlpha();
 
     SDL_Texture*        texture;
     IntRect             frame;

@@ -78,4 +78,17 @@ Sprite::~Sprite()
 {
 }
 
+void Sprite::SetAlpha( Uint8 value )
+{
+    SDL_SetTextureAlphaMod( texture, value );
+}
+
+Uint8 Sprite::GetAlpha()
+{
+    Uint8 alpha;
+    SDL_GetTextureAlphaMod( texture, &alpha );
+    return alpha;
+}
+
+
 }
