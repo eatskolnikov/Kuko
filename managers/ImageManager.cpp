@@ -73,24 +73,22 @@ void ImageManager::Cleanup()
 
 void ImageManager::Draw( const Sprite& sprite, float offsetX, float offsetY )
 {
-//    Sprite offsetSprite = sprite;
-//    offsetSprite.position.x += offsetX;
-//    offsetSprite.position.y += offsetY;
-//
-//    Draw( offsetSprite );
-    Draw( sprite );
+    Sprite offsetSprite = sprite;
+    offsetSprite.position.x += offsetX;
+    offsetSprite.position.y += offsetY;
+
+    Draw( offsetSprite );
 }
 
 void ImageManager::Draw( const Sprite& sprite, float offsetX, float offsetY, float scale )
 {
-//    Sprite offsetSprite = sprite;
-//    offsetSprite.position.x += offsetX;
-//    offsetSprite.position.y += offsetY;
-//    offsetSprite.position.w = sprite.position.w * scale;
-//    offsetSprite.position.h = sprite.position.h * scale;
-//
-//    Draw( offsetSprite );
-    Draw( sprite );
+    Sprite offsetSprite = sprite;
+    offsetSprite.position.x += offsetX;
+    offsetSprite.position.y += offsetY;
+    offsetSprite.position.w = sprite.position.w * scale;
+    offsetSprite.position.h = sprite.position.h * scale;
+
+    Draw( offsetSprite );
 }
 
 void ImageManager::Draw( const Sprite& sprite )
