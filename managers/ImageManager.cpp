@@ -17,6 +17,16 @@ void ImageManager::AddTexture( const std::string& id, const std::string& path )
 
 void ImageManager::ClearTextures()
 {
+    for ( std::map<std::string, SDL_Texture*>::iterator it = m_textures.begin();
+        it != m_textures.end(); it++ )
+    {
+        if ( it->second != NULL )
+        {
+            SDL_DestroyTexture( it->second );
+            it->second = NULL;
+        }
+    }
+
     m_textures.clear();
     m_filenames.clear();
 }

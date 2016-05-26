@@ -22,7 +22,7 @@ Sprite::Sprite()
 
 Sprite::~Sprite()
 {
-    SDL_DestroyTexture( texture );
+//    SDL_DestroyTexture( texture ); // Should be handled by the image manager!
     texture = NULL;
 }
 
@@ -66,9 +66,6 @@ float Sprite::GetRotation()
 
 void Sprite::SetTexture( SDL_Texture* ptrTexture )
 {
-    SDL_DestroyTexture( texture );
-    texture = NULL;
-
     texture = ptrTexture;//LoadFile( path );
     position.x = position.y = 0;
     frame.x = frame.y = 0;
