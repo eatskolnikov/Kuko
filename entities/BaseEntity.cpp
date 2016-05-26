@@ -96,22 +96,7 @@ void BaseEntity::Update()
 
 void BaseEntity::Draw()
 {
-    ImageManager::Draw( m_sprite );
-
-    if ( m_debugFrame )
-    {
-        kuko::ImageManager::DrawRectangle( GetCollisionRegionAtPosition(), 0, 0, 255 );
-    }
-}
-
-void BaseEntity::Draw( float offsetX, float offsetY )
-{
-    ImageManager::Draw( m_sprite, offsetX, offsetY );
-}
-
-void BaseEntity::Draw( float offsetX, float offsetY, float scale )
-{
-    ImageManager::Draw( m_sprite, offsetX, offsetY, scale );
+    m_sprite.Draw();
 }
 
 bool BaseEntity::IsCollision( const BaseEntity& other )

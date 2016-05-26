@@ -71,39 +71,32 @@ void ImageManager::Cleanup()
     }
 }
 
-void ImageManager::Draw( const Sprite& sprite, float offsetX, float offsetY )
+//void ImageManager::Draw( const Sprite& sprite )
+//{
+//    SDL_RendererFlip flip = ( sprite.isFlipped ) ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+//
+//    SDL_Rect rect = sprite.position.ToSDLRect();
+//    SDL_Rect frame = sprite.frame.ToSDLRect();
+//
+//    SDL_RenderCopyEx(
+//        kuko::Application::GetRenderer(),
+//        sprite.texture,
+//        &frame,
+//        &rect,
+//        sprite.angle,
+//        NULL,
+//        flip
+//    );
+//}
+
+void ImageManager::Draw( SDL_Texture* ptrTexture, SDL_Rect* ptrRect, SDL_Rect* ptrFrame, SDL_RendererFlip flip, float angle )
 {
-    Sprite offsetSprite = sprite;
-    offsetSprite.position.x += offsetX;
-    offsetSprite.position.y += offsetY;
-
-    Draw( offsetSprite );
-}
-
-void ImageManager::Draw( const Sprite& sprite, float offsetX, float offsetY, float scale )
-{
-    Sprite offsetSprite = sprite;
-    offsetSprite.position.x += offsetX;
-    offsetSprite.position.y += offsetY;
-    offsetSprite.position.w = sprite.position.w * scale;
-    offsetSprite.position.h = sprite.position.h * scale;
-
-    Draw( offsetSprite );
-}
-
-void ImageManager::Draw( const Sprite& sprite )
-{
-    SDL_RendererFlip flip = ( sprite.isFlipped ) ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
-
-    SDL_Rect rect = sprite.position.ToSDLRect();
-    SDL_Rect frame = sprite.frame.ToSDLRect();
-
     SDL_RenderCopyEx(
         kuko::Application::GetRenderer(),
-        sprite.texture,
-        &frame,
-        &rect,
-        sprite.angle,
+        ptrTexture,
+        ptrFrame,
+        ptrRect,
+        angle,
         NULL,
         flip
     );
@@ -122,6 +115,19 @@ void ImageManager::Draw( SDL_Texture* ptrTexture, int x, int y )
         ptrTexture,
         NULL,
         &pos,
+        0.0f,
+        NULL,
+        SDL_FLIP_NONE
+    );
+}
+
+void ImageManager::Draw( SDL_Texture* ptrTexture, SDL_Rect rect )
+{
+    SDL_RenderCopyEx(
+        kuko::Application::GetRenderer(),
+        ptrTexture,
+        NULL,
+        &rect,
         0.0f,
         NULL,
         SDL_FLIP_NONE

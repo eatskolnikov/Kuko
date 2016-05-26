@@ -88,7 +88,7 @@ void UILabel::GenerateTexture()
 
     // Set w/h to fit the ratio
     int fullWidth, fullHeight;
-    SDL_QueryTexture(m_sprite.texture, NULL, NULL, &fullWidth, &fullHeight);
+    SDL_QueryTexture( m_sprite.texture, NULL, NULL, &fullWidth, &fullHeight );
 
     float fontRatio = float(fullWidth) / float(fullHeight);
 
@@ -129,9 +129,9 @@ void UILabel::Draw()
     {
         if ( m_useShadow )
         {
-            kuko::ImageManager::Draw( m_shadowSprite );
+            m_shadowSprite.Draw();
         }
-        kuko::ImageManager::Draw( m_sprite );
+        m_sprite.Draw();
     }
 }
 

@@ -58,7 +58,7 @@ void UITextBox::Draw()
     SDL_SetRenderDrawColor( Application::GetRenderer(), 0, 0, 0, 255 );
     SDL_RenderDrawRect( Application::GetRenderer(), &rect );
     // Text
-    kuko::ImageManager::Draw( m_sprite );
+    m_sprite.Draw();
 }
 
 void UITextBox::SetActive( bool val )

@@ -3,6 +3,7 @@
 
 #include "../base/Application.hpp"
 #include "../utilities/StringUtil.hpp"
+#include "../managers/ImageManager.hpp"
 
 namespace kuko
 {
@@ -17,6 +18,12 @@ Sprite::Sprite()
     position.w = position.h = 16;
     isFlipped = false;
     angle = 0.0f;
+}
+
+Sprite::~Sprite()
+{
+    SDL_DestroyTexture( texture );
+    texture = NULL;
 }
 
 bool Sprite::IsClicked( int x, int y )
@@ -59,6 +66,9 @@ float Sprite::GetRotation()
 
 void Sprite::SetTexture( SDL_Texture* ptrTexture )
 {
+    SDL_DestroyTexture( texture );
+    texture = NULL;
+
     texture = ptrTexture;//LoadFile( path );
     position.x = position.y = 0;
     frame.x = frame.y = 0;
@@ -74,10 +84,6 @@ SDL_Texture* Sprite::GetTexture()
     return texture;
 }
 
-Sprite::~Sprite()
-{
-}
-
 void Sprite::SetAlpha( Uint8 value )
 {
     SDL_SetTextureAlphaMod( texture, value );
@@ -90,5 +96,21 @@ Uint8 Sprite::GetAlpha()
     return alpha;
 }
 
+void Sprite::Draw()
+{
+    SDL_Rect rectPos = position.ToSDLRect();
+    SDL_Rect rectFrame = frame.ToSDLRect();
+    SDL_RendererFlip flipped = ( isFlipped ) ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+    ImageManager::Draw( texture, &rectPos, &rectFrame, flipped, angle );
+}
+
+void Sprite::Draw( const kuko::IntRect& offset )
+{
+//    Logger::Out( "Draw B" );
+//    Sprite temp = *this;
+//    ImageManager::Draw( temp );
+//    m_altTexture = texture;
+//    ImageManager::Draw( m_altTexture, offset.ToSDLRect() );
+}
 
 }

@@ -24,10 +24,10 @@ class ImageManager
     static SDL_Texture* GetTexture( const std::string& key );
     static std::string GetTextureFile( const std::string& key );
 
-    static void Draw( const Sprite& sprite );
+    //static void Draw( const Sprite& sprite );
     static void Draw( SDL_Texture* ptrTexture, int x, int y );
-    static void Draw( const Sprite& sprite, float offsetX, float offsetY );
-    static void Draw( const Sprite& sprite, float offsetX, float offsetY, float scale );
+    static void Draw( SDL_Texture* ptrTexture, SDL_Rect rect );
+    static void Draw( SDL_Texture* ptrTexture, SDL_Rect* ptrRect, SDL_Rect* ptrFrame, SDL_RendererFlip flip, float angle );
 
     static void DrawRectangle( kuko::FloatRect pos, int r, int g, int b, int thickness = 1 );
 

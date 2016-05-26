@@ -19,8 +19,6 @@ class BaseEntity
 
     virtual void Update();
     virtual void Draw();
-    virtual void Draw( float offsetX, float offsetY );
-    virtual void Draw( float offsetX, float offsetY, float scale );
 
     virtual kuko::FloatRect GetPosition() const;
     virtual kuko::IntRect GetFrame();
@@ -46,6 +44,7 @@ class BaseEntity
     kuko::FloatRect m_position;
     kuko::FloatRect m_collisionRegion;
     Sprite m_sprite;
+    Sprite m_altSprite;
     bool m_isSolid;
     bool m_debugFrame;
 

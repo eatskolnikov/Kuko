@@ -32,11 +32,17 @@ class Sprite
     void SetAlpha( Uint8 value );
     Uint8 GetAlpha();
 
+    void Draw();
+    void Draw( const kuko::IntRect& offset );
+
     SDL_Texture*        texture;
     IntRect             frame;
     float               angle;
     FloatRect           position;
     bool                isFlipped;
+
+    private:
+    SDL_Texture* m_altTexture;
 };
 
 }

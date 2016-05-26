@@ -122,7 +122,7 @@ void UIImage::Draw()
     }
     else
     {
-        kuko::ImageManager::Draw( m_background );
+        m_background.Draw();
     }
 }
 
