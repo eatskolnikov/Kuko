@@ -21,6 +21,29 @@ void ImageManager::AddTexture( const std::string& id, SDL_Texture* externalTextu
     m_textures.insert( std::pair<std::string, SDL_Texture*>( id, externalTexture ) );
 }
 
+void ImageManager::DestroyTexture( SDL_Texture* ptrTexture )
+{
+    // Find texture
+    std::string removeId = "";
+    for ( std::map<std::string, SDL_Texture*>::iterator it = m_textures.begin();
+        it != m_textures.end(); it++ )
+    {
+        if ( it->second == ptrTexture )
+        {
+            Logger::Out( "Request to destroy texture \"" + it->first + "\"", "ImageManager::AddTexture" );
+            SDL_DestroyTexture( it->second );
+            it->second = NULL;
+            removeId = it->first;
+            break;
+        }
+    }
+
+    if ( removeId != "" )
+    {
+        m_textures.erase( removeId );
+    }
+}
+
 void ImageManager::ClearTextures()
 {
     for ( std::map<std::string, SDL_Texture*>::iterator it = m_textures.begin();

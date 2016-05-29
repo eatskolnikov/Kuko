@@ -14,6 +14,7 @@ UILabel::UILabel() : IWidget()
     m_position.w = m_position.h = 10;
     m_useShadow = false;
     m_font = NULL;
+    m_sprite.texture = NULL;
 }
 
 void UILabel::Setup( const std::string& id, const std::string& label, FloatRect position, bool centered, SDL_Color textColor, TTF_Font* font, const std::string& effect, int effectMax )
@@ -83,9 +84,16 @@ void UILabel::GenerateTexture()
         return;
     }
 
+    if ( m_sprite.texture != NULL )
+    {
+        // Since this is a label, the texture should be cleared.
+        ImageManager::DestroyTexture( m_sprite.texture );
+        m_sprite.texture = NULL;
+    }
+
     SDL_Surface* textSurface = TTF_RenderUTF8_Solid( m_font, m_label.c_str(), m_color );
     SDL_Texture* newTexture = SDL_CreateTextureFromSurface( kuko::Application::GetRenderer(), textSurface );
-    ImageManager::AddTexture( "label-" + m_label + "-" + StringUtil::FloatToString( Logger::GetTimestamp() ), newTexture );
+    ImageManager::AddTexture( "label-" + m_label + "-" + Logger::GetFormattedTimestamp(), newTexture );
     m_sprite.SetTexture( newTexture );
     SDL_FreeSurface( textSurface );
 
