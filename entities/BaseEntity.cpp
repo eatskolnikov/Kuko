@@ -102,7 +102,6 @@ void BaseEntity::Draw()
 bool BaseEntity::IsCollision( const BaseEntity& other )
 {
     kuko::FloatRect rect = other.GetCollisionRegionAtPosition();
-
     return IsCollision( rect );
 }
 

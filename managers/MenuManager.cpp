@@ -23,6 +23,7 @@ MenuManager::MenuManager()
 
 MenuManager::~MenuManager()
 {
+    m_activeTextbox = NULL;
     ClearMenu();
 }
 
@@ -496,6 +497,8 @@ void MenuManager::ClearMenu()
     m_labels.clear();
     m_buttons.clear();
     m_textboxes.clear();
+
+    m_activeTextbox = NULL;
 }
 
 void MenuManager::Update()
@@ -628,26 +631,42 @@ std::string MenuManager::GetButtonClicked( float mouseX, float mouseY )
 
 bool MenuManager::CheckTextboxClick( float mouseX, float mouseY )
 {
+    Logger::Out( "Look for click of a textbox", "MenuManager::CheckTextboxClick" );
+    Logger::Out( "Total textboxes: " + StringUtil::IntToString( m_textboxes.size() ), "MenuManager::CheckTextboxClick" );
+
     // If a textbox is clicked, make sure the widget visually represents that.
     for ( std::map< std::string, UITextBox* >::iterator iter = m_textboxes.begin();
             iter != m_textboxes.end(); ++iter )
     {
+        Logger::Debug( "Seek", "MenuManager::CheckTextboxClick" );
+        if ( iter->second == NULL )
+        {
+            continue;
+        }
+
         FloatRect widget = iter->second->GetPosition();
         bool isHit = ( mouseX >= widget.x && mouseX <= widget.x + widget.w &&
                  mouseY >= widget.y && mouseY <= widget.y + widget.h );
 
+        Logger::Debug( "Hit?", "MenuManager::CheckTextboxClick" );
         if ( isHit )
         {
             if ( m_activeTextbox != NULL )
             {
+                Logger::Debug( "Un-activate old active textbox", "MenuManager::CheckTextboxClick" );
+
                 m_activeTextbox->SetActive( false );
             }
-            Logger::Out( "Set active text box to " + iter->second->GetId(), "MenuManager::CheckTextboxClick" );
-            m_activeTextbox = iter->second;
-            m_activeTextbox->SetActive( true );
-            return true;
+            if ( iter->second != NULL )
+            {
+                Logger::Out( "Set active text box to " + iter->second->GetId(), "MenuManager::CheckTextboxClick" );
+                m_activeTextbox = iter->second;
+                m_activeTextbox->SetActive( true );
+                return true;
+            }
         }
     }
+    Logger::Debug( "No textboxes clicked", "MenuManager::CheckTextboxClick" );
     return false;
 }
 
@@ -728,8 +747,10 @@ void MenuManager::SetTextboxValue( const std::string& key, const std::string& va
         if ( iter->second->GetId() == key )
         {
             iter->second->SetText( value );
+            return;
         }
     }
+    Logger::Error( "Unable to find textbox \"" + key + "\"", "MenuManager::SetTextboxValue" );
 }
 
 void MenuManager::SetTextEditing( bool turnOn )

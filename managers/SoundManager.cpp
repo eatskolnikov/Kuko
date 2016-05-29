@@ -58,7 +58,7 @@ void SoundManager::ClearAudio()
 
 void SoundManager::PlayMusic( const std::string& key, bool loop )
 {
-return;
+//return;
     Logger::Out( "Play music ID: " + key, "SoundManager::PlayMusic" );
 
     if ( Mix_PlayingMusic() != 0 )

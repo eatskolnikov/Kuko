@@ -24,6 +24,13 @@ int StringUtil::StringToInt( const std::string& text )
     return num;
 }
 
+std::string StringUtil::PointerToString( uintptr_t address )
+{
+    std::stringstream ss;
+    ss << address;
+    return ss.str();
+}
+
 std::string StringUtil::RemoveWhitespace( const std::string& text, const std::string& replaceWith )
 {
     std::string stripped = "";
