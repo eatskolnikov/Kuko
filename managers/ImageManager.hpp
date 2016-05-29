@@ -20,6 +20,7 @@ class ImageManager
     static void Cleanup();
 
     static void AddTexture( const std::string& id, const std::string& path );
+    static void AddTexture( const std::string& id, SDL_Texture* externalTexture );
     static void ClearTextures();
     static SDL_Texture* GetTexture( const std::string& key );
     static std::string GetTextureFile( const std::string& key );

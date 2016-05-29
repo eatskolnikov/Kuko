@@ -15,6 +15,12 @@ void ImageManager::AddTexture( const std::string& id, const std::string& path )
     m_textures.insert( std::pair<std::string, SDL_Texture*>( id, LoadFile( path ) ) );
 }
 
+void ImageManager::AddTexture( const std::string& id, SDL_Texture* externalTexture )
+{
+    Logger::Out( "Add externally-created texture \"" + id + "\"", "ImageManager::AddTexture" );
+    m_textures.insert( std::pair<std::string, SDL_Texture*>( id, externalTexture ) );
+}
+
 void ImageManager::ClearTextures()
 {
     for ( std::map<std::string, SDL_Texture*>::iterator it = m_textures.begin();

@@ -1,5 +1,6 @@
 // Kuko Framework - https://github.com/Rejcx/Kuko - Rachel J. Morris - MIT License
 #include "Logger.hpp"
+#include "StringUtil.hpp"
 #include <iomanip>
 
 std::ofstream Logger::m_file;
@@ -109,7 +110,7 @@ void Logger::Out( const std::string& message, const std::string& location /* = "
 
     if ( condition )
     {
-        std::cout << GetFormattedTimestamp();
+        std::cout << StringUtil::GetTime();
         if ( location != "" ) { std::cout << " @ " << location; }
         std::cout << std::endl << "  " << message << std::endl << std::endl;
 
@@ -119,7 +120,7 @@ void Logger::Out( const std::string& message, const std::string& location /* = "
         std::string rowClass = ( m_rowCount % 2 == 0 ) ? "" : "odd";
 
         m_file << "<tr class='" + rowClass + "'>"
-            << "<td class='time'>" << GetFormattedTimestamp() << "</td>"
+            << "<td class='time'>" << StringUtil::GetTime() << "</td>"
             << "<td class='location'>" << loc << "</td>"
             << "<td class='message'>" << message << "</td>"
             << "</tr>" << std::endl;
@@ -130,7 +131,7 @@ void Logger::Out( const std::string& message, const std::string& location /* = "
 
 void Logger::Error( const std::string& message, const std::string& location /* = "" */ )
 {
-    std::cerr   << "** " << GetTimestamp() << "\t" << message;
+    std::cerr   << "** " << StringUtil::GetTime() << "\t" << message;
     if ( location != "" ) { std::cerr << " @ " << location; }
     std::cerr << std::endl;
 
@@ -138,7 +139,7 @@ void Logger::Error( const std::string& message, const std::string& location /* =
     if ( loc == "" ) { loc = "-"; }
 
     m_file << "<tr class='error'>"
-        << "<td class='time'>" << GetFormattedTimestamp() << "</td>"
+        << "<td class='time'>" << StringUtil::GetTime() << "</td>"
         << "<td class='location'>" << loc << "</td>"
         << "<td class='message'>" << message << "</td>"
         << "</tr>" << std::endl;
@@ -146,7 +147,7 @@ void Logger::Error( const std::string& message, const std::string& location /* =
 
 void Logger::Debug( const std::string& message, const std::string& location )
 {
-    std::cerr   << "** " << GetTimestamp() << "\t" << message;
+    std::cerr   << "** " << StringUtil::GetTime() << "\t" << message;
     if ( location != "" ) { std::cerr << " @ " << location; }
     std::cerr << std::endl;
 
@@ -154,7 +155,7 @@ void Logger::Debug( const std::string& message, const std::string& location )
     if ( loc == "" ) { loc = "-"; }
 
     m_file << "<tr class='debug'>"
-        << "<td class='time'>" << GetFormattedTimestamp() << "</td>"
+        << "<td class='time'>" << StringUtil::GetTime() << "</td>"
         << "<td class='location'>" << loc << "</td>"
         << "<td class='message'>" << message << "</td>"
         << "</tr>" << std::endl;

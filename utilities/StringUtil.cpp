@@ -40,3 +40,10 @@ std::string StringUtil::RemoveWhitespace( const std::string& text, const std::st
     }
     return stripped;
 }
+
+std::string StringUtil::GetTime()
+{
+    std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
+    std::time_t time = std::chrono::system_clock::to_time_t( now );
+    return ctime( &time );
+}

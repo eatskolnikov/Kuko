@@ -3,6 +3,8 @@
 #define _KUKO_STRINGUTIL
 
 #include <string>
+#include <chrono>
+#include <ctime>
 
 class StringUtil
 {
@@ -11,6 +13,7 @@ class StringUtil
     static std::string FloatToString( float number );
     static int StringToInt( const std::string& text );
     static std::string RemoveWhitespace( const std::string& text, const std::string& replaceWith = "" );
+    static std::string GetTime();
 };
 
 #endif

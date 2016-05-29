@@ -76,6 +76,7 @@ void UILabel::RegenerateTexture()
 
 void UILabel::GenerateTexture()
 {
+    Logger::Debug( "Call " + StringUtil::GetTime(), "UILabel::GenerateTexture" );
     if ( m_font == NULL )
     {
         Logger::Error( "Error: Font for UILabel " + m_id + " is NULL!", "UILabel::GenerateTexture" );
@@ -83,7 +84,9 @@ void UILabel::GenerateTexture()
     }
 
     SDL_Surface* textSurface = TTF_RenderUTF8_Solid( m_font, m_label.c_str(), m_color );
-    m_sprite.SetTexture ( SDL_CreateTextureFromSurface( kuko::Application::GetRenderer(), textSurface ) );
+    SDL_Texture* newTexture = SDL_CreateTextureFromSurface( kuko::Application::GetRenderer(), textSurface );
+    ImageManager::AddTexture( "label-" + m_label + "-" + StringUtil::FloatToString( Logger::GetTimestamp() ), newTexture );
+    m_sprite.SetTexture( newTexture );
     SDL_FreeSurface( textSurface );
 
     // Set w/h to fit the ratio
@@ -113,7 +116,11 @@ void UILabel::GenerateTexture()
     if ( m_useShadow )
     {
         SDL_Surface* shadowSurface = TTF_RenderUTF8_Solid( m_font, m_label.c_str(), m_shadowColor );
-        m_shadowSprite.SetTexture ( SDL_CreateTextureFromSurface( kuko::Application::GetRenderer(), shadowSurface ) );
+
+        SDL_Texture* newShadowTexture = SDL_CreateTextureFromSurface( kuko::Application::GetRenderer(), shadowSurface );
+        ImageManager::AddTexture( "labelshadow-" + m_label + "-" + StringUtil::FloatToString( Logger::GetTimestamp() ), newShadowTexture );
+
+        m_shadowSprite.SetTexture( newShadowTexture );
         m_shadowSprite.position = m_position;
         m_shadowSprite.position.x += m_shadowOffsetX;
         m_shadowSprite.position.y += m_shadowOffsetY;
