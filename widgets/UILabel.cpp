@@ -77,7 +77,6 @@ void UILabel::RegenerateTexture()
 
 void UILabel::GenerateTexture()
 {
-    Logger::Debug( "Call " + StringUtil::GetTime(), "UILabel::GenerateTexture" );
     if ( m_font == NULL )
     {
         Logger::Error( "Error: Font for UILabel " + m_id + " is NULL!", "UILabel::GenerateTexture" );
@@ -123,6 +122,13 @@ void UILabel::GenerateTexture()
 
     if ( m_useShadow )
     {
+        if ( m_shadowSprite.texture != NULL )
+        {
+            // Since this is a label, the texture should be cleared.
+            ImageManager::DestroyTexture( m_shadowSprite.texture );
+            m_shadowSprite.texture = NULL;
+        }
+
         SDL_Surface* shadowSurface = TTF_RenderUTF8_Solid( m_font, m_label.c_str(), m_shadowColor );
 
         SDL_Texture* newShadowTexture = SDL_CreateTextureFromSurface( kuko::Application::GetRenderer(), shadowSurface );
