@@ -59,7 +59,7 @@ void Application::SetDefaultResolution( int width, int height )
     m_defaultHeight = height;
 }
 
-bool Application::Start( const std::string& winTitle, int screenWidth /* = 480 */, int screenHeight /* = 480 */, int defaultWidth, int defaultHeight, bool useVsync )
+bool Application::Start( const std::string& winTitle, int screenWidth /* = 480 */, int screenHeight /* = 480 */, int defaultWidth, int defaultHeight, bool useVsync, bool fullscreen )
 {
     Logger::Out( "Title \"" + winTitle + "\", Screen: "
         + StringUtil::IntToString( screenWidth ) + "x" + StringUtil::IntToString( screenHeight )
@@ -87,9 +87,16 @@ bool Application::Start( const std::string& winTitle, int screenWidth /* = 480 *
     m_screenWidth = screenWidth;
     m_screenHeight = screenHeight;
 
-    m_window = SDL_CreateWindow( winTitle.c_str(),
-        SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-        m_screenWidth, m_screenHeight, SDL_WINDOW_SHOWN );
+    if ( fullscreen )
+    {
+        m_window = SDL_CreateWindow( winTitle.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, m_screenWidth, m_screenHeight,
+            SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN );
+    }
+    else
+    {
+        m_window = SDL_CreateWindow( winTitle.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, m_screenWidth, m_screenHeight,
+            SDL_WINDOW_SHOWN );
+    }
 
     if ( m_window == NULL )
     {

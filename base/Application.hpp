@@ -32,7 +32,7 @@ namespace kuko
     class Application
     {
         public:
-        static bool Start( const std::string& winTitle, int screenWidth = 480, int screenHeight = 480, int defaultWidth = 480, int defaultHeight = 480, bool useVsync = false );
+        static bool Start( const std::string& winTitle, int screenWidth = 480, int screenHeight = 480, int defaultWidth = 480, int defaultHeight = 480, bool useVsync = false, bool fullscreen = false );
         static void End();
 
         static int GetScreenWidth();

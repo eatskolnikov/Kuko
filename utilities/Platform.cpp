@@ -34,3 +34,14 @@ OperatingSystem Platform::GetOperatingSystem()
 #endif
 
 }
+
+std::string Platform::GetOperatingSystemName( OperatingSystem system )
+{
+    if      ( system == WINDOWS32 ) { return "WINDOWS32"; }
+    else if ( system == WINDOWS64 ) { return "WINDOWS64"; }
+    else if ( system == LINUX )     { return "LINUX"; }
+    else if ( system == UNIX )      { return "UNIX"; }
+    else if ( system == APPLE )     { return "APPLE"; }
+    else if ( system == ANDROID )   { return "ANDROID"; }
+    return "UNKNOWN";
+}
