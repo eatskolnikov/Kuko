@@ -59,7 +59,7 @@ void Application::SetDefaultResolution( int width, int height )
     m_defaultHeight = height;
 }
 
-bool Application::Start( const std::string& winTitle, int screenWidth /* = 480 */, int screenHeight /* = 480 */, int defaultWidth, int defaultHeight )
+bool Application::Start( const std::string& winTitle, int screenWidth /* = 480 */, int screenHeight /* = 480 */, int defaultWidth, int defaultHeight, bool useVsync )
 {
     Logger::Out( "Title \"" + winTitle + "\", Screen: "
         + StringUtil::IntToString( screenWidth ) + "x" + StringUtil::IntToString( screenHeight )
@@ -98,7 +98,17 @@ bool Application::Start( const std::string& winTitle, int screenWidth /* = 480 *
         return false;
     }
 
-    m_renderer = SDL_CreateRenderer( m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
+    if ( useVsync )
+    {
+        Logger::Out( "Use VSYNC", "Application::Start" );
+        m_renderer = SDL_CreateRenderer( m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
+    }
+    else
+    {
+        Logger::Out( "Do not use VSYNC", "Application::Start" );
+        m_renderer = SDL_CreateRenderer( m_window, -1, SDL_RENDERER_ACCELERATED );
+    }
+
     if ( m_renderer == NULL )
     {
         std::string error( SDL_GetError() );
