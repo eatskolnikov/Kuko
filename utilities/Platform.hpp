@@ -3,7 +3,7 @@
 
 enum OperatingSystem { UNKNOWN, WINDOWS32, WINDOWS64, APPLE, LINUX, UNIX, IOS, ANDROID };
 
-class PlatformSpecific
+class Platform
 {
     public:
     static OperatingSystem GetOperatingSystem();

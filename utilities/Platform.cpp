@@ -1,6 +1,6 @@
-#include "PlatformSpecific.hpp"
+#include "Platform.hpp"
 
-OperatingSystem PlatformSpecific::GetOperatingSystem()
+OperatingSystem Platform::GetOperatingSystem()
 {
 
 #ifdef _WIN32
