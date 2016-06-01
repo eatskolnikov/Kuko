@@ -17,10 +17,17 @@ int Application::m_defaultWidth;
 int Application::m_defaultHeight;
 float Application::m_widthRatio;
 float Application::m_heightRatio;
+bool Application::m_vsyncEnabled;
 
 SDL_Window* Application::m_window = NULL;
 SDL_Renderer* Application::m_renderer = NULL;
 Timer Application::m_timer;
+
+Timer::Timer()
+{
+    fps = 100;
+    ticksPerFrame = 1000 / fps;
+}
 
 void Timer::Setup( int fps )
 {
@@ -43,6 +50,15 @@ void Timer::Update()
     ++countedFrames;
 }
 
+void Timer::CapFrames()
+{
+    int ticks = SDL_GetTicks();
+    if ( ticks < ticksPerFrame )
+    {
+        SDL_Delay( ticksPerFrame - ticks );
+    }
+}
+
 void Application::TimerStart()
 {
     m_timer.Start();
@@ -51,6 +67,10 @@ void Application::TimerStart()
 void Application::TimerUpdate()
 {
     m_timer.Update();
+    if ( !m_vsyncEnabled )
+    {
+        m_timer.CapFrames();
+    }
 }
 
 void Application::SetDefaultResolution( int width, int height )
@@ -105,6 +125,7 @@ bool Application::Start( const std::string& winTitle, int screenWidth /* = 480 *
         return false;
     }
 
+    m_vsyncEnabled = useVsync;
     if ( useVsync )
     {
         Logger::Out( "Use VSYNC", "Application::Start" );

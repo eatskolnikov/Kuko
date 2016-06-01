@@ -22,11 +22,15 @@ namespace kuko
 {
     struct Timer
     {
+        Timer();
         int startTicks;
         int countedFrames;
+        int fps;
+        int ticksPerFrame;
         void Setup( int fps );
         void Start();
         void Update();
+        void CapFrames();
     };
 
     class Application
@@ -67,6 +71,8 @@ namespace kuko
         static SDL_Renderer* m_renderer;
 
         static Timer m_timer;
+
+        static bool m_vsyncEnabled;
     };
 }
 
