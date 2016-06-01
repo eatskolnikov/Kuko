@@ -10,6 +10,9 @@ namespace kuko
 std::map<std::string, Mix_Chunk*> SoundManager::m_sounds;
 std::map<std::string, Mix_Music*> SoundManager::m_music;
 
+int SoundManager::m_musicVolume;
+int SoundManager::m_soundVolume;
+
 void SoundManager::Cleanup()
 {
     ClearAudio();
@@ -30,7 +33,6 @@ void SoundManager::AddSound( const std::string& id, const std::string& path )
 
 void SoundManager::ClearAudio()
 {
-
     Logger::Out( "SoundManager::Cleanup" );
 
     for (   std::map<std::string, Mix_Chunk*>::iterator it = m_sounds.begin();
@@ -107,6 +109,18 @@ Mix_Music* SoundManager::LoadMusicFile( const std::string& path )
         Logger::Error( "Error loading music file \"" + path + "\": " + Mix_GetError() );
     }
     return music;
+}
+
+void SoundManager::SetMusicVolume( int value )
+{
+    m_musicVolume = value;
+    Mix_VolumeMusic( m_musicVolume );
+}
+
+void SoundManager::SetSoundVolume( int value )
+{
+    m_soundVolume = value;
+    Mix_Volume( -1, m_soundVolume );
 }
 
 }

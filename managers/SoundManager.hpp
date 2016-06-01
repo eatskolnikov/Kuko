@@ -24,12 +24,18 @@ class SoundManager
     static void PlayMusic( const std::string& key, bool loop );
     static void PlaySound( const std::string& key );
 
+    static void SetMusicVolume( int value );
+    static void SetSoundVolume( int value );
+
     protected:
     static std::map<std::string, Mix_Chunk*> m_sounds;
     static std::map<std::string, Mix_Music*> m_music;
 
     static Mix_Chunk* LoadSoundFile( const std::string& path );
     static Mix_Music* LoadMusicFile( const std::string& path );
+
+    static int m_musicVolume;
+    static int m_soundVolume;
 };
 
 }
