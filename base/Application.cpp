@@ -22,6 +22,7 @@ bool Application::m_vsyncEnabled;
 SDL_Window* Application::m_window = NULL;
 SDL_Renderer* Application::m_renderer = NULL;
 Timer Application::m_timer;
+Timer Application::m_stepTimer;
 
 Timer::Timer()
 {
@@ -59,6 +60,16 @@ void Timer::CapFrames()
     }
 }
 
+int Timer::GetTicks()
+{
+    return SDL_GetTicks() - startTicks;
+}
+
+void Timer::Reset()
+{
+    startTicks = SDL_GetTicks();
+}
+
 void Application::TimerStart()
 {
     m_timer.Start();
@@ -69,7 +80,7 @@ void Application::TimerUpdate()
     m_timer.Update();
     if ( !m_vsyncEnabled )
     {
-        m_timer.CapFrames();
+//        m_timer.CapFrames();
     }
 }
 
@@ -241,6 +252,16 @@ void Application::BeginDraw()
 void Application::EndDraw()
 {
     SDL_RenderPresent( m_renderer );
+}
+
+float Application::GetTimeStep()
+{
+    return m_stepTimer.GetTicks() / 1000.0f;
+}
+
+void Application::ResetStepTimer()
+{
+    m_stepTimer.Reset();
 }
 
 }

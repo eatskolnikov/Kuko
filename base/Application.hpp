@@ -31,6 +31,8 @@ namespace kuko
         void Start();
         void Update();
         void CapFrames();
+        int GetTicks();
+        void Reset();
     };
 
     class Application
@@ -56,6 +58,8 @@ namespace kuko
 
         static void TimerStart();
         static void TimerUpdate();
+        static float GetTimeStep();
+        static void ResetStepTimer();
 
         private:
         static int m_screenWidth;
@@ -71,6 +75,7 @@ namespace kuko
         static SDL_Renderer* m_renderer;
 
         static Timer m_timer;
+        static Timer m_stepTimer;
 
         static bool m_vsyncEnabled;
     };
